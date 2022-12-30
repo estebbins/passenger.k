@@ -17,10 +17,26 @@
 #seat-main {
     grid-area: 3 / 2 / 8 / 12;
     border: 2px solid darkblue;
+    background-image: url('https://cdn.pixabay.com/photo/2016/11/19/10/29/background-1838494_960_720.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 25px 25px 0 0;
 }
 #seat-outer {
     grid-area: 5 / 1 / 9 / 13;
     border: 2px solid greenyellow;
+    background-image: url('https://cdn.pixabay.com/photo/2017/01/23/07/23/pink-leather-2001739_960_720.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    border-radius: 25px 25px 0 0;
+}
+#console {
+    grid-area: 6 / 3 / 7 / 12;
+    background-image: url('https://cdn.pixabay.com/photo/2018/04/05/20/58/plastic-3294211_960_720.jpg');
+    background-repeat: repeat;
+    background-position: left;
+    border-radius: 15px;
 }
 #pocket {
     grid-area: 4 / 4 / 5 / 11;
@@ -28,7 +44,9 @@
 }
 #screen { 
     grid-area: 6 / 3 / 7 / 7; 
+    margin: 2px;
     border: 2px solid blue;
+    background-color: blue;
 } 
 #controls { 
     grid-area: 6 / 7 / 7 / 9; 
@@ -67,12 +85,20 @@
 #phone { 
     grid-area: 6 / 10 / 7 / 12; 
     border: 2px solid pink;
+    background-image: url('https://cdn.pixabay.com/photo/2018/04/05/20/58/plastic-3294211_960_720.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 30px;
 } 
 #tray-table { 
     grid-area: 8 / 2 / 9 / 12;
     border: 2px solid gray;
     display: flex;
     justify-content: center;
+    background-image: url('https://cdn.pixabay.com/photo/2014/04/05/11/09/material-314790_960_720.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 25px 25px 0 0;
 } 
 #magazine { 
     grid-area: 2 / 5 / 5 / 10; 
