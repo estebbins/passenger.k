@@ -53,7 +53,12 @@
 #tray-table { 
     grid-area: 9 / 2 / 10 / 5;
     border: 2px solid gray;
+    display: flex;
+    justify-content: center;
 } 
+#tray-open {
+
+}
 #magazine { 
     grid-area: 2 / 3 / 5 / 4; 
     border: 2px solid purple;
