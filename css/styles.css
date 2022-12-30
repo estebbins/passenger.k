@@ -15,7 +15,37 @@
 #controls { 
     grid-area: 5 / 4 / 8 / 5; 
     border: 2px solid black;
+    display: grid;
+    grid-template-rows: .5fr 2fr .5fr;
 } 
+#vol {
+    display: grid;
+    grid-template-areas: repeat(2, 1fr);
+}
+#navigators {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+#up {
+    grid-area: 1 / 2 / 2 / 3;
+}
+#right {
+    grid-area: 2 / 3 / 3 / 4;
+}
+#down {
+    grid-area: 3 / 2 / 4 / 3;
+}
+#left {
+    grid-area: 2 / 1 / 3 / 2;
+}
+#select {
+    grid-area: 2 / 2 / 3 / 3;
+}
+#brightness {
+    display: grid;
+    grid-template-areas: repeat(2, 1fr);
+}
 #phone { 
     grid-area: 5 / 6 / 8 / 7; 
     border: 2px solid pink;
