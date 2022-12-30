@@ -103,10 +103,13 @@
 #magazine { 
     grid-area: 2 / 5 / 5 / 10; 
     border: 2px solid purple;
+    background-color: purple;
 } 
 #safety-card { 
     grid-area: 4 / 6 / 5 / 8; 
     border: 2px solid green;
+    background: red;
+    text-align: right;
 } 
 
 #stats {
