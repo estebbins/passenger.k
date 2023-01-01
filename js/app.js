@@ -18,8 +18,9 @@ let sanityScore = 100
 // eta is in units of seconds
 let eta = 300
 
-// Create Main Menu Options
+// Create Menu Options
 const mainMenu = ['Play', 'Listen', 'Watch']
+const playMenu = ['Tic-Tac-Toe', 'Other game']
 
 // Create selection option for screen div options to default to 0
 let selection = 0
@@ -99,21 +100,80 @@ const displayMainMenu = () => {
     const mainMenuOptions = document.querySelectorAll('.main-menu-list')
     // Add event listeners
     checkLinearNavigators(mainMenuOptions)
-    checkSelectMainMenu(mainMenuOptions)
+    checkSelectMainMenu()
+}
+
+const checkSelectMainMenu = () => {
+    selectButton.addEventListener('click', () => {
+        const mainMenuUl = document.getElementById('main-menu')
+        mainMenuUl.style.display = 'none'
+        if (selection === 0) {
+            displayPlayMenu()
+        } else if (selection === 1) {
+            displayListenMenu()
+        } else if (selection === 2) {
+            displayWatchMenu()
+        }
+        selection = 0
+    clearNavigatorListeners()
+    }, {once: true})
+}
+
+const clearNavigatorListeners = () => {
+    upButton.removeEventListener('click', () => {console.log('Removed up listener')})
+    downButton.removeEventListener('click', () => {})
+}
+
+const displayPlayMenu = () => {                         
+    // Create Ul and Li items for main menu
+    const playMenuUl = document.createElement('ul')
+    playMenuUl.id = 'play-menu'
+    for (let i = 0; i < playMenu.length; i++) {
+        const listItem = document.createElement('li')
+        listItem.innerText = playMenu[i]
+        listItem.className = 'play-menu-list'
+        playMenuUl.appendChild(listItem)
+    }
+    // Append menu to screen div
+    playMenuUl.style.display = 'block'
+    screenDiv.appendChild(playMenuUl)
+    const playMenuOptions = document.querySelectorAll('.play-menu-list')
+    // Add event listeners
+    checkLinearNavigators(playMenuOptions)
+    checkSelectPlayMenu()
+}
+
+const checkSelectPlayMenu = () => {
+    selectButton.addEventListener('click', () => {
+        const playMenuUl = document.getElementById('play-menu')
+        playMenuUl.style.display = 'none'
+        if (selection === 0) {launchTicTacToe()}
+        selection = 0
+    }, {once: true})
+}
+const displayListenMenu = () => {
+    console.log('display listen menu')
+}
+const displayWatchMenu = () => {
+    console.log('display watch menu')
+}
+
+const launchTicTacToe = () => {
+    screenDiv.id = 'tictactoe'
 }
 
 const checkLinearNavigators = (list) => {
     let selected = list[selection]
     selected.style.fontWeight = 'bold'
-    downButton.addEventListener('click', () => {
-        if (selection < (list.length - 1)) {
+    if (selection < (list.length - 1)) {
+        downButton.addEventListener('click', () => {
+            selected = list[selection]
             selected.style.fontWeight = 'normal'
-            selection++
+            selection += 1
             selected = list[selection]
             selected.style.fontWeight = 'bold'
-            console.log(selection)
-        }
-    })
+        })
+    }
     upButton.addEventListener('click', () => {
         if (selection > 0) {
             selected.style.fontWeight = 'normal'
@@ -123,30 +183,6 @@ const checkLinearNavigators = (list) => {
         }
     })    
 } 
-
-const checkSelectMainMenu = (list) => {
-    selectButton.addEventListener('click', () => {
-        const mainMenuUl = document.getElementById('main-menu')
-        mainMenuUl.style.display = 'none'
-        if (selection === 0) {
-            displayGameMenu()
-        } else if (selection === 1) {
-            displayListenMenu()
-        } else if (selection === 2) {
-            displayWatchMenu()
-        }
-    })
-}
-
-const displayPlayMenu = () => {
-    console.log('display game menu')
-}
-const displayListenMenu = () => {
-    console.log('display listen menu')
-}
-const displayWatchMenu = () => {
-    console.log('display watch menu')
-}
 
 // When DOMContentLoaded, start the game, show start screen
 document.addEventListener('DOMContentLoaded', () => {
