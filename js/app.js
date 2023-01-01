@@ -139,22 +139,28 @@ const displayWatchMenu = () => {
 
 const launchTicTacToe = () => {
     screenDiv.className = 'tictactoe'
+    const boxes = document.querySelectorAll('.box')
+    for (let i = 0; i < boxes.length; i++) {
+        screenDiv.appendChild(boxes[i])
+        boxes[i].style.display = 'block'
+    }
 }
 
 
 const checkLinearNavigators = (list, ul) => {
     let selected = list[selection]
     selected.style.fontWeight = 'bold'
-    downButton.addEventListener('click', downAction = () => {        
-        if (selection < (list.length - 1)) {
-            console.log(list)
-            selected = list[selection]
-            selected.style.fontWeight = 'normal'
-            selection += 1
-            selected = list[selection]
-            selected.style.fontWeight = 'bold'
-            }
-        })
+    downButton.addEventListener('click', 
+        downAction = () => {        
+            if (selection < (list.length - 1)) {
+                console.log(list)
+                selected = list[selection]
+                selected.style.fontWeight = 'normal'
+                selection += 1
+                selected = list[selection]
+                selected.style.fontWeight = 'bold'
+                }
+    })
     upButton.addEventListener('click', upAction = () => {
         if (selection > 0) {
             selected.style.fontWeight = 'normal'
@@ -165,9 +171,9 @@ const checkLinearNavigators = (list, ul) => {
     })
     selectButton.addEventListener('click', selectAction = () => {
         ul.style.display = 'none'
-        console.log(ul.id)
         downButton.removeEventListener('click', downAction)
         upButton.removeEventListener('click', upAction)
+        selectButton.removeEventListener('click', selectAction)
         if (ul.id === 'main-menu') {
             if (selection === 0) {
                 displayPlayMenu()
@@ -180,7 +186,6 @@ const checkLinearNavigators = (list, ul) => {
             if (selection === 0) {launchTicTacToe()}
         }
         selection = 0
-        selectButton.removeEventListener('click', selectAction)
     }, {once: true})
 }
 

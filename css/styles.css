@@ -60,6 +60,7 @@
     overflow: hidden;
 }
 .box {
+    display: none;
     border: 1px solid #e6a176;
     background-repeat: no-repeat;
     background-size: 90%;
