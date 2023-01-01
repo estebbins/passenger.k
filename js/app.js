@@ -99,29 +99,17 @@ const displayMainMenu = () => {
     screenDiv.appendChild(mainMenuUl)
     const mainMenuOptions = document.querySelectorAll('.main-menu-list')
     // Add event listeners
-    checkLinearNavigators(mainMenuOptions)
-    checkSelectMainMenu()
+    checkLinearNavigators(mainMenuOptions, mainMenuUl)
+    // checkSelectMainMenu()
 }
 
 const checkSelectMainMenu = () => {
-    selectButton.addEventListener('click', () => {
-        const mainMenuUl = document.getElementById('main-menu')
-        mainMenuUl.style.display = 'none'
-        if (selection === 0) {
-            displayPlayMenu()
-        } else if (selection === 1) {
-            displayListenMenu()
-        } else if (selection === 2) {
-            displayWatchMenu()
-        }
-        selection = 0
-    clearNavigatorListeners()
-    }, {once: true})
+
 }
 
 const clearNavigatorListeners = () => {
-    upButton.removeEventListener('click', () => {console.log('Removed up listener')})
-    downButton.removeEventListener('click', () => {})
+    upButton.removeEventListener('click', downAction)
+    downButton.removeEventListener('click', downAction, true)
 }
 
 const displayPlayMenu = () => {                         
@@ -139,18 +127,9 @@ const displayPlayMenu = () => {
     screenDiv.appendChild(playMenuUl)
     const playMenuOptions = document.querySelectorAll('.play-menu-list')
     // Add event listeners
-    checkLinearNavigators(playMenuOptions)
-    checkSelectPlayMenu()
+    checkLinearNavigators(playMenuOptions, playMenuUl)
 }
 
-const checkSelectPlayMenu = () => {
-    selectButton.addEventListener('click', () => {
-        const playMenuUl = document.getElementById('play-menu')
-        playMenuUl.style.display = 'none'
-        if (selection === 0) {launchTicTacToe()}
-        selection = 0
-    }, {once: true})
-}
 const displayListenMenu = () => {
     console.log('display listen menu')
 }
@@ -159,30 +138,55 @@ const displayWatchMenu = () => {
 }
 
 const launchTicTacToe = () => {
-    screenDiv.id = 'tictactoe'
+    screenDiv.className = 'tictactoe'
 }
 
-const checkLinearNavigators = (list) => {
+
+const checkLinearNavigators = (list, ul) => {
     let selected = list[selection]
     selected.style.fontWeight = 'bold'
-    if (selection < (list.length - 1)) {
-        downButton.addEventListener('click', () => {
+    downButton.addEventListener('click', downAction = () => {        
+        if (selection < (list.length - 1)) {
+            console.log(list)
             selected = list[selection]
             selected.style.fontWeight = 'normal'
             selection += 1
             selected = list[selection]
             selected.style.fontWeight = 'bold'
+            }
         })
-    }
-    upButton.addEventListener('click', () => {
+    upButton.addEventListener('click', upAction = () => {
         if (selection > 0) {
             selected.style.fontWeight = 'normal'
             selection--
             selected = list[selection]
             selected.style.fontWeight = 'bold'
         }
-    })    
-} 
+    })
+    selectButton.addEventListener('click', selectAction = () => {
+        ul.style.display = 'none'
+        console.log(ul.id)
+        downButton.removeEventListener('click', downAction)
+        upButton.removeEventListener('click', upAction)
+        if (ul.id === 'main-menu') {
+            if (selection === 0) {
+                displayPlayMenu()
+            } else if (selection === 1) {
+                displayListenMenu()
+            } else if (selection === 2) {
+                displayWatchMenu()
+            }
+        } else if (ul.id === 'play-menu') {
+            if (selection === 0) {launchTicTacToe()}
+        }
+        selection = 0
+        selectButton.removeEventListener('click', selectAction)
+    }, {once: true})
+}
+
+
+
+
 
 // When DOMContentLoaded, start the game, show start screen
 document.addEventListener('DOMContentLoaded', () => {
