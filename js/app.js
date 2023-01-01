@@ -25,6 +25,9 @@ const playMenu = ['Tic-Tac-Toe', 'Other game']
 // Create selection option for screen div options to default to 0
 let selection = 0
 
+// Create tictactoe game elements
+
+
 const getStartScreen = () => {
     // Set up start button & add to screen div
     const startButton = document.createElement('button')
@@ -136,17 +139,6 @@ const displayListenMenu = () => {
 const displayWatchMenu = () => {
     console.log('display watch menu')
 }
-
-const launchTicTacToe = () => {
-    screenDiv.className = 'tictactoe'
-    const boxes = document.querySelectorAll('.box')
-    for (let i = 0; i < boxes.length; i++) {
-        screenDiv.appendChild(boxes[i])
-        boxes[i].style.display = 'block'
-    }
-}
-
-
 const checkLinearNavigators = (list, ul) => {
     let selected = list[selection]
     selected.style.fontWeight = 'bold'
@@ -189,7 +181,19 @@ const checkLinearNavigators = (list, ul) => {
     }, {once: true})
 }
 
+const launchTicTacToe = () => {
+    screenDiv.className = 'tictactoe'
+    const boxes = document.querySelectorAll('.box')
+    for (let i = 0; i < boxes.length; i++) {
+        screenDiv.appendChild(boxes[i])
+        boxes[i].style.display = 'block'
+    }
+    playTicTacToe()
+}
 
+const playTicTacToe = () => {
+
+}
 
 
 
