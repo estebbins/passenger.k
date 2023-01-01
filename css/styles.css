@@ -44,9 +44,10 @@
 }
 #screen { 
     grid-area: 6 / 3 / 7 / 7; 
-    margin: 2px;
+    margin: 4px 3px 4px 4px;
     border: 2px solid blue;
     background-color: blue;
+    z-index: 1;
 } 
 #controls { 
     grid-area: 6 / 7 / 7 / 9; 
@@ -65,18 +66,23 @@
 }
 #up {
     grid-area: 1 / 2 / 2 / 3;
+    font-size: 10px;
 }
 #right {
     grid-area: 2 / 3 / 3 / 4;
+    font-size: 10px;
 }
 #down {
     grid-area: 3 / 2 / 4 / 3;
+    font-size: 10px;
 }
 #left {
     grid-area: 2 / 1 / 3 / 2;
+    font-size: 10px;
 }
 #select {
     grid-area: 2 / 2 / 3 / 3;
+    font-size: 10px;
 }
 #brightness {
     display: grid;
