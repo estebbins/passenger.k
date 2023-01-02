@@ -172,11 +172,20 @@ const checkLinearNavigators = (list, ul) => {
     }, {once: true})
 }
 
+const gameOver = () => {
+    alert('Game over!')
+}
+
 // When DOMContentLoaded, start the game, show start screen
 document.addEventListener('DOMContentLoaded', () => {
     getStartScreen()
 })
 
+// if (entertainmentScore >= 100) {
+//     entertainmentScore = 100
+// } else if entertainmentScore < 0 {
+//     gameOver()
+// }
 
 // Create tictactoe game elements
 const boxes = document.querySelectorAll('.box')
@@ -387,6 +396,7 @@ const printWin = (moveCounter, result) => {
         for (let i = 0; i < boxes.length; i++) {
             gameDiv.appendChild(boxes[i])
             boxes[i].style.display = 'none'
+            boxes[i].style.backgroundImage = 'none'
             boxes[i].classList.remove('played')
             boxes[i].classList.remove('tttselection')
         }
@@ -450,89 +460,3 @@ const leaveTicTacToe = () => {
     // Add select event listener for new option on screen
 
 }
-
-// const gameOver = () => {
-//     // When the game ends in win/lose/tie, deactivate clicks on remaining boxes
-//     for (let i = 0; i < divGame.length; i++) {
-//         divGame[i].classList.add('played')
-//     }
-//     // Show the updated scores in the stats divs
-//     document.querySelector('#player-X').textContent = `${playerXScore}`
-//     document.querySelector('#player-O').textContent = `${playerOScore}`
-//     document.querySelector('#tie').textContent = `${tieScore}`
-//     // Style the new game button to indicate to user they should click it
-//     newGameButton.style.backgroundColor = '#82981e'
-// }
-
-// const newGame = () => {
-//     // Once clicked, the new game button turns grey since a new game already started, though can still be used
-//     newGameButton.style.backgroundColor = 'grey'
-//     // Remove played tags & images from all boxes & return to default color
-//     for (let i = 0; i < divGame.length; i++) {
-//         divGame[i].classList.remove('played')
-//         divGame[i].style.backgroundImage = 'none'
-//     }
-//     // Empty player arrays 
-//     for (let i = 0; i < 9; i++) {
-//         playerXMoves.pop()
-//         playerOMoves.pop()
-//     }
-//     // reset move counter to 0
-//     moveCounter = 0
-//     // Remove resultBox from the messages div
-//     const resultBox = document.getElementById('result')
-//     if(divMessages.contains(resultBox)) {
-//         divMessages.removeChild(resultBox)
-//     }
-//     // Style change first button to indicate it can be selected
-//     changeFirstButton.style.backgroundColor = '#82981e'
-//     // Bold the first player based on whether there is an offset or not
-//     if (playerOffset === 0) {
-//         document.querySelector('#pX-indicator').style.fontWeight = 'bolder'
-//         document.querySelector('#pO-indicator').style.fontWeight = 'normal'
-//     } else {
-//         document.querySelector('#pO-indicator').style.fontWeight = 'bolder'
-//         document.querySelector('#pX-indicator').style.fontWeight = 'normal'
-//     }
-// }
-
-// // Function to restart statistic tracking
-// const resetGame = () => {
-//     // Call new game function
-//     newGame()
-//     // Reset remaining statistics
-//     playerXScore = 0
-//     playerOScore = 0
-//     tieScore = 0
-//     // Reset player offset to default
-//     playerOffset = 0
-//     // Reset statistics displayed on the screen
-//     document.querySelector('#player-X').textContent = `${playerXScore}`
-//     document.querySelector('#player-O').textContent = `${playerOScore}`
-//     document.querySelector('#tie').textContent = `${tieScore}`
-// }
-
-// // Function to change which player X or O will start the game
-// const changeFirstPlayer = () => {
-//     // This can only be used when the game is new (move counter = 0)
-//     if (moveCounter === 0) {
-//         // Alternate between the players using the offset of 0 or 1
-//         if (playerOffset === 0) {
-//             // Change to player O
-//             playerOffset = 1
-//             // Change button text to alternate player to indicate what the button will do
-//             changeFirstButton.textContent = 'Change First to: X'
-//             // Style the next player in bold in the stats div
-//             document.querySelector('#pX-indicator').style.fontWeight = 'normal'
-//             document.querySelector('#pO-indicator').style.fontWeight = 'bolder'
-//         } else if (playerOffset === 1) {
-//             // Change to player X
-//             playerOffset = 0
-//             // Change button text to alternate player to indicate what the button will do
-//             changeFirstButton.textContent = 'Change First to: O'
-//             // Style the next player in bold in the stats div
-//             document.querySelector('#pX-indicator').style.fontWeight = 'bolder'
-//             document.querySelector('#pO-indicator').style.fontWeight = 'normal'
-//         }
-//     }
-// }
