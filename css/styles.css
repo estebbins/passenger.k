@@ -67,6 +67,13 @@
     background-position: center;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
 }
+.tttselection {
+    animation-name: blinking;
+    animation-duration: 2s;
+    animation-iteration-count: 100;
+    border: 4px solid #b35114;
+}
+
 #controls { 
     grid-area: 6 / 7 / 7 / 9; 
     border: 2px solid black;
