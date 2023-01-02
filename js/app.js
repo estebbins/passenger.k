@@ -105,11 +105,6 @@ const displayMainMenu = () => {
     checkLinearNavigators(mainMenuOptions, mainMenuUl)
 }
 
-const clearNavigatorListeners = () => {
-    upButton.removeEventListener('click', downAction)
-    downButton.removeEventListener('click', downAction, true)
-}
-
 const displayPlayMenu = () => {                         
     // Create Ul and Li items for main menu
     const playMenuUl = document.createElement('ul')
@@ -173,6 +168,7 @@ const checkLinearNavigators = (list, ul) => {
             if (selection === 0) {launchTicTacToe()}
         }
         selection = 0
+        screenDiv.removeChild(ul)
     }, {once: true})
 }
 
@@ -233,6 +229,9 @@ const navAction = (event) => {
         } else if (boxes[5].classList.contains('tttselection')) {
             boxes[5].classList.remove('tttselection')
             boxes[8].classList.add('tttselection')
+        } else {
+            sanityScore--
+            displayStats(entertainmentScore, sanityScore, eta) 
         }
     } else if (event.target.id === 'up') {
         if (boxes[3].classList.contains('tttselection')) {
@@ -253,6 +252,9 @@ const navAction = (event) => {
         } else if (boxes[8].classList.contains('tttselection')) {
             boxes[8].classList.remove('tttselection')
             boxes[5].classList.add('tttselection')
+        } else {
+            sanityScore--
+            displayStats(entertainmentScore, sanityScore, eta) 
         }
     } else if (event.target.id === 'left') {
         if (boxes[1].classList.contains('tttselection')) {
@@ -273,6 +275,9 @@ const navAction = (event) => {
         } else if (boxes[8].classList.contains('tttselection')) {
             boxes[8].classList.remove('tttselection')
             boxes[7].classList.add('tttselection')
+        } else {
+            sanityScore--
+            displayStats(entertainmentScore, sanityScore, eta) 
         }
     } else if (event.target.id === 'right') {
         if (boxes[0].classList.contains('tttselection')) {
@@ -293,9 +298,13 @@ const navAction = (event) => {
         } else if (boxes[7].classList.contains('tttselection')) {
             boxes[7].classList.remove('tttselection')
             boxes[8].classList.add('tttselection')
+        } else {
+            sanityScore--
+            displayStats(entertainmentScore, sanityScore, eta) 
         }
     } 
 }
+
 
 const makeMove = (event) => {
     // Increase move counter
@@ -334,6 +343,7 @@ const makeMove = (event) => {
 
 }
 
+// Adds appropriate event listeners for TicTacToe game
 const playTicTacToe = () => {
     upButton.addEventListener('click', navAction)
     downButton.addEventListener('click', navAction)
@@ -341,9 +351,6 @@ const playTicTacToe = () => {
     rightButton.addEventListener('click', navAction)
     selectButton.addEventListener('click', makeMove)
 }
-
-
-
 
 // Function to display results
 const printWin = (moveCounter, result) => {
@@ -356,24 +363,47 @@ const printWin = (moveCounter, result) => {
             // If player X wins, add & style the text in the result div, increase the score counter and end the game
             resultBox.textContent = "Player X Wins!"
             resultBox.style.color = 'rgb(51, 201, 206)'
+            sanityScore += 5
+            entertainmentScore += 10
+            displayStats(entertainmentScore, sanityScore, eta) 
         } else if (result === false) {
             // If player O wins, add & style the text in the result div, increase the score counter and end the game
             resultBox.textContent = "Player O Wins!"
             resultBox.style.color = '#cdcdcd'
+            sanityScore += 2
+            entertainmentScore += 5
+            displayStats(entertainmentScore, sanityScore, eta) 
         } else if (moveCounter === 9 && result === null) {
             // If neither player wins, add & style the text in the result div, increase the score counter and end the game. Apply complimentary textShadow to override default
             resultBox.textContent = "It's a Tie!"
             resultBox.style.color = '#e6a176'
             resultBox.style.textShadow = '1px 1px 2px #984464'
+            sanityScore -= 10
+            entertainmentScore -= 10
+            displayStats(entertainmentScore, sanityScore, eta) 
         }
         // Remove the tictactoe boxes from the screen.=
         screenDiv.classList.remove('tictactoe')
         for (let i = 0; i < boxes.length; i++) {
             gameDiv.appendChild(boxes[i])
             boxes[i].style.display = 'none'
+            boxes[i].classList.remove('played')
+            boxes[i].classList.remove('tttselection')
         }
         // Append the result div to the screen
         screenDiv.appendChild(resultBox)
+        // Add leave option to screen
+        const leaveOption = document.createElement('div')
+        leaveOption.id = 'leave'
+        screenDiv.append(leaveOption)
+        leaveOption.textContent = 'Exit to Main Menu'
+        // Reset ttt statistics
+        moveCounter = 0
+        for (let i = 0; i < 9; i++) {
+            playerXMoves.pop()
+            playerOMoves.pop()
+        }
+        leaveTicTacToe()
     }
 }  
 
@@ -397,6 +427,28 @@ const checkWin = () => {
     }
     // No win returns null
     return null
+}
+
+const leaveTicTacToe = () => {
+    // Remove game event listeners
+    upButton.removeEventListener('click', navAction)
+    downButton.removeEventListener('click', navAction)
+    leftButton.removeEventListener('click', navAction)
+    rightButton.removeEventListener('click', navAction)
+    selectButton.removeEventListener('click', makeMove)
+
+    const exitToMain = () => {
+        const tttResult = document.getElementById('tttresult')
+        const tttLeave = document.getElementById('leave')
+        screenDiv.removeChild(tttResult)
+        screenDiv.removeChild(tttLeave)
+        displayMainMenu()
+        selectButton.removeEventListener('click', exitToMain)
+    }
+    selectButton.addEventListener('click', exitToMain)
+    console.log('selection ', selection)
+    // Add select event listener for new option on screen
+
 }
 
 // const gameOver = () => {
