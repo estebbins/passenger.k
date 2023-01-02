@@ -49,6 +49,7 @@
     background-color: blue;
     z-index: 1;
 } 
+
 .tictactoe {
     display: grid;
     grid-template: repeat(3, 1fr)/repeat(3, 1fr);
@@ -73,7 +74,9 @@
     animation-iteration-count: 100;
     border: 4px solid #b35114;
 }
-
+#tttresult {
+    
+}
 #controls { 
     grid-area: 6 / 7 / 7 / 9; 
     border: 2px solid black;
