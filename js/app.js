@@ -11,6 +11,8 @@ const downButton = document.getElementById('down')
 const leftButton = document.getElementById('left')
 const rightButton = document.getElementById('right')
 const selectButton = document.getElementById('select')
+const safetyCardDiv = document.getElementById('safety-card')
+const safetyCardSpan = document.getElementById('safe-card')
 
 // Create statistics
 let entertainmentScore = 100
@@ -40,6 +42,9 @@ const getStartScreen = () => {
         screenDiv.removeChild(startButton)
         displayMainMenu()
     })
+    safetyCardSpan.textContent = 'Safety Card'
+    safetyCardDiv.addEventListener('click', openSafetyCard)
+
 
     // a! Will need to add more reset features to this screen.
 }
@@ -459,4 +464,129 @@ const leaveTicTacToe = () => {
     console.log('selection ', selection)
     // Add select event listener for new option on screen
 
+}
+
+// Safety Card Puzzle
+
+// Used site for guidance and code for dragging & dropping https://www.javascripttutorial.net/web-apis/javascript-drag-and-drop/#:~:text=Most%20modern%20web%20browsers%20have,you%20would%20drag%20an%20image. 
+
+const draggableImages = document.querySelectorAll('.safetycard-img')
+const safetyPanelDivs = document.querySelectorAll('.panel')
+
+const openSafetyCard = () => {
+    gameDiv.appendChild(safetyCardDiv)
+    safetyCardDiv.style.gridArea = '3 / 3 / 4 / 4'
+    safetyCardDiv.style.zIndex = '1'
+    safetyCardDiv.style.display = 'grid'
+    safetyCardDiv.style.backgroundColor = 'gray'
+    safetyCardDiv.style.gridTemplateRows = '.2fr repeat(5, 1fr)'
+    safetyCardDiv.style.gridTemplateColumns = '1.5fr 1.5fr 1fr 2fr 1.5fr 1.5fr'
+    const panelOneDiv = document.createElement('div')
+    const panelTwoDiv = document.createElement('div')
+    const panelThreeDiv = document.createElement('div')
+    panelOneDiv.classList.add('panel')
+    panelTwoDiv.classList.add('panel')
+    panelThreeDiv.classList.add('panel')
+    panelOneDiv.style.gridArea = '1 / 1 / 6 / 3'
+    panelTwoDiv.style.gridArea = '1 / 3 / 6 / 5'
+    panelThreeDiv.style.gridArea = '1 / 5 / 6 / 7'
+    const seatbeltOneDiv = document.createElement('div')
+    const seatbeltTwoDiv = document.createElement('div')
+    const smokingOneDiv = document.createElement('div')
+    const smokingTwoDiv = document.createElement('div')
+    const maskAOneDiv = document.createElement('div')
+    const maskATwoDiv = document.createElement('div')
+    const maskBOneDiv = document.createElement('div')
+    const maskBTwoDiv = document.createElement('div')
+    const bagOneDiv = document.createElement('div')
+    const bagTwoDiv = document.createElement('div')
+    seatbeltOneDiv.style.gridArea = '2 / 1 / 3 / 2'
+    seatbeltTwoDiv.style.gridArea = '6 / 5 / 7 / 6'
+    smokingOneDiv.style.gridArea = '3 / 2 / 4 / 3'
+    smokingTwoDiv.style.gridArea = '5 / 6 / 6 / 7'
+    maskAOneDiv.style.gridArea = '4 / 1 / 5 / 2'
+    maskATwoDiv.style.gridArea = '2 / 5 / 3 / 6'
+    maskBOneDiv.style.gridArea = '5 / 2 / 6 / 3'
+    maskBTwoDiv.style.gridArea = '3 / 6 / 4 / 7'
+    bagOneDiv.style.gridArea = '6 / 1 / 7 / 2'
+    bagTwoDiv.style.gridArea = '4 / 5 / 5 / 6'
+    seatbeltOneDiv.style.backgroundColor = 'blue'
+    seatbeltTwoDiv.style.backgroundColor = 'blue'
+    smokingOneDiv.style.backgroundColor = 'red'
+    smokingTwoDiv.style.backgroundColor = 'red'
+    maskAOneDiv.style.backgroundColor = 'pink'
+    maskATwoDiv.style.backgroundColor = 'pink'
+    maskBOneDiv.style.backgroundColor = 'yellow'
+    maskBTwoDiv.style.backgroundColor = 'yellow'
+    bagOneDiv.style.backgroundColor = 'green'
+    bagTwoDiv.style.backgroundColor = 'green'
+
+    safetyCardDiv.appendChild(panelOneDiv)
+    safetyCardDiv.appendChild(panelTwoDiv)
+    safetyCardDiv.appendChild(panelThreeDiv)
+
+    safetyCardDiv.appendChild(seatbeltOneDiv)
+    safetyCardDiv.appendChild(seatbeltTwoDiv)
+    safetyCardDiv.appendChild(smokingOneDiv)
+    safetyCardDiv.appendChild(smokingTwoDiv)
+    safetyCardDiv.appendChild(maskAOneDiv)
+    safetyCardDiv.appendChild(maskATwoDiv)
+    safetyCardDiv.appendChild(maskBOneDiv)
+    safetyCardDiv.appendChild(maskBTwoDiv)
+    safetyCardDiv.appendChild(bagOneDiv)
+    safetyCardDiv.appendChild(bagTwoDiv)
+
+    const seatbeltImageOne = document.getElementById('seatbelt-one')
+    const seatbeltImageTwo = document.getElementById('seatbelt-two')
+    seatbeltOneDiv.appendChild(seatbeltImageOne)
+    seatbeltTwoDiv.appendChild(seatbeltImageTwo)
+    
+    for (let i = 0; i < draggableImages.length; i++) {
+        draggableImages[i].addEventListener('dragstart', dragStart)
+    }
+    safetyPanelDivs.forEach {div => {
+        div.addEventListener('dragenter', dragEnter)
+        div.addEventListener('dragover', dragOver)
+        div.addEventListener('dragleave', dragLeave)
+    }
+    }
+
+    panelOneDiv.addEventListener('dragenter', dragEnter)
+    panelDiv.addEventListener('dragover', dragOVer)
+
+
+}
+
+const dragStart = (event) => {
+    event.dataTransfer.setData('text/plain', e.target.id)
+    setTimeout(() => {
+        event.target.classList.add('hide')
+    }, 0)
+}
+
+const dragEnter = (event) => {
+    event.preventDefault();
+    event.target.classList.add('drag-over')
+}
+// why is this the same function???
+const dragOver = (event) => {
+    event.preventDefault()
+    event.target.classList.add('drag-over')
+}
+
+const dragLeave = (event) => {
+    e.target.classList.remove('drag-over')
+}
+
+const drop = (event) => {
+    event.target.classList.remove('drag-over')
+    // Get the draggable image
+    const id = event.dataTransfer.getData('text/plain')
+    const draggable = document.getElementById(id)
+
+    // Add the draggable element to the drop target
+    e.target.appendChild(draggable)
+
+    // Display the draggable element
+    draggable.classList.remove('hide')
 }
