@@ -141,7 +141,6 @@ const checkLinearNavigators = (list, ul) => {
     downButton.addEventListener('click', 
         downAction = () => {        
             if (selection < (list.length - 1)) {
-                console.log(list)
                 selected = list[selection]
                 selected.style.fontWeight = 'normal'
                 selection += 1
@@ -471,7 +470,27 @@ const leaveTicTacToe = () => {
 
 // Used site for guidance and code for dragging & dropping https://www.javascripttutorial.net/web-apis/javascript-drag-and-drop/#:~:text=Most%20modern%20web%20browsers%20have,you%20would%20drag%20an%20image. 
 
+const answerOne = document.createElement('div')
+const answerTwo = document.createElement('div')
+const answerThree = document.createElement('div')
+const answerFour = document.createElement('div')
+const answerFive = document.createElement('div')
 
+let ansOneArray = []
+let ansTwoArray = []
+let ansThreeArray = []
+let ansFourArray = []
+let ansFiveArray = []
+
+const ansArrays = [ansOneArray, ansTwoArray, ansThreeArray, ansFourArray, ansFiveArray]
+
+const scWinOne = ['0', '1']
+const scWintwo = ['2', '3']
+const scWinThree = ['4', '5']
+const scWinFour = ['6', '7']
+const scWinFive = ['8', '9']
+
+const scWinArrays = [scWinOne, scWintwo, scWinThree, scWinFour, scWinFive]
 
 const openSafetyCard = () => {
     safetyCardDiv.removeEventListener('click', openSafetyCard)
@@ -486,14 +505,15 @@ const openSafetyCard = () => {
     const panelOneDiv = document.createElement('div')
     const panelTwoDiv = document.createElement('div')
     const panelThreeDiv = document.createElement('div')
+
     panelOneDiv.classList.add('panel')
     panelTwoDiv.classList.add('panel')
     panelThreeDiv.classList.add('panel')
+
     panelOneDiv.style.gridArea = '1 / 1 / 7 / 3'
     panelTwoDiv.style.gridArea = '1 / 3 / 7 / 5'
     panelThreeDiv.style.gridArea = '1 / 5 / 7 / 7'
 
-    
     const seatbeltOneDiv = document.createElement('div')
     const seatbeltTwoDiv = document.createElement('div')
     const smokingOneDiv = document.createElement('div')
@@ -504,6 +524,7 @@ const openSafetyCard = () => {
     const maskBTwoDiv = document.createElement('div')
     const bagOneDiv = document.createElement('div')
     const bagTwoDiv = document.createElement('div')
+
     seatbeltOneDiv.className = 'dragdiv'
     seatbeltTwoDiv.className = 'dragdiv'
     smokingOneDiv.className = 'dragdiv'
@@ -515,23 +536,13 @@ const openSafetyCard = () => {
     bagOneDiv.className = 'dragdiv'
     bagTwoDiv.className = 'dragdiv'
 
-    const answerOne = document.createElement('div')
-    const answerTwo = document.createElement('div')
-    const answerThree = document.createElement('div')
-    const answerFour = document.createElement('div')
-    const answerFive = document.createElement('div')
+
 
     answerOne.className = ('safety-answer')
     answerTwo.className = ('safety-answer')
     answerThree.className = ('safety-answer')
     answerFour.className = ('safety-answer')
     answerFive.className = ('safety-answer')
-
-    safetyCardDiv.appendChild(answerOne)
-    safetyCardDiv.appendChild(answerTwo)
-    safetyCardDiv.appendChild(answerThree)
-    safetyCardDiv.appendChild(answerFour)
-    safetyCardDiv.appendChild(answerFive)
 
     answerOne.style.gridArea = '2 / 4 / 3 / 5'
     answerTwo.style.gridArea = '3 / 4 / 4 / 5'
@@ -560,6 +571,12 @@ const openSafetyCard = () => {
     bagOneDiv.style.backgroundColor = 'green'
     bagTwoDiv.style.backgroundColor = 'green'
 
+    safetyCardDiv.appendChild(answerOne)
+    safetyCardDiv.appendChild(answerTwo)
+    safetyCardDiv.appendChild(answerThree)
+    safetyCardDiv.appendChild(answerFour)
+    safetyCardDiv.appendChild(answerFive)
+
     safetyCardDiv.appendChild(panelOneDiv)
     safetyCardDiv.appendChild(panelTwoDiv)
     safetyCardDiv.appendChild(panelThreeDiv)
@@ -575,7 +592,6 @@ const openSafetyCard = () => {
     safetyCardDiv.appendChild(bagOneDiv)
     safetyCardDiv.appendChild(bagTwoDiv)
 
-    const safetyPanelDivs = document.querySelectorAll('.panel')
     const safetyAnswers = document.querySelectorAll('.safety-answer')
     const draggableImages = document.querySelectorAll('.safetycard-img')
     const dragDivs = document.querySelectorAll('.dragdiv')
@@ -587,25 +603,19 @@ const openSafetyCard = () => {
         div.appendChild(img)
         img.addEventListener('dragstart', dragStart)
     }
-    console.log(safetyAnswers)
     safetyAnswers.forEach((div) => {
         div.addEventListener('dragenter', dragEnter)
-        div.addEventListener('dragover', dragOver)
-        div.addEventListener('dragleave', dragLeave)
+        div.addEventListener('dragover', dragEnter)
+        div.addEventListener('dragleave', dragEnter)
         div.addEventListener('drop', drop)
-        div.textContent = 'hey'
     })
-    safetyPanelDivs.forEach(div => {
-        div.addEventListener('dragenter', dragEnter)
-        div.addEventListener('dragover', dragOver)
-        div.addEventListener('dragleave', dragLeave)
-        div.addEventListener('drop', drop)
-        div.style.border = '2px solid black'
-    })
+    safetyCardDiv.addEventListener('dragenter', dragEnter)
+    safetyCardDiv.addEventListener('dragover', dragEnter)
+    safetyCardDiv.addEventListener('dragleave', dragEnter)
+    // safetyCardDiv.addEventListener('drop', drop)
 }
 
 const dragStart = (event) => {
-    console.log('dragstart')
     event.dataTransfer.setData('text/plain', event.target.id)
     setTimeout(() => {
         event.target.classList.add('hide')
@@ -613,33 +623,47 @@ const dragStart = (event) => {
 }
 
 const dragEnter = (event) => {
-    console.log('dragenter')
     event.preventDefault()
-    event.target.classList.add('drag-over')
-}
-// why is this the same function???
-const dragOver = (event) => {
-    console.log('dragover')
-    event.preventDefault()
-    event.target.classList.add('drag-over')
-}
-
-const dragLeave = (event) => {
-    console.log('dragleave')
-    event.target.classList.remove('drag-over')
+    // event.target.classList.add('drag-over')
 }
 
 const drop = (event) => {
-    console.log('drop')
     event.preventDefault()
-    event.target.classList.remove('drag-over')
+    // event.target.classList.remove('drag-over')
     // Get the draggable image
     const id = event.dataTransfer.getData('text/plain')
     const draggable = document.getElementById(id)
-    console.log(draggable)
     // Add the draggable element to the drop target
     event.target.appendChild(draggable)
 
+
+    if (event.target.style.gridArea === '2 / 4 / 3 / 5') {
+        ansOneArray.push(id)
+    } else if(event.target.style.gridArea === '3 / 4 / 4 / 5') {
+        ansTwoArray.push(id)
+    } else if(event.target.style.gridArea === '4 / 4 / 5 / 5') {
+        ansThreeArray.push(id)
+    } else if(event.target.style.gridArea === '5 / 4 / 6 / 5') {
+        ansFourArray.push(id)
+    } else if(event.target.style.gridArea === '6 / 4 / 7 / 5') {
+        ansFiveArray.push(id)
+    }
+    console.log(ansArrays)
     // Display the draggable element
     draggable.classList.remove('hide')
+    checkSafetyComplete()
+}
+
+const checkSafetyComplete = () => {
+    // Return unique values based on results - X win = true, O win = false
+    let complete = 0
+    for(i = 0; i < 5; i++) {
+        if(findWinCombo(ansArrays[i], scWinArrays[i])) {
+            complete++
+        } 
+    } 
+    console.log(complete)
+    if (complete === 5) {
+        console.log('you win!')
+    }
 }

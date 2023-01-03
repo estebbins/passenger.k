@@ -201,10 +201,14 @@
     height: 40px;
     justify-self: center;
 }
-
+.safety-answer {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr;
+    border: 3px dashed red;
+    margin: 3px;
+    z-index: 1;
+    align-items: center;
+}
 .hide {
     display: none;
-}
-.drag-over {
-    border: 3px solid red;
 }
