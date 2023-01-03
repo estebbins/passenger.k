@@ -205,3 +205,6 @@
 .hide {
     display: none;
 }
+.drag-over {
+    border: 3px solid red;
+}

@@ -41,9 +41,10 @@ const getStartScreen = () => {
         startGameStats()
         screenDiv.removeChild(startButton)
         displayMainMenu()
+        safetyCardSpan.textContent = 'Safety Card'
+        safetyCardDiv.addEventListener('click', openSafetyCard)
     })
-    safetyCardSpan.textContent = 'Safety Card'
-    safetyCardDiv.addEventListener('click', openSafetyCard)
+    
 
 
     // a! Will need to add more reset features to this screen.
@@ -470,8 +471,7 @@ const leaveTicTacToe = () => {
 
 // Used site for guidance and code for dragging & dropping https://www.javascripttutorial.net/web-apis/javascript-drag-and-drop/#:~:text=Most%20modern%20web%20browsers%20have,you%20would%20drag%20an%20image. 
 
-const draggableImages = document.querySelectorAll('.safetycard-img')
-const safetyPanelDivs = document.querySelectorAll('.panel')
+
 
 const openSafetyCard = () => {
     gameDiv.appendChild(safetyCardDiv)
@@ -481,15 +481,18 @@ const openSafetyCard = () => {
     safetyCardDiv.style.backgroundColor = 'gray'
     safetyCardDiv.style.gridTemplateRows = '.2fr repeat(5, 1fr)'
     safetyCardDiv.style.gridTemplateColumns = '1.5fr 1.5fr 1fr 2fr 1.5fr 1.5fr'
+    safetyCardSpan.style.gridArea = '1 / 1 / 7 / 2'
     const panelOneDiv = document.createElement('div')
     const panelTwoDiv = document.createElement('div')
     const panelThreeDiv = document.createElement('div')
     panelOneDiv.classList.add('panel')
     panelTwoDiv.classList.add('panel')
     panelThreeDiv.classList.add('panel')
-    panelOneDiv.style.gridArea = '1 / 1 / 6 / 3'
-    panelTwoDiv.style.gridArea = '1 / 3 / 6 / 5'
-    panelThreeDiv.style.gridArea = '1 / 5 / 6 / 7'
+    panelOneDiv.style.gridArea = '1 / 1 / 7 / 3'
+    panelTwoDiv.style.gridArea = '1 / 3 / 7 / 5'
+    panelThreeDiv.style.gridArea = '1 / 5 / 7 / 7'
+
+    
     const seatbeltOneDiv = document.createElement('div')
     const seatbeltTwoDiv = document.createElement('div')
     const smokingOneDiv = document.createElement('div')
@@ -500,6 +503,41 @@ const openSafetyCard = () => {
     const maskBTwoDiv = document.createElement('div')
     const bagOneDiv = document.createElement('div')
     const bagTwoDiv = document.createElement('div')
+    seatbeltOneDiv.className = 'dragdiv'
+    seatbeltTwoDiv.className = 'dragdiv'
+    smokingOneDiv.className = 'dragdiv'
+    smokingTwoDiv.className = 'dragdiv'
+    maskAOneDiv.className = 'dragdiv'
+    maskATwoDiv.className = 'dragdiv'
+    maskBOneDiv.className = 'dragdiv'
+    maskBTwoDiv.className = 'dragdiv'
+    bagOneDiv.className = 'dragdiv'
+    bagTwoDiv.className = 'dragdiv'
+
+    const answerOne = document.createElement('div')
+    const answerTwo = document.createElement('div')
+    const answerThree = document.createElement('div')
+    const answerFour = document.createElement('div')
+    const answerFive = document.createElement('div')
+
+    answerOne.className = ('safety-answer')
+    answerTwo.className = ('safety-answer')
+    answerThree.className = ('safety-answer')
+    answerFour.className = ('safety-answer')
+    answerFive.className = ('safety-answer')
+
+    safetyCardDiv.appendChild(answerOne)
+    safetyCardDiv.appendChild(answerTwo)
+    safetyCardDiv.appendChild(answerThree)
+    safetyCardDiv.appendChild(answerFour)
+    safetyCardDiv.appendChild(answerFive)
+
+    answerOne.style.gridArea = '2 / 4 / 3 / 5'
+    answerTwo.style.gridArea = '3 / 4 / 4 / 5'
+    answerThree.style.gridArea = '4 / 4 / 5 / 5'
+    answerFour.style.gridArea = '5 / 4 / 6 / 5'
+    answerFive.style.gridArea = '6 / 4 / 7 / 5'
+
     seatbeltOneDiv.style.gridArea = '2 / 1 / 3 / 2'
     seatbeltTwoDiv.style.gridArea = '6 / 5 / 7 / 6'
     smokingOneDiv.style.gridArea = '3 / 2 / 4 / 3'
@@ -536,56 +574,70 @@ const openSafetyCard = () => {
     safetyCardDiv.appendChild(bagOneDiv)
     safetyCardDiv.appendChild(bagTwoDiv)
 
-    const seatbeltImageOne = document.getElementById('seatbelt-one')
-    const seatbeltImageTwo = document.getElementById('seatbelt-two')
-    seatbeltOneDiv.appendChild(seatbeltImageOne)
-    seatbeltTwoDiv.appendChild(seatbeltImageTwo)
-    
+    const safetyPanelDivs = document.querySelectorAll('.panel')
+    const safetyAnswers = document.querySelectorAll('.safety-answer')
+    const draggableImages = document.querySelectorAll('.safetycard-img')
+    const dragDivs = document.querySelectorAll('.dragdiv')
+
     for (let i = 0; i < draggableImages.length; i++) {
-        draggableImages[i].addEventListener('dragstart', dragStart)
+        let div = dragDivs[i]
+        let img = draggableImages[i]
+        div.appendChild(img)
+        img.addEventListener('dragstart', dragStart)
     }
-    safetyPanelDivs.forEach {div => {
+    console.log(safetyAnswers)
+    safetyPanelDivs.forEach(div => {
         div.addEventListener('dragenter', dragEnter)
         div.addEventListener('dragover', dragOver)
         div.addEventListener('dragleave', dragLeave)
-    }
-    }
+        div.style.border = '2px solid black'
+        div.addEventListener('drop', drop)
+    })
 
-    panelOneDiv.addEventListener('dragenter', dragEnter)
-    panelDiv.addEventListener('dragover', dragOVer)
-
-
+    safetyAnswers.forEach((div) => {
+        div.addEventListener('dragenter', dragEnter)
+        div.addEventListener('dragover', dragOver)
+        div.addEventListener('dragleave', dragLeave)
+        div.style.border = '2px solid black'
+        div.addEventListener('drop', drop)
+        div.textContent = 'hey'
+    })
 }
 
 const dragStart = (event) => {
-    event.dataTransfer.setData('text/plain', e.target.id)
+    console.log('dragstart')
+    event.dataTransfer.setData('text/plain', event.target.id)
     setTimeout(() => {
         event.target.classList.add('hide')
     }, 0)
 }
 
 const dragEnter = (event) => {
-    event.preventDefault();
+    console.log('dragenter')
+    event.preventDefault()
     event.target.classList.add('drag-over')
 }
 // why is this the same function???
 const dragOver = (event) => {
+    console.log('dragover')
     event.preventDefault()
     event.target.classList.add('drag-over')
 }
 
 const dragLeave = (event) => {
-    e.target.classList.remove('drag-over')
+    console.log('dragleave')
+    event.target.classList.remove('drag-over')
 }
 
 const drop = (event) => {
+    console.log('drop')
     event.target.classList.remove('drag-over')
     // Get the draggable image
     const id = event.dataTransfer.getData('text/plain')
-    const draggable = document.getElementById(id)
-
+    const draggable = document.querySelector(`#${id}`)
+    console.log(draggable)
     // Add the draggable element to the drop target
-    e.target.appendChild(draggable)
+    event.target.appendChild(draggable)
 
     // Display the draggable element
     draggable.classList.remove('hide')
