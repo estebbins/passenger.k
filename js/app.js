@@ -474,6 +474,7 @@ const leaveTicTacToe = () => {
 
 
 const openSafetyCard = () => {
+    safetyCardDiv.removeEventListener('click', openSafetyCard)
     gameDiv.appendChild(safetyCardDiv)
     safetyCardDiv.style.gridArea = '3 / 3 / 4 / 4'
     safetyCardDiv.style.zIndex = '1'
@@ -582,25 +583,24 @@ const openSafetyCard = () => {
     for (let i = 0; i < draggableImages.length; i++) {
         let div = dragDivs[i]
         let img = draggableImages[i]
+        img.id = i
         div.appendChild(img)
         img.addEventListener('dragstart', dragStart)
     }
     console.log(safetyAnswers)
-    safetyPanelDivs.forEach(div => {
-        div.addEventListener('dragenter', dragEnter)
-        div.addEventListener('dragover', dragOver)
-        div.addEventListener('dragleave', dragLeave)
-        div.style.border = '2px solid black'
-        div.addEventListener('drop', drop)
-    })
-
     safetyAnswers.forEach((div) => {
         div.addEventListener('dragenter', dragEnter)
         div.addEventListener('dragover', dragOver)
         div.addEventListener('dragleave', dragLeave)
-        div.style.border = '2px solid black'
         div.addEventListener('drop', drop)
         div.textContent = 'hey'
+    })
+    safetyPanelDivs.forEach(div => {
+        div.addEventListener('dragenter', dragEnter)
+        div.addEventListener('dragover', dragOver)
+        div.addEventListener('dragleave', dragLeave)
+        div.addEventListener('drop', drop)
+        div.style.border = '2px solid black'
     })
 }
 
@@ -631,10 +631,11 @@ const dragLeave = (event) => {
 
 const drop = (event) => {
     console.log('drop')
+    event.preventDefault()
     event.target.classList.remove('drag-over')
     // Get the draggable image
     const id = event.dataTransfer.getData('text/plain')
-    const draggable = document.querySelector(`#${id}`)
+    const draggable = document.getElementById(id)
     console.log(draggable)
     // Add the draggable element to the drop target
     event.target.appendChild(draggable)
