@@ -2,6 +2,7 @@
 
 // Access HTML elements
 const gameDiv = document.getElementById('game')
+const seatOneDiv = document.getElementById('seat-1')
 const screenDiv = document.getElementById('screen')
 const entertainmentDiv = document.getElementById('entertainment-meter')
 const sanityDiv = document.getElementById('sanity-meter')
@@ -657,13 +658,35 @@ const drop = (event) => {
 const checkSafetyComplete = () => {
     // Return unique values based on results - X win = true, O win = false
     let complete = 0
+    const leaveButton = document.createElement('button')
+    leaveButton.innerText = 'Leave'
     for(i = 0; i < 5; i++) {
         if(findWinCombo(ansArrays[i], scWinArrays[i])) {
             complete++
         } 
     } 
-    console.log(complete)
+    const exitToMain = () => {
+        while (safetyCardDiv.firstChild) {
+            safetyCardDiv.removeChild(safetyCardDiv.firstChild)
+        }
+        seatOneDiv.append(safetyCardDiv)
+        safetyCardDiv.style.gridArea = '4 / 6 / 5 / 8' 
+        safetyCardDiv.style.display = 'block'
+        safetyCardDiv.append(safetyCardSpan)
+        safetyCardDiv.style.backgroundColor = 'red'
+        leaveButton.removeEventListener('click', exitToMain)
+    }
+    
     if (complete === 5) {
-        console.log('you win!')
+        while (safetyCardDiv.firstChild) {
+            safetyCardDiv.removeChild(safetyCardDiv.firstChild)
+        }
+        safetyCardSpan.innerText = "Safety Demonstration Complete"
+        safetyCardDiv.gridTemplateArea = '2fr / 1fr'
+        safetyCardDiv.appendChild(safetyCardSpan)
+        safetyCardDiv.appendChild(leaveButton)
+        safetyCardSpan.style.gridArea = '1 / 1 / 2 / 2'
+        leaveButton.style.gridArea = '2 / 1 / 3 / 2'
+        leaveButton.addEventListener('click', exitToMain)
     }
 }

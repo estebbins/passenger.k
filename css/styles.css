@@ -196,11 +196,7 @@
     border: 3px dotted blue;
 }
 
-.safetycard-img {
-    width: 40px;
-    height: 40px;
-    justify-self: center;
-}
+
 .safety-answer {
     display: grid;
     grid-template: 1fr / 1fr 1fr;
@@ -208,6 +204,12 @@
     margin: 3px;
     z-index: 1;
     align-items: center;
+}
+.safetycard-img {
+    width: 40px;
+    height: 40px;
+    justify-self: center;
+    z-index: 1;
 }
 .hide {
     display: none;
