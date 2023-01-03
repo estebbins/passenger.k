@@ -493,8 +493,11 @@ const scWinFive = ['8', '9']
 
 const scWinArrays = [scWinOne, scWintwo, scWinThree, scWinFour, scWinFive]
 
+let scMoveCounter = 0
+
 const openSafetyCard = () => {
     safetyCardDiv.removeEventListener('click', openSafetyCard)
+    safetyCardDiv.addEventListener('click', increaseSCMoveCounter)
     gameDiv.appendChild(safetyCardDiv)
     safetyCardDiv.style.gridArea = '3 / 3 / 4 / 4'
     safetyCardDiv.style.zIndex = '1'
@@ -601,6 +604,7 @@ const openSafetyCard = () => {
         let div = dragDivs[i]
         let img = draggableImages[i]
         img.id = i
+        img.classList.remove('hide')
         div.appendChild(img)
         img.addEventListener('dragstart', dragStart)
     }
@@ -614,6 +618,8 @@ const openSafetyCard = () => {
     safetyCardDiv.addEventListener('dragover', dragEnter)
     safetyCardDiv.addEventListener('dragleave', dragEnter)
     // safetyCardDiv.addEventListener('drop', drop)
+
+    
 }
 
 const dragStart = (event) => {
@@ -665,28 +671,51 @@ const checkSafetyComplete = () => {
             complete++
         } 
     } 
-    const exitToMain = () => {
-        while (safetyCardDiv.firstChild) {
-            safetyCardDiv.removeChild(safetyCardDiv.firstChild)
-        }
-        seatOneDiv.append(safetyCardDiv)
-        safetyCardDiv.style.gridArea = '4 / 6 / 5 / 8' 
-        safetyCardDiv.style.display = 'block'
-        safetyCardDiv.append(safetyCardSpan)
-        safetyCardDiv.style.backgroundColor = 'red'
-        leaveButton.removeEventListener('click', exitToMain)
-    }
+
     
     if (complete === 5) {
         while (safetyCardDiv.firstChild) {
             safetyCardDiv.removeChild(safetyCardDiv.firstChild)
         }
         safetyCardSpan.innerText = "Safety Demonstration Complete"
-        safetyCardDiv.gridTemplateArea = '2fr / 1fr'
-        safetyCardDiv.appendChild(safetyCardSpan)
-        safetyCardDiv.appendChild(leaveButton)
-        safetyCardSpan.style.gridArea = '1 / 1 / 2 / 2'
-        leaveButton.style.gridArea = '2 / 1 / 3 / 2'
-        leaveButton.addEventListener('click', exitToMain)
+        exitSafety()
+        // Creates button to leave - can probably just close it out.
+
+        // safetyCardDiv.gridTemplateArea = '2fr / 1fr'
+        // safetyCardDiv.appendChild(safetyCardSpan)
+        // safetyCardDiv.appendChild(leaveButton)
+        // safetyCardSpan.style.gridArea = '1 / 1 / 2 / 2'
+        // leaveButton.style.gridArea = '2 / 1 / 3 / 2'
+        // leaveButton.addEventListener('click', exitToMain)
     }
+
+}
+
+const exitSafety = () => {
+    while (safetyCardDiv.firstChild) {
+        safetyCardDiv.removeChild(safetyCardDiv.firstChild)
+    }
+    seatOneDiv.append(safetyCardDiv)
+    safetyCardDiv.style.gridArea = '4 / 6 / 5 / 8' 
+    safetyCardDiv.style.display = 'block'
+    safetyCardDiv.append(safetyCardSpan)
+    safetyCardDiv.style.backgroundColor = 'red'
+    scMoveCounter = 0
+    // leaveButton.removeEventListener('click', exitToMain)
+}
+const checkSCFail = () => {
+    if (scMoveCounter === 15) {
+        while (safetyCardDiv.firstChild) {
+            safetyCardDiv.removeChild(safetyCardDiv.firstChild)
+        }
+        safetyCardSpan.innerText = "Safety Demonstration FAILED"
+        exitSafety()
+        safetyCardDiv.removeEventListener('click', increaseSCMoveCounter)
+        safetyCardDiv.addEventListener('click', openSafetyCard)
+    }
+}
+const increaseSCMoveCounter = () => {
+    scMoveCounter++
+    checkSCFail()
+    console.log(scMoveCounter)
 }
