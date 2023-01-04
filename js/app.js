@@ -18,8 +18,8 @@ const trayTableButton =document.getElementById('tray-open')
 const consoleDiv = document.getElementById('console')
 const controlsDiv = document.getElementById('controls')
 const phoneDiv = document.getElementById('phone')
-const trayTableDiv = document.getElementById('tray-table')
-const passengerDiv = document.getElementById('passenger')
+
+
 
 // Create statistics
 let entertainmentScore = 100
@@ -40,10 +40,14 @@ leaveOption.textContent = 'Exit to Main Menu'
 let selection = 0
 
 const movieOne = document.getElementById('alien')
-
+const trayTableDiv = document.getElementById('tray-table')
 const attendantDiv = document.getElementById('attendant')
 const attendantTextDiv = document.createElement('div')
 const trayTableOptions = ['Comply', 'Ask for 5 more minutes', 'Make a scene']
+const passengerDiv = document.getElementById('passenger')
+const babyTextDiv = document.createElement('div')
+const babyOptions = ['Try to ignore', 'Put in headphones', 'Cry louder than the baby', 'Play Peekaboo']
+
 
 const getStartScreen = () => {
     // Set up start button & add to screen div
@@ -300,36 +304,69 @@ const startTrayTableInt = () => {
 }
 
 const startBabyTimer = () => {
-    let timer = Math.floor(Math.random() * 200000) + 60000
-    setTimeout(startBabyInt, timer)
+    let timer = Math.floor(Math.random() * 30000) + 30000
+    console.log('timer: ', timer)
+    setTimeout(interactBaby, timer)
 }
 
-// const interactBaby = () => {
-//     attendantDiv.appendChild(attendantTextDiv)
-//     attendantTextDiv.innerText = trayTableStr
-//     // consoleDiv.style.zIndex = '1'
-//     consoleDiv.style.display = 'grid'
-//     consoleDiv.style.gridTemplate = '3fr repeat(3, 1fr) 3fr / 1fr'
-//     controlsDiv.style.display = 'none'
-//     phoneDiv.classList.add('hide')
-//     screenDiv.classList.add('hide')
-//     for (let i=0; i < trayTableOptions.length; i++) {
-//         let button = document.createElement('button')
-//         const buttonDiv = document.createElement('div')
-//         button.innerText = trayTableOptions[i]
-//         button.id = `${i}opt`
-//         button.className = 'trayTableOptions'
-//         buttonDiv.appendChild(button)
-//         consoleDiv.appendChild(buttonDiv)
-//         buttonDiv.style.display = 'flex'
-//         buttonDiv.style.gridArea = `${2+i} / 1 / ${3+i} / 2`
-//         buttonDiv.style.justifyContent = 'center'
-//     }
-//     const trayTableButtons = document.querySelectorAll('.trayTableOptions')
-//     trayTableButtons.forEach(ttbutton => {
-//         ttbutton.addEventListener('click', reactTrayTable)
-//     })
-// }
+const babyCryStr = 'Wah'
+
+const interactBaby = () => {
+    let repeat = 7
+    passenger.appendChild(babyTextDiv)
+    const addWah = () => {
+        let wah = document.createElement('p')
+        wah.textContent = babyCryStr
+        babyTextDiv.appendChild(wah)
+    }
+    for (let i = 0; i < repeat; i++) {
+        setTimeout(addWah, 2000*i)
+    }
+    consoleDiv.style.display = 'grid'
+    consoleDiv.style.gridTemplate = '3fr repeat(3, 1fr) 3fr / 1fr'
+    controlsDiv.style.display = 'none'
+    phoneDiv.classList.add('hide')
+    screenDiv.classList.add('hide')
+    for (let i=0; i < babyOptions.length; i++) {
+        let button = document.createElement('button')
+        const buttonDiv = document.createElement('div')
+        button.innerText = babyOptions[i]
+        button.id = `${i}optb`
+        button.className = 'babyOptions'
+        buttonDiv.appendChild(button)
+        consoleDiv.appendChild(buttonDiv)
+        buttonDiv.style.display = 'flex'
+        buttonDiv.style.gridArea = `${2+i} / 1 / ${3+i} / 2`
+        buttonDiv.style.justifyContent = 'center'
+    }
+    const babyButtons = document.querySelectorAll('.babyOptions')
+    babyButtons.forEach(babyButton => {
+        babyButton.addEventListener('click', reactBaby)
+    })
+}
+
+const reactBaby = (event) => {
+    if (event.target.id === '0optb') {
+        console.log('option 1 baby')
+    } else if (event.target.id === '1optb') {
+        console.log('option 2 baby')
+    } else if (event.target.id === '2optb') {
+        console.log('option 3 baby')
+    } else if (event.target.id === '3optb') {
+        console.log('option 4 baby')
+    }
+    const babyButtons = document.querySelectorAll('.babyOptions')
+    babyButtons.forEach(babyButton => {
+        babyButton.removeEventListener('click', reactBaby)
+    })
+    while (consoleDiv.firstChild) {
+        consoleDiv.removeChild(consoleDiv.firstChild)
+    }
+    controlsDiv.style.display = 'grid'
+    phoneDiv.classList.remove('hide')
+    screenDiv.classList.remove('hide')
+    passengerDiv.removeChild(babyTextDiv)
+}
 
 
 const gameOver = () => {
