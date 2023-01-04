@@ -14,6 +14,8 @@ const rightButton = document.getElementById('right')
 const selectButton = document.getElementById('select')
 const safetyCardDiv = document.getElementById('safety-card')
 const safetyCardSpan = document.getElementById('safe-card')
+const trayTableButton =document.getElementById('tray-open')
+const consoleDiv = document.getElementById('console')
 
 // Create statistics
 let entertainmentScore = 100
@@ -35,6 +37,10 @@ let selection = 0
 
 const movieOne = document.getElementById('alien')
 
+const attendantDiv = document.getElementById('attendant')
+const attendantTextDiv = document.createElement('div')
+const trayTableOptions = ['Comply', 'Ask for 5 more minutes', 'Make a Scene']
+
 const getStartScreen = () => {
     // Set up start button & add to screen div
     const startButton = document.createElement('button')
@@ -48,10 +54,8 @@ const getStartScreen = () => {
         displayMainMenu()
         safetyCardSpan.textContent = 'Safety Card'
         safetyCardDiv.addEventListener('click', openSafetyCard)
+        trayTableButton.addEventListener('click', startTrayTableInt)
     })
-    
-
-
     // a! Will need to add more reset features to this screen.
 }
 
@@ -207,6 +211,10 @@ const checkLinearNavigators = (list, ul) => {
     }, {once: true})
 }
 
+
+// Resource for Movie HTML guidance https://www.w3schools.com/html/html5_video.asp 
+// Royalty Free Alien Movie - https://pixabay.com/videos/alien-eye-gel-aloe-vera-blender-139974/ 
+
 const watchMovie = (num) => {
     screenDiv.appendChild(movieOne)
     const sourceOne = document.createElement('source')
@@ -223,6 +231,33 @@ const exitMovie = () => {
         screenDiv.removeChild(screenDiv.firstChild)
     }
     displayMainMenu()
+}
+
+let trayTableStr = "Excuse me! We can't take off until your tray table is closed!"
+
+const attendantInt = () => {
+    attendantDiv.appendChild(attendantTextDiv)
+    attendantTextDiv.innerText = trayTableStr
+    consoleDiv.style.zIndex = '1'
+    consoleDiv.style.display = 'grid'
+    consoleDiv.style.gridTemplate = '3fr repeat(3, 1fr) 3fr / 1fr'
+
+    for (let i=0; i < trayTableOptions.length; i++) {
+        let button = `button${i}`
+        button = document.createElement('button')
+        const buttonDiv = document.createElement('div')
+        button.innerText = trayTableOptions[i]
+        buttonDiv.appendChild(button)
+        consoleDiv.appendChild(buttonDiv)
+        buttonDiv.style.display = 'flex'
+        buttonDiv.style.gridArea = `${2+i} / 1 / ${3+i} / 2`
+        buttonDiv.style.justifyContent = 'center'
+    }
+}
+
+const startTrayTableInt = () => {
+    trayTableButton.removeEventListener('click', startTrayTableInt)
+    setTimeout(attendantInt, 5000)
 }
 
 const gameOver = () => {
@@ -538,6 +573,8 @@ const scWinFive = ['8', '9']
 
 const scWinArrays = [scWinOne, scWintwo, scWinThree, scWinFour, scWinFive]
 
+const safteyImgDiv = document.getElementById('safety-imgs')
+
 let scMoveCounter = 0
 
 const openSafetyCard = () => {
@@ -751,7 +788,7 @@ const exitSafety = () => {
 const checkSCFail = () => {
     if (scMoveCounter === 15) {
         while (safetyCardDiv.firstChild) {
-            safetyCardDiv.removeChild(safetyCardDiv.firstChild)
+            safteyImgDiv.appendChild(safetyCardDiv.firstChild)
         }
         safetyCardSpan.innerText = "Safety Demonstration FAILED"
         exitSafety()
