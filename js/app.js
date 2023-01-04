@@ -18,6 +18,7 @@ const trayTableButton =document.getElementById('tray-open')
 const consoleDiv = document.getElementById('console')
 const controlsDiv = document.getElementById('controls')
 const phoneDiv = document.getElementById('phone')
+const cellPhoneDiv = document.getElementById('cellphone')
 
 
 
@@ -48,6 +49,10 @@ const passengerDiv = document.getElementById('passenger')
 const babyTextDiv = document.createElement('div')
 const babyOptions = ['Try to ignore', 'Put in headphones', 'Cry louder than the baby', 'Play Peekaboo']
 
+let timer = Math.floor(Math.random() * 30000) + 10000
+
+let phoneInteraction = true
+
 
 const getStartScreen = () => {
     // Set up start button & add to screen div
@@ -64,6 +69,7 @@ const getStartScreen = () => {
         safetyCardDiv.addEventListener('click', openSafetyCard)
         trayTableButton.addEventListener('click', startTrayTableInt)
         startBabyTimer()
+        startPhoneTimer()
     })
     // a! Will need to add more reset features to this screen.
 }
@@ -304,7 +310,6 @@ const startTrayTableInt = () => {
 }
 
 const startBabyTimer = () => {
-    let timer = Math.floor(Math.random() * 30000) + 30000
     console.log('timer: ', timer)
     setTimeout(interactBaby, timer)
 }
@@ -367,6 +372,73 @@ const reactBaby = (event) => {
     screenDiv.classList.remove('hide')
     passengerDiv.removeChild(babyTextDiv)
 }
+
+const startPhoneTimer = () => {
+    let phoneTimer = timer*1.75
+    console.log('phonetimer: ', phoneTimer)
+    setTimeout(interactPhone, phoneTimer)
+}
+
+const interactPhone = () => {
+    const touchPhone = () => {
+        // phoneInteraction = false
+        phoneDiv.style.border = '2px solid pink'
+        phoneDiv.removeEventListener('click', touchPhone)
+        console.log('touch phone')
+        interactCellPhone()
+    }
+    console.log('interact')
+    phoneDiv.addEventListener('click', touchPhone)
+    phoneDiv.style.border = '3px solid red'
+    // const blinkBright = () => {
+    //     phoneDiv.style.border = '2px solid red'
+    // }
+    // const blinkLow = () => {
+    //     phoneDiv.style.border = '2px solid pink'
+    // }
+    // while (phoneInteraction === true) {
+    //     setTimeout(blinkBright, 1000)
+    //     setTimeout(blinkLow, 2000)
+    // }
+
+}
+
+const interactCellPhone = () => {
+    console.log('interactcellphone')
+    const cellParts = document.querySelectorAll('cellpart')
+    // seatOneDiv.appendChild(cellPhoneDiv)
+    cellPhoneDiv.classList.remove('hide')
+    // controlsDiv.style.pointerEvents = 'none'
+    // screenDiv.style.pointerEvents = 'none'
+    const part0 =document.getElementById('part0')
+    const part1 =document.getElementById('part1')
+    const part2 =document.getElementById('part2')
+    const part3 =document.getElementById('part3')
+    const part4 =document.getElementById('part4')
+    const part5 =document.getElementById('part5')
+    const part6 =document.getElementById('part6')
+    const part7 =document.getElementById('part7')    
+    const part8 =document.getElementById('part8')
+    const part9 =document.getElementById('part9')
+    const part10 =document.getElementById('part10')
+    const part11 =document.getElementById('part11')
+    const part12 =document.getElementById('part12') 
+    part0.style.gridArea = '1 / 1 / 2 / 5' 
+    part1.style.gridArea = '2 / 1 / 3 / 2' 
+    part2.style.gridArea = '2 / 2 / 3 / 4' 
+    part3.style.gridArea = '3 / 1 / 4 / 2' 
+    part4.style.gridArea = '3 / 2 / 4 / 4' 
+    part5.style.gridArea = '4 / 1 / 5 / 2' 
+    part6.style.gridArea = '4 / 2 / 5 / 4' 
+    part7.style.gridArea = '5 / 3 / 6 / 5'
+    part8.style.gridArea = '6 / 1 / 7 / 4' 
+    part9.style.gridArea = '6 / 4 / 7 / 5' 
+    part10.style.gridArea = '7 / 1 / 8 / 5' 
+    part11.style.gridArea = '8 / 1 / 9 / 5' 
+    part12.style.gridArea = '9 / 1 / 10 / 5'
+}
+
+
 
 
 const gameOver = () => {

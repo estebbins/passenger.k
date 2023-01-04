@@ -212,6 +212,17 @@
     justify-self: center;
     z-index: 1;
 }
+
+.cellphonec {
+    background-color: white;
+    border-radius: 6px;
+    border: 15px solid black;
+    grid-area: 6 / 6 / 9 / 7;
+    display: grid;
+    z-index: 1;
+    grid-template: .75fr repeat(4, .5fr) .75fr repeat(3, 1fr) / .5fr .75fr 2fr .75fr;
+}
+
 .hide {
     display: none;
 }
