@@ -19,6 +19,7 @@ const consoleDiv = document.getElementById('console')
 const controlsDiv = document.getElementById('controls')
 const phoneDiv = document.getElementById('phone')
 const trayTableDiv = document.getElementById('tray-table')
+const passengerDiv = document.getElementById('passenger')
 
 // Create statistics
 let entertainmentScore = 100
@@ -58,7 +59,7 @@ const getStartScreen = () => {
         safetyCardSpan.textContent = 'Safety Card'
         safetyCardDiv.addEventListener('click', openSafetyCard)
         trayTableButton.addEventListener('click', startTrayTableInt)
-        
+        startBabyTimer()
     })
     // a! Will need to add more reset features to this screen.
 }
@@ -297,6 +298,39 @@ const startTrayTableInt = () => {
     trayTableDiv.style.backgroundImage = 'none'
     setTimeout(attendantInt, 5000)
 }
+
+const startBabyTimer = () => {
+    let timer = Math.floor(Math.random() * 200000) + 60000
+    setTimeout(startBabyInt, timer)
+}
+
+// const interactBaby = () => {
+//     attendantDiv.appendChild(attendantTextDiv)
+//     attendantTextDiv.innerText = trayTableStr
+//     // consoleDiv.style.zIndex = '1'
+//     consoleDiv.style.display = 'grid'
+//     consoleDiv.style.gridTemplate = '3fr repeat(3, 1fr) 3fr / 1fr'
+//     controlsDiv.style.display = 'none'
+//     phoneDiv.classList.add('hide')
+//     screenDiv.classList.add('hide')
+//     for (let i=0; i < trayTableOptions.length; i++) {
+//         let button = document.createElement('button')
+//         const buttonDiv = document.createElement('div')
+//         button.innerText = trayTableOptions[i]
+//         button.id = `${i}opt`
+//         button.className = 'trayTableOptions'
+//         buttonDiv.appendChild(button)
+//         consoleDiv.appendChild(buttonDiv)
+//         buttonDiv.style.display = 'flex'
+//         buttonDiv.style.gridArea = `${2+i} / 1 / ${3+i} / 2`
+//         buttonDiv.style.justifyContent = 'center'
+//     }
+//     const trayTableButtons = document.querySelectorAll('.trayTableOptions')
+//     trayTableButtons.forEach(ttbutton => {
+//         ttbutton.addEventListener('click', reactTrayTable)
+//     })
+// }
+
 
 const gameOver = () => {
     alert('Game over!')
