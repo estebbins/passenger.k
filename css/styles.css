@@ -16,7 +16,6 @@
 }
 #seat-main {
     grid-area: 3 / 2 / 8 / 12;
-    border: 2px solid darkblue;
     background-image: url('https://cdn.pixabay.com/photo/2016/11/19/10/29/background-1838494_960_720.jpg');
     background-repeat: no-repeat;
     background-position: center;
@@ -24,7 +23,6 @@
 }
 #seat-outer {
     grid-area: 5 / 1 / 9 / 13;
-    border: 2px solid greenyellow;
     background-image: url('https://cdn.pixabay.com/photo/2017/01/23/07/23/pink-leather-2001739_960_720.jpg');
     background-repeat: no-repeat;
     background-size: 100%;
@@ -40,7 +38,11 @@
 }
 #pocket {
     grid-area: 4 / 4 / 5 / 11;
-    border: 2px solid pink;
+    border-radius: 50px;
+    border: 5px solid rgb(78, 72, 72);
+    background-color: rgb(161, 149, 149);
+    box-shadow: 10px 10px 3px 2px rgba(0,0,0,0.4);
+
 }
 #screen { 
     grid-area: 6 / 3 / 7 / 7; 
@@ -139,12 +141,15 @@
     grid-area: 2 / 5 / 5 / 10; 
     border: 2px solid purple;
     background-color: purple;
+    border-bottom: 5px solid rgb(78, 72, 72);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2)
 } 
 #safety-card { 
     grid-area: 4 / 6 / 5 / 8; 
-    border: 2px solid green;
     background: red;
     text-align: right;
+    border-bottom:5px solid rgb(78, 72, 72);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2)
 } 
 
 #stats {
@@ -226,4 +231,7 @@
 
 .hide {
     display: none;
+}
+.noclick {
+    pointer-events: none;
 }

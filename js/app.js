@@ -49,7 +49,7 @@ const passengerDiv = document.getElementById('passenger')
 const babyTextDiv = document.createElement('div')
 const babyOptions = ['Try to ignore', 'Put in headphones', 'Cry louder than the baby', 'Play Peekaboo']
 
-let timer = Math.floor(Math.random() * 30000) + 10000
+let timer = Math.floor(Math.random() * 30000) + 5000
 
 let phoneInteraction = true
 
@@ -61,6 +61,7 @@ const getStartScreen = () => {
     startButton.innerText = 'Board Plane'
     screenDiv.appendChild(startButton)
     startButton.addEventListener('click', () => {
+        stylePage()
         displayStats(entertainmentScore, sanityScore, eta)
         startGameStats()
         screenDiv.removeChild(startButton)
@@ -72,6 +73,13 @@ const getStartScreen = () => {
         startPhoneTimer()
     })
     // a! Will need to add more reset features to this screen.
+}
+
+const stylePage = () => {
+    const seatOuter = document.getElementById('seat-outer')
+    const seatMain = document.getElementById('seat-main')
+    seatOuter.style.boxShadow = '10px 0 3px 2px rgba(0,0,0,0.4)'
+    seatMain.style.boxShadow = '10px 0 3px 2px rgba(0,0,0,0.4)'
 }
 
 const displayStats = (entScore, sanScore, currentEta) => {
@@ -407,8 +415,8 @@ const interactCellPhone = () => {
     console.log('interactcellphone')
     seatOneDiv.appendChild(cellPhoneDiv)
     cellPhoneDiv.classList.remove('hide')
-    // controlsDiv.style.pointerEvents = 'none'
-    // screenDiv.style.pointerEvents = 'none'
+    screenDiv.classList.add('noclick')
+    controlsDiv.classList.add('noclick')
     const part0 =document.getElementById('part0')
     const part1 =document.getElementById('part1')
     const part2 =document.getElementById('part2')
@@ -421,7 +429,8 @@ const interactCellPhone = () => {
     const part9 =document.getElementById('part9')
     const part10 =document.getElementById('part10')
     const part11 =document.getElementById('part11')
-    const part12 =document.getElementById('part12') 
+    const part12 =document.getElementById('part12')
+    const textContentSpan = document.getElementById('textcontent') 
     part0.style.gridArea = '1 / 1 / 2 / 5' 
     part1.style.gridArea = '2 / 1 / 3 / 2' 
     part2.style.gridArea = '2 / 2 / 3 / 4' 
@@ -442,15 +451,31 @@ const interactCellPhone = () => {
     part3.style.backgroundImage = ''
     part5.style.backgroundImage = ''
     // style family text messages
-    part2.style.backgroundColor = 'blue'
+    part2.style.backgroundColor = 'darkgrey'
     part2.style.borderRadius = '5px'
     part2.style.padding = '2px'
-    part4.style.backgroundColor = 'blue'
+    part4.style.backgroundColor = 'darkgrey'
     part4.style.borderRadius = '5px'
     part4.style.padding = '2px'
-    part6.style.backgroundColor = 'blue'
+    part6.style.backgroundColor = 'darkgrey'
     part6.style.borderRadius = '5px'
     part6.style.padding = '2px'
+
+    // style sent text
+    part7.style.backgroudColor = 'blue'
+    part7.style.borderRadius = '5px'
+    part6.style.padding = '2px'
+
+
+    // style my texts 
+    part8.style.backgroundColor = 'gray'
+    part9.style.backgroundColor ='gray'
+    part10.style.backgroundColor = 'gray'
+    part11.style.backgroundColor = 'gray'
+    part12.style.backgroundColor = 'gray'
+    // style send area - NOT WORKING
+    // textContentSpan.backgroudColor = 'white'
+    // textContentSpan.borderRadius = '10px'
 }
 
 
