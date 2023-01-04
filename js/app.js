@@ -24,12 +24,16 @@ let eta = 300
 // Create Menu Options
 const mainMenu = ['Play', 'Listen', 'Watch']
 const playMenu = ['Tic-Tac-Toe', 'Other game']
+const watchMenu = ['ICU', '2', '3']
+
+const leaveOption = document.createElement('div')
+leaveOption.id = 'leave'
+leaveOption.textContent = 'Exit to Main Menu'
 
 // Create selection option for screen div options to default to 0
 let selection = 0
 
-
-
+const movieOne = document.getElementById('alien')
 
 const getStartScreen = () => {
     // Set up start button & add to screen div
@@ -134,9 +138,24 @@ const displayListenMenu = () => {
     console.log('display listen menu')
 }
 const displayWatchMenu = () => {
-    console.log('display watch menu')
+    const watchMenuUl = document.createElement('ul')
+    watchMenuUl.id = 'watch-menu'
+    for (let i = 0; i < watchMenu.length; i++) {
+        const listItem = document.createElement('li')
+        listItem.innerText = watchMenu[i]
+        listItem.className = 'watch-menu-list'
+        watchMenuUl.appendChild(listItem)
+    }
+    // Append menu to screen div
+    watchMenuUl.style.display = 'block'
+    screenDiv.appendChild(watchMenuUl)
+    const watchMenuOptions = document.querySelectorAll('.watch-menu-list')
+    // Add event listeners
+    checkLinearNavigators(watchMenuOptions, watchMenuUl)
+
 }
 const checkLinearNavigators = (list, ul) => {
+    console.log(selection)
     let selected = list[selection]
     selected.style.fontWeight = 'bold'
     downButton.addEventListener('click', 
@@ -164,23 +183,52 @@ const checkLinearNavigators = (list, ul) => {
         selectButton.removeEventListener('click', selectAction)
         if (ul.id === 'main-menu') {
             if (selection === 0) {
+                selection = 0
                 displayPlayMenu()
             } else if (selection === 1) {
+                selection = 0
                 displayListenMenu()
             } else if (selection === 2) {
+                selection = 0
                 displayWatchMenu()
             }
         } else if (ul.id === 'play-menu') {
-            if (selection === 0) {launchTicTacToe()}
+            if (selection === 0) {
+                selection = 0
+                launchTicTacToe()
+        }
+        } else if (ul.id === 'watch-menu') {
+            if (selection === 0) {
+                watchMovie(0)
+            }
         }
         selection = 0
         screenDiv.removeChild(ul)
     }, {once: true})
 }
 
+const watchMovie = (num) => {
+    screenDiv.appendChild(movieOne)
+    const sourceOne = document.createElement('source')
+    sourceOne.src = 'img/Alienmovie.mp4'
+    sourceOne.type = 'video/mp4'
+    movieOne.appendChild(sourceOne)
+    movieOne.autoplay = true
+    setTimeout(()=>screenDiv.appendChild(leaveOption), 8000)
+    selectButton.addEventListener('click', exitMovie)
+}
+
+const exitMovie = () => {
+    while (screenDiv.firstChild) {
+        screenDiv.removeChild(screenDiv.firstChild)
+    }
+    displayMainMenu()
+}
+
 const gameOver = () => {
     alert('Game over!')
 }
+
 
 // When DOMContentLoaded, start the game, show start screen
 document.addEventListener('DOMContentLoaded', () => {
@@ -409,10 +457,7 @@ const printWin = (moveCounter, result) => {
         // Append the result div to the screen
         screenDiv.appendChild(resultBox)
         // Add leave option to screen
-        const leaveOption = document.createElement('div')
-        leaveOption.id = 'leave'
         screenDiv.append(leaveOption)
-        leaveOption.textContent = 'Exit to Main Menu'
         // Reset ttt statistics
         moveCounter = 0
         for (let i = 0; i < 9; i++) {
@@ -717,5 +762,4 @@ const checkSCFail = () => {
 const increaseSCMoveCounter = () => {
     scMoveCounter++
     checkSCFail()
-    console.log(scMoveCounter)
 }
