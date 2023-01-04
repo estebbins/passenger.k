@@ -405,8 +405,7 @@ const interactPhone = () => {
 
 const interactCellPhone = () => {
     console.log('interactcellphone')
-    const cellParts = document.querySelectorAll('cellpart')
-    // seatOneDiv.appendChild(cellPhoneDiv)
+    seatOneDiv.appendChild(cellPhoneDiv)
     cellPhoneDiv.classList.remove('hide')
     // controlsDiv.style.pointerEvents = 'none'
     // screenDiv.style.pointerEvents = 'none'
@@ -436,6 +435,22 @@ const interactCellPhone = () => {
     part10.style.gridArea = '7 / 1 / 8 / 5' 
     part11.style.gridArea = '8 / 1 / 9 / 5' 
     part12.style.gridArea = '9 / 1 / 10 / 5'
+    // style Fam div
+    part0.style.backgroundColor = 'gray'
+    // style text sender images
+    part1.style.backgroundImage = ''
+    part3.style.backgroundImage = ''
+    part5.style.backgroundImage = ''
+    // style family text messages
+    part2.style.backgroundColor = 'blue'
+    part2.style.borderRadius = '5px'
+    part2.style.padding = '2px'
+    part4.style.backgroundColor = 'blue'
+    part4.style.borderRadius = '5px'
+    part4.style.padding = '2px'
+    part6.style.backgroundColor = 'blue'
+    part6.style.borderRadius = '5px'
+    part6.style.padding = '2px'
 }
 
 
