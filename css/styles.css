@@ -130,6 +130,7 @@
     display: flex;
     justify-content: center;
     background-image: url('https://cdn.pixabay.com/photo/2014/04/05/11/09/material-314790_960_720.jpg');
+    background-color: rgb(78, 72, 72);
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 25px 25px 0 0;

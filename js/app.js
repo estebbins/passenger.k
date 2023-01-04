@@ -16,6 +16,9 @@ const safetyCardDiv = document.getElementById('safety-card')
 const safetyCardSpan = document.getElementById('safe-card')
 const trayTableButton =document.getElementById('tray-open')
 const consoleDiv = document.getElementById('console')
+const controlsDiv = document.getElementById('controls')
+const phoneDiv = document.getElementById('phone')
+const trayTableDiv = document.getElementById('tray-table')
 
 // Create statistics
 let entertainmentScore = 100
@@ -39,7 +42,7 @@ const movieOne = document.getElementById('alien')
 
 const attendantDiv = document.getElementById('attendant')
 const attendantTextDiv = document.createElement('div')
-const trayTableOptions = ['Comply', 'Ask for 5 more minutes', 'Make a Scene']
+const trayTableOptions = ['Comply', 'Ask for 5 more minutes', 'Make a scene']
 
 const getStartScreen = () => {
     // Set up start button & add to screen div
@@ -55,6 +58,7 @@ const getStartScreen = () => {
         safetyCardSpan.textContent = 'Safety Card'
         safetyCardDiv.addEventListener('click', openSafetyCard)
         trayTableButton.addEventListener('click', startTrayTableInt)
+        
     })
     // a! Will need to add more reset features to this screen.
 }
@@ -238,25 +242,59 @@ let trayTableStr = "Excuse me! We can't take off until your tray table is closed
 const attendantInt = () => {
     attendantDiv.appendChild(attendantTextDiv)
     attendantTextDiv.innerText = trayTableStr
-    consoleDiv.style.zIndex = '1'
+    // consoleDiv.style.zIndex = '1'
     consoleDiv.style.display = 'grid'
     consoleDiv.style.gridTemplate = '3fr repeat(3, 1fr) 3fr / 1fr'
-
+    controlsDiv.style.display = 'none'
+    phoneDiv.classList.add('hide')
+    screenDiv.classList.add('hide')
     for (let i=0; i < trayTableOptions.length; i++) {
-        let button = `button${i}`
-        button = document.createElement('button')
+        let button = document.createElement('button')
         const buttonDiv = document.createElement('div')
         button.innerText = trayTableOptions[i]
+        button.id = `${i}opt`
+        button.className = 'trayTableOptions'
         buttonDiv.appendChild(button)
         consoleDiv.appendChild(buttonDiv)
         buttonDiv.style.display = 'flex'
         buttonDiv.style.gridArea = `${2+i} / 1 / ${3+i} / 2`
         buttonDiv.style.justifyContent = 'center'
     }
+    const trayTableButtons = document.querySelectorAll('.trayTableOptions')
+    trayTableButtons.forEach(ttbutton => {
+        ttbutton.addEventListener('click', reactTrayTable)
+    })
+}
+
+const reactTrayTable = (event) => {
+    if (event.target.id === '0opt') {
+        console.log('option 1 tray table')
+    } else if (event.target.id === '1opt') {
+        console.log('option 2 tray table')
+    } else if (event.target.id === '2opt') {
+        console.log('option 3 tray table')
+    }
+    const trayTableButtons = document.querySelectorAll('.trayTableOptions')
+    trayTableButtons.forEach(ttbutton => {
+        ttbutton.removeEventListener('click', reactTrayTable)
+    })
+    while (consoleDiv.firstChild) {
+        consoleDiv.removeChild(consoleDiv.firstChild)
+    }
+    controlsDiv.style.display = 'grid'
+    phoneDiv.classList.remove('hide')
+    screenDiv.classList.remove('hide')
+    // consoleDiv.style.zIndex = '0'
+    // controlsDiv.style.zIndex = '1'
+    // phoneDiv.style.zIndex = '1'
+    attendantDiv.removeChild(attendantTextDiv)
+    trayTableDiv.style.backgroundImage = "url('https://cdn.pixabay.com/photo/2014/04/05/11/09/material-314790_960_720.jpg')"
+    trayTableButton.addEventListener('click', startTrayTableInt)
 }
 
 const startTrayTableInt = () => {
     trayTableButton.removeEventListener('click', startTrayTableInt)
+    trayTableDiv.style.backgroundImage = 'none'
     setTimeout(attendantInt, 5000)
 }
 
