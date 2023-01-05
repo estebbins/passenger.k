@@ -658,18 +658,12 @@ const gameOver = () => {
     alert('Game over!')
 }
 
-
 // When DOMContentLoaded, start the game, show start screen
 document.addEventListener('DOMContentLoaded', () => {
     getStartScreen()
 })
 
-// if (entertainmentScore >= 100) {
-//     entertainmentScore = 100
-// } else if entertainmentScore < 0 {
-//     gameOver()
-// }
-
+// Tic Tac Toe Game - most code copied from ttt-project under github user estebbins
 // Create tictactoe game elements
 const boxes = document.querySelectorAll('.box')
 // Style Player Markers
@@ -692,6 +686,7 @@ const playerOMoves = []
 let moveCounter = 0
 
 const launchTicTacToe = () => {
+    // Add tictactoe boxes to screendiv & style
     screenDiv.classList.add('tictactoe')
     for (let i = 0; i < boxes.length; i++) {
         screenDiv.appendChild(boxes[i])
@@ -702,6 +697,7 @@ const launchTicTacToe = () => {
     playTicTacToe()
 }
 const navAction = (event) => {
+    // React to screen controls
     if (event.target.id === 'down') {
         if (boxes[0].classList.contains('tttselection')) {
             boxes[0].classList.remove('tttselection')
@@ -722,6 +718,7 @@ const navAction = (event) => {
             boxes[5].classList.remove('tttselection')
             boxes[8].classList.add('tttselection')
         } else {
+            // Reduce sanity score if buttons are clicked unnecessarily
             sanityScore--
             displayStats(entertainmentScore, sanityScore, eta) 
         }
@@ -745,6 +742,7 @@ const navAction = (event) => {
             boxes[8].classList.remove('tttselection')
             boxes[5].classList.add('tttselection')
         } else {
+            // Reduce sanity score if buttons are clicked unnecessarily
             sanityScore--
             displayStats(entertainmentScore, sanityScore, eta) 
         }
@@ -768,6 +766,7 @@ const navAction = (event) => {
             boxes[8].classList.remove('tttselection')
             boxes[7].classList.add('tttselection')
         } else {
+            // Reduce sanity score if buttons are clicked unnecessarily
             sanityScore--
             displayStats(entertainmentScore, sanityScore, eta) 
         }
@@ -791,12 +790,12 @@ const navAction = (event) => {
             boxes[7].classList.remove('tttselection')
             boxes[8].classList.add('tttselection')
         } else {
+            // Reduce sanity score if buttons are clicked unnecessarily
             sanityScore--
             displayStats(entertainmentScore, sanityScore, eta) 
         }
     } 
 }
-
 
 const makeMove = (event) => {
     // Increase move counter
