@@ -68,19 +68,23 @@ const getStartScreen = () => {
     startButton.id = 'start'
     startButton.innerText = 'Board Plane'
     screenDiv.appendChild(startButton)
-    startButton.addEventListener('click', () => {
-        stylePage()
-        displayStats(entertainmentScore, sanityScore, eta)
-        startGameStats()
-        screenDiv.removeChild(startButton)
-        displayMainMenu()
-        safetyCardSpan.textContent = 'Safety Card'
-        safetyCardDiv.addEventListener('click', openSafetyCard)
-        trayTableButton.addEventListener('click', startTrayTableInt)
-        startBabyTimer()
-        startPhoneTimer()
-    })
+    startButton.addEventListener('click', startGameLoop)
     // a! Will need to add more reset features to this screen.
+}
+
+const startGameLoop = () => {
+    const startButton = document.getElementById('start')
+    stylePage()
+    displayStats(entertainmentScore, sanityScore, eta)
+    startGameStats()
+    screenDiv.removeChild(startButton)
+    displayMainMenu()
+    safetyCardSpan.textContent = 'Safety Card'
+    safetyCardDiv.addEventListener('click', openSafetyCard)
+    trayTableButton.addEventListener('click', startTrayTableInt)
+    startBabyTimer()
+    startPhoneTimer()
+    startButton.removeEventListener('click', startGameLoop)
 }
 
 const stylePage = () => {
@@ -652,10 +656,6 @@ const chooseText = (event) => {
     }
     // Add Event listener to send button
     sendButton.addEventListener('click', sendText)
-}
-
-const gameOver = () => {
-    alert('Game over!')
 }
 
 // When DOMContentLoaded, start the game, show start screen
