@@ -663,7 +663,9 @@ document.addEventListener('DOMContentLoaded', () => {
     getStartScreen()
 })
 
-// Tic Tac Toe Game - most code copied from ttt-project under github user estebbins
+// Tic Tac Toe Puzzle
+
+// Most code copied from ttt-project under github user estebbins
 // Create tictactoe game elements
 const boxes = document.querySelectorAll('.box')
 // Style Player Markers
@@ -903,8 +905,10 @@ const printWin = (moveCounter, result) => {
 const findWinCombo = (array1, array2) => {
     // Compare two arrays
     const checkFor = (box) => {
+        // Returns true if array includes a specific value
         return array1.includes(box)
     }
+    // Return true if array includes every item that's being checked for
     return array2.every(checkFor) 
 }
 
@@ -932,17 +936,17 @@ const leaveTicTacToe = () => {
     selectButton.removeEventListener('click', makeMove)
 
     const exitToMain = () => {
+        // Removes tictactoe elements from screen and displays main menu
         const tttResult = document.getElementById('tttresult')
         const tttLeave = document.getElementById('leave')
         screenDiv.removeChild(tttResult)
         screenDiv.removeChild(tttLeave)
         displayMainMenu()
+        // Removes event listener from select button
         selectButton.removeEventListener('click', exitToMain)
     }
-    selectButton.addEventListener('click', exitToMain)
-    console.log('selection ', selection)
-    // Add select event listener for new option on screen
-
+    // Set short delay to be able to exit screen, add event listener to select
+    setTimeout(selectButton.addEventListener('click', exitToMain), 3000)
 }
 
 // Safety Card Puzzle
