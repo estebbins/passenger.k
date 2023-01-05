@@ -519,25 +519,28 @@ const interactPhone = () => {
 }
 
 const interactCellPhone = () => {
-    console.log('interactcellphone')
+    // Move cell phone div from game div to seat One div & unhide
     seatOneDiv.appendChild(cellPhoneDiv)
     cellPhoneDiv.classList.remove('hide')
+    // Disable clicks for screen & controls
     screenDiv.classList.add('noclick')
     controlsDiv.classList.add('noclick')
-    const part0 =document.getElementById('part0')
-    const part1 =document.getElementById('part1')
-    const part2 =document.getElementById('part2')
-    const part3 =document.getElementById('part3')
-    const part4 =document.getElementById('part4')
-    const part5 =document.getElementById('part5')
-    const part6 =document.getElementById('part6')
-    const part7 =document.getElementById('part7')    
-    const part8 =document.getElementById('part8')
-    const part9 =document.getElementById('part9')
-    const part10 =document.getElementById('part10')
-    const part11 =document.getElementById('part11')
-    const part12 =document.getElementById('part12')
+    // Access cell phone parts
+    const part0 = document.getElementById('part0')
+    const part1 = document.getElementById('part1')
+    const part2 = document.getElementById('part2')
+    const part3 = document.getElementById('part3')
+    const part4 = document.getElementById('part4')
+    const part5 = document.getElementById('part5')
+    const part6 = document.getElementById('part6')
+    const part7 = document.getElementById('part7')    
+    const part8 = document.getElementById('part8')
+    const part9 = document.getElementById('part9')
+    const part10 = document.getElementById('part10')
+    const part11 = document.getElementById('part11')
+    const part12 = document.getElementById('part12')
     const textContentSpan = document.getElementById('textcontent') 
+    // Place parts in the correct grid areas
     part0.style.gridArea = '1 / 1 / 2 / 5' 
     part1.style.gridArea = '2 / 1 / 3 / 2' 
     part2.style.gridArea = '2 / 2 / 3 / 4' 
@@ -591,36 +594,65 @@ const interactCellPhone = () => {
 }
 
 const chooseText = (event) => {
+    // Access necessary cell phone parts
     const textContentSpan = document.getElementById('textcontent') 
     const sendButton = document.getElementById('part9')
     const playerText = document.getElementById('part7')
+    // Creates text content
+    const textOption1 = "I'll just take a taxi from the airport"
+    const textOption2 = "We've been delayed a few times, but I should be arriving at about 6:23 your time"
+    const textOption3 = "I don't care I'm just so excited to see you guys!"
+    // Populate text content area based on player selection
     if (event.target.id === 'cell-text-1'){
-        textContentSpan.textContent = "I'll just take a taxi from the airport"
+        textContentSpan.textContent = textOption1
     } else if (event.target.id === 'cell-text-2') {
-        textContentSpan.textContent = "We've been delayed a few times, but I should be arriving at about 6:23 your time"
+        textContentSpan.textContent = textOption2
     } else if (event.target.id === 'cell-text-3') {
-        textContentSpan.textContent = "I don't care I'm just so excited to see you guys!"
+        textContentSpan.textContent = textOption3
     }
     const exitPhone = () => {
+        // Resets screen when finished with phone interaction
         gameDiv.appendChild(cellPhoneDiv)
         cellPhoneDiv.classList.add('hide')
         screenDiv.classList.remove('noclick')
         controlsDiv.classList.remove('noclick')
     }
     const sendText = () => {
+        // Set the sent text to the text in the textContentSpan
         playerText.textContent = textContentSpan.textContent
+        // adjust scores based on the text the player chose to send
+        if (playerText.textContent === textOption1) {
+            // Taxi option - impact to scores
+            eta -= 0
+            entertainmentScore += 0
+            sanityScore -= 100
+            displayStats(entertainmentScore, sanityScore, eta)
+        } else if (playerText.textContent === textOption2) {
+            // Send ETA option - impact to scores
+            eta -= 30
+            entertainmentScore += 10
+            sanityScore += 10
+            displayStats(entertainmentScore, sanityScore, eta)
+        } else if (playerText.textContent === textOption3) {
+            // Excited option - impact to scores
+            eta += 0
+            entertainmentScore += 20
+            sanityScore -= 30
+            displayStats(entertainmentScore, sanityScore, eta)
+        }
+        // Erase text in content span
         textContentSpan.textContent = ""
+        // Remove event listeners from cell phone
         cellTextOneButton.removeEventListener('click', chooseText)
         cellTextTwoButton.removeEventListener('click', chooseText)
         cellTextThreeButton.removeEventListener('click', chooseText)
         sendButton.removeEventListener('click', sendText)
+        // Allow a short pause before phone exits
         setTimeout(exitPhone, 5000)
     }
+    // Add Event listener to send button
     sendButton.addEventListener('click', sendText)
 }
-
-
-
 
 const gameOver = () => {
     alert('Game over!')
