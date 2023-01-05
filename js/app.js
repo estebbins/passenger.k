@@ -61,9 +61,12 @@ const attendantTextDiv = document.createElement('div')
 const trayTableOptions = ['Comply', 'Ask for 5 more minutes', 'Make a scene']
 const passengerDiv = document.getElementById('passenger')
 const babyTextDiv = document.createElement('div')
-const babyOptions = ['Try to ignore', 'Put in headphones', 'Cry louder than the baby', 'Play Peekaboo']
-
-let timer = Math.floor(Math.random() * 30000) + 10000
+const babyOptions = [
+    'Try to ignore', 
+    'Put in headphones', 
+    'Cry louder than the baby', 
+    'Play Peekaboo'
+]
 
 let phoneInteraction = true
 
@@ -87,8 +90,6 @@ const startGameLoop = () => {
     safetyCardSpan.textContent = 'Safety Card'
     safetyCardDiv.addEventListener('click', openSafetyCard)
     trayTableButton.addEventListener('click', startTrayTableInt)
-    startBabyTimer()
-    startPhoneTimer()
     startButton.removeEventListener('click', startGameLoop)
 }
 
@@ -224,9 +225,7 @@ const resetGame = () => {
     while (screenDiv.firstChild) {
         screenDiv.removeChild(screenDiv.firstChild)
     }
-    while (passengerDiv.firstChild) {
-        passengerDiv.removeChild(passengerDiv.firstChild)
-    }
+    clearBabyInteraction()
     gameDiv.removeChild(winLoseScreen)
     phoneDiv.removeEventListener('click', touchPhone)
     getStartScreen()
@@ -407,6 +406,7 @@ const exitMovie = () => {
     }
     selectButton.removeEventListener('click', exitMovie)
     displayMainMenu()
+    interactPhone()
 }
 
 // Set Game Interactions with Attendant & Passenger
@@ -493,11 +493,6 @@ const startTrayTableInt = () => {
     setTimeout(interactAttendant, 5000)
 }
 
-const startBabyTimer = () => {
-    // Start countdown for baby crying - timer is random
-    setTimeout(interactBaby, timer)
-}
-
 const interactBaby = () => {
     // Create baby text & set number to repeat
     const babyCryStr = 'Wah'
@@ -567,6 +562,10 @@ const reactBaby = (event) => {
         sanityScore += 10
         displayStats(entertainmentScore, sanityScore, eta)
     }
+    clearBabyInteraction()
+}
+
+const clearBabyInteraction = () => {
     // Remove event listeners from player options
     const babyButtons = document.querySelectorAll('.babyOptions')
     babyButtons.forEach(babyButton => {
@@ -576,6 +575,9 @@ const reactBaby = (event) => {
     while (consoleDiv.firstChild) {
         consoleDiv.removeChild(consoleDiv.firstChild)
     }
+    while (passengerDiv.firstChild) {
+        passengerDiv.removeChild(passengerDiv.firstChild)
+    }
     // Redisplay console elements to continue gameplay
     controlsDiv.style.display = 'grid'
     phoneDiv.classList.remove('hide')
@@ -584,11 +586,6 @@ const reactBaby = (event) => {
     passengerDiv.removeChild(babyTextDiv)
 }
 
-const startPhoneTimer = () => {
-    // Phone event to trigger based on baby event timer
-    let phoneTimer = timer*1.75
-    setTimeout(interactPhone, phoneTimer)
-}
 const touchPhone = () => {
     // After phone clicked, return styling and remove event listener, start interaction
     // phoneInteraction = false
@@ -1029,6 +1026,7 @@ const leaveTicTacToe = () => {
         displayMainMenu()
         // Removes event listener from select button
         selectButton.removeEventListener('click', exitToMain)
+        interactBaby()
     }
     // Set short delay to be able to exit screen, add event listener to select
     setTimeout(selectButton.addEventListener('click', exitToMain), 3000)
