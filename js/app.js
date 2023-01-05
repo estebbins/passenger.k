@@ -953,55 +953,64 @@ const leaveTicTacToe = () => {
 
 // Used site for guidance and code for dragging & dropping https://www.javascripttutorial.net/web-apis/javascript-drag-and-drop/#:~:text=Most%20modern%20web%20browsers%20have,you%20would%20drag%20an%20image. 
 
+// Create answer divs
 const answerOne = document.createElement('div')
 const answerTwo = document.createElement('div')
 const answerThree = document.createElement('div')
 const answerFour = document.createElement('div')
 const answerFive = document.createElement('div')
 
+// Create player answer arrays & place into an array
 let ansOneArray = []
 let ansTwoArray = []
 let ansThreeArray = []
 let ansFourArray = []
 let ansFiveArray = []
-
 const ansArrays = [ansOneArray, ansTwoArray, ansThreeArray, ansFourArray, ansFiveArray]
 
+// Create win conditions in arrays & place into an array
 const scWinOne = ['0', '1']
 const scWintwo = ['2', '3']
 const scWinThree = ['4', '5']
 const scWinFour = ['6', '7']
 const scWinFive = ['8', '9']
-
 const scWinArrays = [scWinOne, scWintwo, scWinThree, scWinFour, scWinFive]
 
+// Access re-used HTML elements
 const safteyImgDiv = document.getElementById('safety-imgs')
 
+// Initialize move counter
 let scMoveCounter = 0
 
 const openSafetyCard = () => {
+    // Initalizes and styles open Safety Card
+    // Remove original event listener from saftey card
     safetyCardDiv.removeEventListener('click', openSafetyCard)
+    // Add event listener to track moves to avoid player getting stuck in safety card
     safetyCardDiv.addEventListener('click', increaseSCMoveCounter)
+    // Move safety card div to game div for styling
     gameDiv.appendChild(safetyCardDiv)
+    // Style safety card
     safetyCardDiv.style.gridArea = '3 / 3 / 4 / 4'
     safetyCardDiv.style.zIndex = '1'
     safetyCardDiv.style.display = 'grid'
     safetyCardDiv.style.backgroundColor = 'gray'
     safetyCardDiv.style.gridTemplateRows = '.2fr repeat(5, 1fr)'
     safetyCardDiv.style.gridTemplateColumns = '1.5fr 1.5fr 1fr 2fr 1.5fr 1.5fr'
+    // Style title of safety card
     safetyCardSpan.style.gridArea = '1 / 1 / 7 / 2'
+    // Create 3 panel divs for styling & placement in game grid
     const panelOneDiv = document.createElement('div')
     const panelTwoDiv = document.createElement('div')
     const panelThreeDiv = document.createElement('div')
-
-    panelOneDiv.classList.add('panel')
-    panelTwoDiv.classList.add('panel')
-    panelThreeDiv.classList.add('panel')
-
     panelOneDiv.style.gridArea = '1 / 1 / 7 / 3'
     panelTwoDiv.style.gridArea = '1 / 3 / 7 / 5'
     panelThreeDiv.style.gridArea = '1 / 5 / 7 / 7'
-
+    // Add class to Panel divs
+    panelOneDiv.classList.add('panel')
+    panelTwoDiv.classList.add('panel')
+    panelThreeDiv.classList.add('panel')
+    // Create divs to initialize draggable items
     const seatbeltOneDiv = document.createElement('div')
     const seatbeltTwoDiv = document.createElement('div')
     const smokingOneDiv = document.createElement('div')
@@ -1012,7 +1021,7 @@ const openSafetyCard = () => {
     const maskBTwoDiv = document.createElement('div')
     const bagOneDiv = document.createElement('div')
     const bagTwoDiv = document.createElement('div')
-
+    // Give item divs a class
     seatbeltOneDiv.className = 'dragdiv'
     seatbeltTwoDiv.className = 'dragdiv'
     smokingOneDiv.className = 'dragdiv'
@@ -1023,19 +1032,7 @@ const openSafetyCard = () => {
     maskBTwoDiv.className = 'dragdiv'
     bagOneDiv.className = 'dragdiv'
     bagTwoDiv.className = 'dragdiv'
-
-    answerOne.className = ('safety-answer')
-    answerTwo.className = ('safety-answer')
-    answerThree.className = ('safety-answer')
-    answerFour.className = ('safety-answer')
-    answerFive.className = ('safety-answer')
-
-    answerOne.style.gridArea = '2 / 4 / 3 / 5'
-    answerTwo.style.gridArea = '3 / 4 / 4 / 5'
-    answerThree.style.gridArea = '4 / 4 / 5 / 5'
-    answerFour.style.gridArea = '5 / 4 / 6 / 5'
-    answerFive.style.gridArea = '6 / 4 / 7 / 5'
-
+    // Style item divs
     seatbeltOneDiv.style.gridArea = '2 / 1 / 3 / 2'
     seatbeltTwoDiv.style.gridArea = '6 / 5 / 7 / 6'
     smokingOneDiv.style.gridArea = '3 / 2 / 4 / 3'
@@ -1056,17 +1053,23 @@ const openSafetyCard = () => {
     maskBTwoDiv.style.backgroundColor = 'yellow'
     bagOneDiv.style.backgroundColor = 'green'
     bagTwoDiv.style.backgroundColor = 'green'
-
-    safetyCardDiv.appendChild(answerOne)
-    safetyCardDiv.appendChild(answerTwo)
-    safetyCardDiv.appendChild(answerThree)
-    safetyCardDiv.appendChild(answerFour)
-    safetyCardDiv.appendChild(answerFive)
-
+    // Give answer divs a class
+    answerOne.className = ('safety-answer')
+    answerTwo.className = ('safety-answer')
+    answerThree.className = ('safety-answer')
+    answerFour.className = ('safety-answer')
+    answerFive.className = ('safety-answer')
+    // Style answer divs
+    answerOne.style.gridArea = '2 / 4 / 3 / 5'
+    answerTwo.style.gridArea = '3 / 4 / 4 / 5'
+    answerThree.style.gridArea = '4 / 4 / 5 / 5'
+    answerFour.style.gridArea = '5 / 4 / 6 / 5'
+    answerFive.style.gridArea = '6 / 4 / 7 / 5'
+    // Append panels to safetycard
     safetyCardDiv.appendChild(panelOneDiv)
     safetyCardDiv.appendChild(panelTwoDiv)
     safetyCardDiv.appendChild(panelThreeDiv)
-
+    // Append item divs to 
     safetyCardDiv.appendChild(seatbeltOneDiv)
     safetyCardDiv.appendChild(seatbeltTwoDiv)
     safetyCardDiv.appendChild(smokingOneDiv)
@@ -1077,31 +1080,45 @@ const openSafetyCard = () => {
     safetyCardDiv.appendChild(maskBTwoDiv)
     safetyCardDiv.appendChild(bagOneDiv)
     safetyCardDiv.appendChild(bagTwoDiv)
+    // Append answer divs to safetycard
+    safetyCardDiv.appendChild(answerOne)
+    safetyCardDiv.appendChild(answerTwo)
+    safetyCardDiv.appendChild(answerThree)
+    safetyCardDiv.appendChild(answerFour)
+    safetyCardDiv.appendChild(answerFive)
 
+    // Store arrays for answers, images, and item divs in variables
     const safetyAnswers = document.querySelectorAll('.safety-answer')
     const draggableImages = document.querySelectorAll('.safetycard-img')
     const dragDivs = document.querySelectorAll('.dragdiv')
 
+
     for (let i = 0; i < draggableImages.length; i++) {
         let div = dragDivs[i]
         let img = draggableImages[i]
+        // Add unique Id to each draggable image
         img.id = i
+        // Unhide images
         img.classList.remove('hide')
+        // Append the images to the item divs
         div.appendChild(img)
+        // Add drag start listenter to each image
         img.addEventListener('dragstart', dragStart)
     }
     safetyAnswers.forEach((div) => {
+        // Add dragenter, dragover, dragleave, and drop event listeners to each answer div
         div.addEventListener('dragenter', dragEnter)
         div.addEventListener('dragover', dragEnter)
         div.addEventListener('dragleave', dragEnter)
         div.addEventListener('drop', drop)
     })
+    // Add dragenter, dragover, dragleave, and drop event listeners to the safetycard
     safetyCardDiv.addEventListener('dragenter', dragEnter)
     safetyCardDiv.addEventListener('dragover', dragEnter)
     safetyCardDiv.addEventListener('dragleave', dragEnter)
-    // safetyCardDiv.addEventListener('drop', drop)
 
-    
+    // a! Is drop event listener needed/helpful?
+    // safetyCardDiv.addEventListener('drop', drop)
 }
 
 const dragStart = (event) => {
