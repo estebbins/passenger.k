@@ -48,6 +48,8 @@ leaveOption.textContent = 'Exit to Main Menu'
 let selection = 0
 
 const movieOne = document.getElementById('alien')
+const movieTwo = document.getElementById('placeholder')
+const movieThree = document.getElementById('placeholder')
 const trayTableDiv = document.getElementById('tray-table')
 const attendantDiv = document.getElementById('attendant')
 const attendantTextDiv = document.createElement('div')
@@ -93,8 +95,10 @@ const checkGameConditions = () => {
         stopCountdowns()
         console.log('bored to death')
     } else if (sanityScore === 0) {
+        stopCountdowns()
         console.log('You jumped out of the emergency exit')
     } else if (eta === 0) {
+        stopCountdowns()
         console.log('congrats you made it to takeoff')
     }
 }
@@ -137,6 +141,7 @@ const startGameStats = () => {
 
     // a! Some game end conditions
 }
+
 const stopCountdowns = () => {
     clearInterval(intervalEnt)
     clearInterval(intervalSanity)
@@ -257,34 +262,86 @@ const checkLinearNavigators = (list, ul) => {
 // Royalty Free Alien Movie - https://pixabay.com/videos/alien-eye-gel-aloe-vera-blender-139974/ 
 
 const watchMovie = (num) => {
-    screenDiv.appendChild(movieOne)
-    const sourceOne = document.createElement('source')
-    sourceOne.src = 'img/Alienmovie.mp4'
-    sourceOne.type = 'video/mp4'
-    movieOne.appendChild(sourceOne)
-    movieOne.autoplay = true
-    setTimeout(()=>screenDiv.appendChild(leaveOption), 8000)
-    selectButton.addEventListener('click', exitMovie)
+    if (num === 0) {
+        screenDiv.appendChild(movieOne)
+        const sourceOne = document.createElement('source')
+        sourceOne.src = 'img/Alienmovie.mp4'
+        sourceOne.type = 'video/mp4'
+        movieOne.appendChild(sourceOne)
+        movieOne.autoplay = true
+        setTimeout(()=> {
+            screenDiv.appendChild(leaveOption)
+            selectButton.addEventListener('click', exitMovie)
+        }, 8000)
+
+        // update game stats
+        entertainmentScore += 15
+        sanityScore -= 10
+        eta -=10
+        displayStats(entertainmentScore, sanityScore, eta)
+    } else if (num === 1) {
+        screenDiv.appendChild(movieTwo)
+        const sourceTwo = document.createElement('source')
+        sourceTwo.src = 'img/Alienmovie.mp4'
+        sourceTwo.type = 'video/mp4'
+        movieTwo.appendChild(sourceTwo)
+        movieTwo.autoplay = true
+        setTimeout(()=> {
+            screenDiv.appendChild(leaveOption)
+            selectButton.addEventListener('click', exitMovie)
+        }, 8000)
+
+        // update game stats
+        entertainmentScore += 10
+        sanityScore += 5
+        eta -= 12
+        displayStats(entertainmentScore, sanityScore, eta)
+    } else if (num === 2) {
+        screenDiv.appendChild(movieThree)
+        const sourceThree = document.createElement('source')
+        sourceThree.src = 'img/Alienmovie.mp4'
+        sourceThree.type = 'video/mp4'
+        movieThree.appendChild(sourceTwo)
+        movieOne.autoplay = true
+        setTimeout(()=> {
+            screenDiv.appendChild(leaveOption)
+            selectButton.addEventListener('click', exitMovie)
+        }, 8000)
+
+        // update game stats
+        entertainmentScore += 20
+        sanityScore += 0
+        eta += 5
+        displayStats(entertainmentScore, sanityScore, eta)
+    }
 }
 
 const exitMovie = () => {
     while (screenDiv.firstChild) {
         screenDiv.removeChild(screenDiv.firstChild)
     }
+    selectButton.removeEventListener('click', exitMovie)
     displayMainMenu()
 }
 
-let trayTableStr = "Excuse me! We can't take off until your tray table is closed!"
+// Set Game Interactions with Attendant & Passenger
 
-const attendantInt = () => {
+const interactAttendant = () => {
+    // Create attendant text & add to screen
+    let trayTableStr = "Excuse me! We can't take off until your tray table is closed!"
     attendantDiv.appendChild(attendantTextDiv)
     attendantTextDiv.innerText = trayTableStr
-    // consoleDiv.style.zIndex = '1'
+
+    // Style console div for player interaction
     consoleDiv.style.display = 'grid'
     consoleDiv.style.gridTemplate = '3fr repeat(3, 1fr) 3fr / 1fr'
+
+    // Hide other console elements
     controlsDiv.style.display = 'none'
     phoneDiv.classList.add('hide')
     screenDiv.classList.add('hide')
+
+    // Create player interaction options & style
     for (let i=0; i < trayTableOptions.length; i++) {
         let button = document.createElement('button')
         const buttonDiv = document.createElement('div')
@@ -296,61 +353,81 @@ const attendantInt = () => {
         buttonDiv.style.display = 'flex'
         buttonDiv.style.gridArea = `${2+i} / 1 / ${3+i} / 2`
         buttonDiv.style.justifyContent = 'center'
+        button.addEventListener('click', reactTrayTable)
     }
-    const trayTableButtons = document.querySelectorAll('.trayTableOptions')
-    trayTableButtons.forEach(ttbutton => {
-        ttbutton.addEventListener('click', reactTrayTable)
-    })
 }
 
 const reactTrayTable = (event) => {
+    // React to one of the tray table player options 
     if (event.target.id === '0opt') {
-        console.log('option 1 tray table')
+        // Comply option - impact on scores
+        entertainmentScore += 0
+        sanityScore += 5
+        eta -= 0
+        displayStats(entertainmentScore, sanityScore, eta)
     } else if (event.target.id === '1opt') {
-        console.log('option 2 tray table')
+        // Ask for 5 more minutes - impact on score
+        entertainmentScore += 5
+        sanityScore += 2
+        eta += 30
+        displayStats(entertainmentScore, sanityScore, eta)
     } else if (event.target.id === '2opt') {
-        console.log('option 3 tray table')
+        // Make a scene - impact on score
+        entertainmentScore += 10
+        sanityScore -= 20
+        eta -= 0
+        displayStats(entertainmentScore, sanityScore, eta)
     }
+
+    // Remove event listeners from tray table player buttons
     const trayTableButtons = document.querySelectorAll('.trayTableOptions')
     trayTableButtons.forEach(ttbutton => {
         ttbutton.removeEventListener('click', reactTrayTable)
     })
+    // Remove elements from console div
     while (consoleDiv.firstChild) {
         consoleDiv.removeChild(consoleDiv.firstChild)
     }
+    // Unhide controls, phone and screen divs
     controlsDiv.style.display = 'grid'
     phoneDiv.classList.remove('hide')
     screenDiv.classList.remove('hide')
-    // consoleDiv.style.zIndex = '0'
-    // controlsDiv.style.zIndex = '1'
-    // phoneDiv.style.zIndex = '1'
+    // Remove flight attendant text div
     attendantDiv.removeChild(attendantTextDiv)
+    // "Close tray table" by restyling to original image
     trayTableDiv.style.backgroundImage = "url('https://cdn.pixabay.com/photo/2014/04/05/11/09/material-314790_960_720.jpg')"
+    // Add event listener back onto tray table to be used again
     trayTableButton.addEventListener('click', startTrayTableInt)
 }
 
 const startTrayTableInt = () => {
+    // Begin tray table interaction once clicked, delay attendant for more realistic interaction
     trayTableButton.removeEventListener('click', startTrayTableInt)
+    // Style tray table to appear open
     trayTableDiv.style.backgroundImage = 'none'
-    setTimeout(attendantInt, 5000)
+    setTimeout(interactAttendant, 5000)
 }
 
 const startBabyTimer = () => {
+    // Start countdown for baby crying - timer is random
     setTimeout(interactBaby, timer)
 }
 
-const babyCryStr = 'Wah'
-
 const interactBaby = () => {
+    const babyCryStr = 'Wah'
     let repeat = 7
     passenger.appendChild(babyTextDiv)
     const addWah = () => {
         let wah = document.createElement('p')
         wah.textContent = babyCryStr
         babyTextDiv.appendChild(wah)
+        console.log('1')
+        // Decrease sanity score each time baby cries
+        sanityScore -= 5 
+        displayStats(entertainmentScore, sanityScore, eta)
     }
     for (let i = 0; i < repeat; i++) {
-        setTimeout(addWah, 2000*i)
+        babyCry = setTimeout(addWah, 2000*i)
     }
     consoleDiv.style.display = 'grid'
     consoleDiv.style.gridTemplate = '3fr repeat(3, 1fr) 3fr / 1fr'
@@ -375,7 +452,7 @@ const interactBaby = () => {
     })
 }
 
-const reactBaby = (event) => {
+const reactBaby = (event, babyCry) => {
     if (event.target.id === '0optb') {
         eta += 60
     } else if (event.target.id === '1optb') {
@@ -514,6 +591,8 @@ const chooseText = (event) => {
     const exitPhone = () => {
         gameDiv.appendChild(cellPhoneDiv)
         cellPhoneDiv.classList.add('hide')
+        screenDiv.classList.remove('noclick')
+        controlsDiv.classList.remove('noclick')
     }
     const sendText = () => {
         playerText.textContent = textContentSpan.textContent
