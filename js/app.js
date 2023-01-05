@@ -211,24 +211,25 @@ const displayGameOver = (condition) => {
 }
 
 const resetGame = () => {
-    // Remove event listener
-    exitGameButton.removeEventListener('click', resetGame)
+    location.reload()
+    // // Remove event listener
+    // exitGameButton.removeEventListener('click', resetGame)
 
-    // Reset all statistics
-    entertainmentScore = 100
-    sanityScore = 100
-    eta = 300
-    // Reset selection to 0
-    selection = 0
-    // Reset safety card span text
-    safetyCardSpan.innerText = 'Instructions'
-    while (screenDiv.firstChild) {
-        screenDiv.removeChild(screenDiv.firstChild)
-    }
-    clearBabyInteraction()
-    gameDiv.removeChild(winLoseScreen)
-    phoneDiv.removeEventListener('click', touchPhone)
-    getStartScreen()
+    // // Reset all statistics
+    // entertainmentScore = 100
+    // sanityScore = 100
+    // eta = 300
+    // // Reset selection to 0
+    // selection = 0
+    // // Reset safety card span text
+    // safetyCardSpan.innerText = 'Instructions'
+    // while (screenDiv.firstChild) {
+    //     screenDiv.removeChild(screenDiv.firstChild)
+    // }
+    // clearBabyInteraction()
+    // gameDiv.removeChild(winLoseScreen)
+    // phoneDiv.removeEventListener('click', touchPhone)
+    // getStartScreen()
 }
 
 const displayMainMenu = () => {
@@ -352,6 +353,8 @@ const watchMovie = (num) => {
         sourceOne.src = 'img/Alienmovie.mp4'
         sourceOne.type = 'video/mp4'
         movieOne.appendChild(sourceOne)
+        movieOne.load()
+        movieOne.play()
         movieOne.autoplay = true
         setTimeout(()=> {
             screenDiv.appendChild(leaveOption)
