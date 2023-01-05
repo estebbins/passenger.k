@@ -54,9 +54,6 @@ let timer = Math.floor(Math.random() * 30000) + 10000
 
 let phoneInteraction = true
 
-let gameActive = false
-
-
 const getStartScreen = () => {
     // Set up start button & add to screen div
     const startButton = document.createElement('button')
@@ -64,7 +61,6 @@ const getStartScreen = () => {
     startButton.innerText = 'Board Plane'
     screenDiv.appendChild(startButton)
     startButton.addEventListener('click', () => {
-        gameActive = true
         stylePage()
         displayStats(entertainmentScore, sanityScore, eta)
         startGameStats()
@@ -86,6 +82,16 @@ const stylePage = () => {
     seatMain.style.boxShadow = '10px 0 3px 2px rgba(0,0,0,0.4)'
 }
 
+const checkGameConditions = () => {
+    if (entertainmentScore === 0) {
+        console.log('bored to death')
+    } else if (sanityScore === 0) {
+        console.log('You jumped out of the emergency exit')
+    } else if (eta === 0) {
+        console.log('congrats you made it to takeoff')
+    }
+}
+
 const displayStats = (entScore, sanScore, currentEta) => {
     entertainmentDiv.textContent = entScore
     sanityDiv.textContent = sanScore
@@ -97,6 +103,7 @@ const displayStats = (entScore, sanScore, currentEta) => {
     } else {
         etaDiv.textContent = `${etaMinute}:${etaSecond}`
     }
+    checkGameConditions()
 }
 
 const startGameStats = () => {
@@ -514,23 +521,11 @@ const chooseText = (event) => {
     sendButton.addEventListener('click', sendText)
 }
 
-const checkGameConditions = () => {
-    if (entertainmentScore === 0) {
-        console.log('bored to death')
-    } else if (sanityScore === 0) {
-        console.log('You jumped out of the emergency exit')
-    } else if (eta === 0) {
-        console.log('congrats you made it to takeoff')
-    }
-}
+
 
 
 const gameOver = () => {
     alert('Game over!')
-}
-
-while (gameActive) {
-    checkGameConditions()
 }
 
 
