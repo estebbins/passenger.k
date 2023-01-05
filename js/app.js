@@ -821,21 +821,18 @@ const makeMove = (event) => {
             playerXMoves.push(tttPlayerSelection.id)
         }
     } else if (event.target.id === 'select') {
+        // Reduce sanity score if buttons are clicked unnecessarily
         sanityScore--
         displayStats(entertainmentScore, sanityScore, eta) 
     }
     // Call print win function to determine if win result and assess move counter
     // in the case of a tie, which should not be assessed until all 9 moves have been made
     // and evaluated
-    console.log('moves: ', moveCounter)
-    console.log('playerX: ', playerXMoves)
-    console.log('player0: ', playerOMoves)
     printWin(moveCounter, checkWin())
-
 }
 
-// Adds appropriate event listeners for TicTacToe game
 const playTicTacToe = () => {
+    // Adds appropriate event listeners for TicTacToe game
     upButton.addEventListener('click', navAction)
     downButton.addEventListener('click', navAction)
     leftButton.addEventListener('click', navAction)
@@ -843,8 +840,8 @@ const playTicTacToe = () => {
     selectButton.addEventListener('click', makeMove)
 }
 
-// Function to display results
 const printWin = (moveCounter, result) => {
+    // Displays result
     // If checkWin results in true or false, or if all moves have been made and no win is foung
     if (result === true | result === false | (result === null && moveCounter === 9)) {
         // Create div to display the results of the game & apply an id of result
@@ -854,6 +851,8 @@ const printWin = (moveCounter, result) => {
             // If player X wins, add & style the text in the result div, increase the score counter and end the game
             resultBox.textContent = "Player X Wins!"
             resultBox.style.color = 'rgb(51, 201, 206)'
+            // adjust scores based on win result
+            eta -= 30
             sanityScore += 5
             entertainmentScore += 10
             displayStats(entertainmentScore, sanityScore, eta) 
@@ -861,6 +860,8 @@ const printWin = (moveCounter, result) => {
             // If player O wins, add & style the text in the result div, increase the score counter and end the game
             resultBox.textContent = "Player O Wins!"
             resultBox.style.color = '#cdcdcd'
+            // adjust scores based on win result
+            eta -= 15
             sanityScore += 2
             entertainmentScore += 5
             displayStats(entertainmentScore, sanityScore, eta) 
@@ -869,11 +870,13 @@ const printWin = (moveCounter, result) => {
             resultBox.textContent = "It's a Tie!"
             resultBox.style.color = '#e6a176'
             resultBox.style.textShadow = '1px 1px 2px #984464'
+            // adjust scores based on win result
+            eta += 10
             sanityScore -= 10
             entertainmentScore -= 10
             displayStats(entertainmentScore, sanityScore, eta) 
         }
-        // Remove the tictactoe boxes from the screen.=
+        // Remove the tictactoe boxes from the screen.
         screenDiv.classList.remove('tictactoe')
         for (let i = 0; i < boxes.length; i++) {
             gameDiv.appendChild(boxes[i])
@@ -892,20 +895,22 @@ const printWin = (moveCounter, result) => {
             playerXMoves.pop()
             playerOMoves.pop()
         }
+        // Reset screen and controls
         leaveTicTacToe()
     }
 }  
 
-// function to compare two arrays
 const findWinCombo = (array1, array2) => {
+    // Compare two arrays
     const checkFor = (box) => {
         return array1.includes(box)
     }
     return array2.every(checkFor) 
 }
 
-// Function to compare player arrays to win combos. 
+
 const checkWin = () => {
+    // Function to compare player arrays to win combos. 
     // Return unique values based on results - X win = true, O win = false
     for(i = 0; i < winConditions.length; i++) {
         if(findWinCombo(playerXMoves, winConditions[i]) === true) {
