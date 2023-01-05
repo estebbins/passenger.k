@@ -1122,27 +1122,29 @@ const openSafetyCard = () => {
 }
 
 const dragStart = (event) => {
+    // Transfer image data using ID when dragstart event
     event.dataTransfer.setData('text/plain', event.target.id)
+    // Hide image during drag
     setTimeout(() => {
         event.target.classList.add('hide')
     }, 0)
 }
 
 const dragEnter = (event) => {
+    // Prevent default behavior during dragenter event
     event.preventDefault()
-    // event.target.classList.add('drag-over')
 }
 
 const drop = (event) => {
+    // Prevent default behavior during dragenter event
     event.preventDefault()
-    // event.target.classList.remove('drag-over')
-    // Get the draggable image
+    // Get the draggable image data
     const id = event.dataTransfer.getData('text/plain')
+    // Get draggable image
     const draggable = document.getElementById(id)
-    // Add the draggable element to the drop target
+    // Add the draggable image to the drop target
     event.target.appendChild(draggable)
-
-
+    // Push the move to the player answer arrays if placed correctly
     if (event.target.style.gridArea === '2 / 4 / 3 / 5') {
         ansOneArray.push(id)
     } else if(event.target.style.gridArea === '3 / 4 / 4 / 5') {
@@ -1154,40 +1156,34 @@ const drop = (event) => {
     } else if(event.target.style.gridArea === '6 / 4 / 7 / 5') {
         ansFiveArray.push(id)
     }
-    console.log(ansArrays)
-    // Display the draggable element
+    // Display the draggable element in it's new location
     draggable.classList.remove('hide')
+    // Check if safety card puzzle complete after each drop event
     checkSafetyComplete()
 }
 
 const checkSafetyComplete = () => {
-    // Return unique values based on results - X win = true, O win = false
+    // Checks if safety puzzle has been completed successfully
+    // Create a score counter to track
     let complete = 0
-    const leaveButton = document.createElement('button')
-    leaveButton.innerText = 'Leave'
+    // Compare player answer arrays to win conditions & increase score by one each time
     for(i = 0; i < 5; i++) {
         if(findWinCombo(ansArrays[i], scWinArrays[i])) {
             complete++
         } 
     } 
-
-    
+    // When score of 5 is reached, safety card is complete
     if (complete === 5) {
-        while (safetyCardDiv.firstChild) {
-            safetyCardDiv.removeChild(safetyCardDiv.firstChild)
-        }
+        // When safety card puzzle complete, set short delay then return to main screen
+        setTimeout(()=> {
+            while (safetyCardDiv.firstChild) {
+                safetyCardDiv.removeChild(safetyCardDiv.firstChild)
+            }
+        }, 2000)
+        // Change text of safety card title to show completed puzzle
         safetyCardSpan.innerText = "Safety Demonstration Complete"
         exitSafety()
-        // Creates button to leave - can probably just close it out.
-
-        // safetyCardDiv.gridTemplateArea = '2fr / 1fr'
-        // safetyCardDiv.appendChild(safetyCardSpan)
-        // safetyCardDiv.appendChild(leaveButton)
-        // safetyCardSpan.style.gridArea = '1 / 1 / 2 / 2'
-        // leaveButton.style.gridArea = '2 / 1 / 3 / 2'
-        // leaveButton.addEventListener('click', exitToMain)
     }
-
 }
 
 const exitSafety = () => {
