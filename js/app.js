@@ -24,10 +24,16 @@ const cellTextTwoButton = document.getElementById('cell-text-2')
 const cellTextThreeButton = document.getElementById('cell-text-3')
 
 // Create statistics
+let intervalEta
+let intervalEnt
+let intervalSanity
 let entertainmentScore = 100
+let entRate = 1000
 let sanityScore = 100
+let sanityRate = 3000
 // eta is in units of seconds
 let eta = 300
+let etaRate = 1000
 
 // Create Menu Options
 const mainMenu = ['Play', 'Listen', 'Watch']
@@ -84,6 +90,7 @@ const stylePage = () => {
 
 const checkGameConditions = () => {
     if (entertainmentScore === 0) {
+        stopCountdowns()
         console.log('bored to death')
     } else if (sanityScore === 0) {
         console.log('You jumped out of the emergency exit')
@@ -108,10 +115,12 @@ const displayStats = (entScore, sanScore, currentEta) => {
 
 const startGameStats = () => {
     // set Eta to a variable to use in setTimeout
-    let totalEta = eta*1000
 
-    const countdownEtaEnt = () => {
+    const countdownEta = () => {
         eta -= 1
+        displayStats(entertainmentScore, sanityScore, eta)
+    }
+    const countdownEnt = () => {
         entertainmentScore -= 1
         displayStats(entertainmentScore, sanityScore, eta)
     }
@@ -121,19 +130,17 @@ const startGameStats = () => {
     }
     // countdown for ETA & entertainment will be -1 each second
     // countdown for sanity will be -1 every three seconds
-    const intervalEtaEnt = setInterval(countdownEtaEnt, 1000)
-    const intervalSanity = setInterval(countdownSanity, 3000)
+    intervalEta = setInterval(countdownEta, etaRate)
+    intervalEnt = setInterval(countdownEnt, entRate)
+    intervalSanity = setInterval(countdownSanity, sanityRate)
     // creates clearIntervals for ETA, entertainment & sanity
-    const stopCountdowns = () => {
-        clearInterval(intervalEtaEnt)
-        clearInterval(intervalSanity)
-    }
+
     // a! Some game end conditions
-    if (eta === 0 || entertainmentScore === 0 || sanityScore === 0) {
-        stopCountdowns()
-    } else if (eta > 0) {
-        setTimeout(stopCountdowns, totalEta)
-    }
+}
+const stopCountdowns = () => {
+    clearInterval(intervalEnt)
+    clearInterval(intervalSanity)
+    clearInterval(intervalEta)
 }
 
 const displayMainMenu = () => {
@@ -329,7 +336,6 @@ const startTrayTableInt = () => {
 }
 
 const startBabyTimer = () => {
-    console.log('timer: ', timer)
     setTimeout(interactBaby, timer)
 }
 
@@ -371,7 +377,7 @@ const interactBaby = () => {
 
 const reactBaby = (event) => {
     if (event.target.id === '0optb') {
-        console.log('option 1 baby')
+        eta += 60
     } else if (event.target.id === '1optb') {
         console.log('option 2 baby')
     } else if (event.target.id === '2optb') {
