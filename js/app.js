@@ -95,22 +95,42 @@ const stylePage = () => {
 }
 
 const checkGameConditions = () => {
-    if (entertainmentScore === 0) {
+    if (entertainmentScore <= 0) {
         stopCountdowns()
-        console.log('bored to death')
-    } else if (sanityScore === 0) {
+        displayGameOver('ent loss')
+    } else if (sanityScore <= 0) {
         stopCountdowns()
-        console.log('You jumped out of the emergency exit')
+        displayGameOver('san loss')
     } else if (eta === 0) {
         stopCountdowns()
-        console.log('congrats you made it to takeoff')
+        displayGameOver('win')
     }
 }
 
 const displayStats = (entScore, sanScore, currentEta) => {
+    // Set mins & maxes for each score
+    if (entScore > 100) {
+        entertainmentScore = 100
+        entScore = 100
+    } else if (entScore < 0) {
+        entertainmentScore = 0
+        entScore = 0
+    } else if (sanScore > 100) {
+        sanityScore = 100
+        sanScore = 100
+    } else if (sanScore < 0) {
+        sanityScore = 0
+        sanScore = 0
+    }  else if (currentEta < 0) {
+        // eta has no max
+        currentEta = 0
+        eta = 0
+    }
+    // Style screen with scores
     entertainmentDiv.textContent = entScore
     sanityDiv.textContent = sanScore
     // format eta, Math.floor method recommendation from https://www.golinuxcloud.com/javascript-integer-division/ 
+    // Style ETA to show as a countdown timer
     const etaMinute = Math.floor(currentEta / 60)
     const etaSecond = currentEta % 60
     if (etaSecond < 10) {
@@ -139,15 +159,65 @@ const startGameStats = () => {
     intervalEta = setInterval(countdownEta, etaRate)
     intervalEnt = setInterval(countdownEnt, entRate)
     intervalSanity = setInterval(countdownSanity, sanityRate)
-    // creates clearIntervals for ETA, entertainment & sanity
-
     // a! Some game end conditions
 }
 
 const stopCountdowns = () => {
+    // creates clearIntervals for ETA, entertainment & sanity
     clearInterval(intervalEnt)
     clearInterval(intervalSanity)
     clearInterval(intervalEta)
+}
+
+const displayGameOver = (condition) => {
+    // Create gameover screen elements
+    const winLoseScreen = document.createElement('div')
+    const winLoseMsg = document.createElement('div')
+    const exitButton = document.createElement('button')
+    // Style win/lose screen
+    winLoseScreen.style.gridArea = '1 / 1 / 5 / 5'
+    winLoseScreen.style.display = 'flex'
+    winLoseScreen.style.backgroundColor = 'rgba(0,0,0,0.6)'
+    winLoseScreen.style.zIndex = '1'
+    winLoseScreen.style.justifyContent = 'center'
+    winLoseScreen.style.alignItems = 'center'
+    winLoseScreen.style.flexDirection = 'column'
+    // Append win/lose screen to the game div to overlay game
+    gameDiv.appendChild(winLoseScreen)
+    // Append win/lose elements to win/lose div
+    winLoseScreen.appendChild(winLoseMsg)
+    winLoseScreen.appendChild(exitButton)
+    // Style exit button
+    exitButton.innerText = 'Exit'
+    // Add event listener to exit button
+    exitButton.addEventListener('click', resetGame)
+    if (condition === 'win') {
+        winLoseMsg.innerText = 'Unbelievable & short-lived victory! You now get to continue sitting on this plane for the rest of your flight!'
+        winLoseMsg.style.color = 'green'
+        winLoseMsg.style.fontSize = '60px'
+    } else if (condition === 'ent loss') {
+        winLoseMsg.innerText = 'Died of Boredom!'
+        winLoseMsg.style.color = 'green'
+        winLoseMsg.style.fontSize = '60px'
+    } else if (condition === 'san loss') {
+        winLoseMsg.innerText = 'You lost all sanity and jumped from the emergency exit onto the tarmac!'
+        winLoseMsg.style.color = 'red'
+        winLoseMsg.style.fontSize = '60px'
+    }
+}
+
+const resetGame = () => {
+    // Remove event listener
+    exitButton.removeEventListener('click', resetGame)
+    // Reset all statistics
+    entertainmentScore = 100
+    sanityScore = 100
+    eta = 300
+    // Reset selection to 0
+    selection = 0
+    // Reset safety card span text
+    safetyCardSpan = 'Instructions'
+    getStartScreen()
 }
 
 const displayMainMenu = () => {
@@ -189,6 +259,7 @@ const displayPlayMenu = () => {
 const displayListenMenu = () => {
     console.log('display listen menu')
 }
+
 const displayWatchMenu = () => {
     const watchMenuUl = document.createElement('ul')
     watchMenuUl.id = 'watch-menu'
@@ -204,8 +275,8 @@ const displayWatchMenu = () => {
     const watchMenuOptions = document.querySelectorAll('.watch-menu-list')
     // Add event listeners
     checkLinearNavigators(watchMenuOptions, watchMenuUl)
-
 }
+
 const checkLinearNavigators = (list, ul) => {
     console.log(selection)
     let selected = list[selection]
@@ -616,6 +687,8 @@ const chooseText = (event) => {
     }
     const exitPhone = () => {
         // Resets screen when finished with phone interaction
+        playerText.innerText = ''
+        textContentSpan = ''
         gameDiv.appendChild(cellPhoneDiv)
         cellPhoneDiv.classList.add('hide')
         screenDiv.classList.remove('noclick')
@@ -652,7 +725,7 @@ const chooseText = (event) => {
         cellTextThreeButton.removeEventListener('click', chooseText)
         sendButton.removeEventListener('click', sendText)
         // Allow a short pause before phone exits
-        setTimeout(exitPhone, 5000)
+        setTimeout(exitPhone, 3000)
     }
     // Add Event listener to send button
     sendButton.addEventListener('click', sendText)

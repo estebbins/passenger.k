@@ -42,7 +42,6 @@
     border: 5px solid rgb(78, 72, 72);
     background-color: rgb(161, 149, 149);
     box-shadow: 10px 10px 3px 2px rgba(0,0,0,0.4);
-
 }
 #screen { 
     grid-area: 6 / 3 / 7 / 7; 
