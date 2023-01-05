@@ -1024,8 +1024,6 @@ const openSafetyCard = () => {
     bagOneDiv.className = 'dragdiv'
     bagTwoDiv.className = 'dragdiv'
 
-
-
     answerOne.className = ('safety-answer')
     answerTwo.className = ('safety-answer')
     answerThree.className = ('safety-answer')
