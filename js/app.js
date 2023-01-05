@@ -118,8 +118,6 @@ const displayStats = (entScore, sanScore, currentEta) => {
 }
 
 const startGameStats = () => {
-    // set Eta to a variable to use in setTimeout
-
     const countdownEta = () => {
         eta -= 1
         displayStats(entertainmentScore, sanityScore, eta)
@@ -414,26 +412,31 @@ const startBabyTimer = () => {
 }
 
 const interactBaby = () => {
+    // Create baby text & set number to repeat
     const babyCryStr = 'Wah'
     let repeat = 7
     passenger.appendChild(babyTextDiv)
     const addWah = () => {
+        // Add divs to screen for each cry
         let wah = document.createElement('p')
         wah.textContent = babyCryStr
         babyTextDiv.appendChild(wah)
-        console.log('1')
         // Decrease sanity score each time baby cries
         sanityScore -= 5 
         displayStats(entertainmentScore, sanityScore, eta)
     }
+    // Set timeout for each cry for every 2 seconds
     for (let i = 0; i < repeat; i++) {
         babyCry = setTimeout(addWah, 2000*i)
     }
+    // Style console Div for player interaction
     consoleDiv.style.display = 'grid'
     consoleDiv.style.gridTemplate = '3fr repeat(3, 1fr) 3fr / 1fr'
+    // Hide other elements on top of console
     controlsDiv.style.display = 'none'
     phoneDiv.classList.add('hide')
     screenDiv.classList.add('hide')
+    // Create player interaction options & add to the screen.
     for (let i=0; i < babyOptions.length; i++) {
         let button = document.createElement('button')
         const buttonDiv = document.createElement('div')
@@ -445,64 +448,74 @@ const interactBaby = () => {
         buttonDiv.style.display = 'flex'
         buttonDiv.style.gridArea = `${2+i} / 1 / ${3+i} / 2`
         buttonDiv.style.justifyContent = 'center'
+        button.addEventListener('click', reactBaby)
     }
-    const babyButtons = document.querySelectorAll('.babyOptions')
-    babyButtons.forEach(babyButton => {
-        babyButton.addEventListener('click', reactBaby)
-    })
 }
 
-const reactBaby = (event, babyCry) => {
+const reactBaby = (event) => {
+    // Update game statistics based on reaction selected
     if (event.target.id === '0optb') {
+        // Try to ignore - impact on scores
         eta += 60
+        entertainmentScore -= 5
+        sanityScore -= 5
+        displayStats(entertainmentScore, sanityScore, eta)
+        // Add baby crying sound at lower volume for remainder of game?
     } else if (event.target.id === '1optb') {
-        console.log('option 2 baby')
+        // Put in headphones - impact on scores
+        eta += 0
+        entertainmentScore += 20
+        sanityScore += 20
+        displayStats(entertainmentScore, sanityScore, eta)
     } else if (event.target.id === '2optb') {
-        console.log('option 3 baby')
+        // Cry louder than baby - impact on scores
+        eta += 0
+        entertainmentScore += 10
+        sanityScore -= 20
+        displayStats(entertainmentScore, sanityScore, eta)
     } else if (event.target.id === '3optb') {
-        console.log('option 4 baby')
+        // Play peekaboo - impact on scores
+        eta -= 30
+        entertainmentScore += 20
+        sanityScore += 10
+        displayStats(entertainmentScore, sanityScore, eta)
     }
+    // Remove event listeners from player options
     const babyButtons = document.querySelectorAll('.babyOptions')
     babyButtons.forEach(babyButton => {
         babyButton.removeEventListener('click', reactBaby)
     })
+    // Remove elements from console div - 
     while (consoleDiv.firstChild) {
         consoleDiv.removeChild(consoleDiv.firstChild)
     }
+    // Redisplay console elements to continue gameplay
     controlsDiv.style.display = 'grid'
     phoneDiv.classList.remove('hide')
     screenDiv.classList.remove('hide')
+    // Remove passenger text div
     passengerDiv.removeChild(babyTextDiv)
 }
 
 const startPhoneTimer = () => {
+    // Phone event to trigger based on baby event timer
     let phoneTimer = timer*1.75
-    console.log('phonetimer: ', phoneTimer)
     setTimeout(interactPhone, phoneTimer)
 }
 
 const interactPhone = () => {
+    // When seat phone touched
     const touchPhone = () => {
+        // After phone clicked, return styling and remove event listener, start interaction
         // phoneInteraction = false
         phoneDiv.style.border = '2px solid pink'
         phoneDiv.removeEventListener('click', touchPhone)
-        console.log('touch phone')
         interactCellPhone()
     }
-    console.log('interact')
+    // Add event listener to phone to allow click
     phoneDiv.addEventListener('click', touchPhone)
+    // Style phone to show it should be clicked
     phoneDiv.style.border = '3px solid red'
-    // const blinkBright = () => {
-    //     phoneDiv.style.border = '2px solid red'
-    // }
-    // const blinkLow = () => {
-    //     phoneDiv.style.border = '2px solid pink'
-    // }
-    // while (phoneInteraction === true) {
-    //     setTimeout(blinkBright, 1000)
-    //     setTimeout(blinkLow, 2000)
-    // }
-
 }
 
 const interactCellPhone = () => {
