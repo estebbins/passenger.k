@@ -19,8 +19,9 @@ const consoleDiv = document.getElementById('console')
 const controlsDiv = document.getElementById('controls')
 const phoneDiv = document.getElementById('phone')
 const cellPhoneDiv = document.getElementById('cellphone')
-
-
+const cellTextOneButton = document.getElementById('cell-text-1')
+const cellTextTwoButton = document.getElementById('cell-text-2')
+const cellTextThreeButton = document.getElementById('cell-text-3')
 
 // Create statistics
 let entertainmentScore = 100
@@ -49,9 +50,11 @@ const passengerDiv = document.getElementById('passenger')
 const babyTextDiv = document.createElement('div')
 const babyOptions = ['Try to ignore', 'Put in headphones', 'Cry louder than the baby', 'Play Peekaboo']
 
-let timer = Math.floor(Math.random() * 30000) + 5000
+let timer = Math.floor(Math.random() * 30000) + 10000
 
 let phoneInteraction = true
+
+let gameActive = false
 
 
 const getStartScreen = () => {
@@ -61,6 +64,7 @@ const getStartScreen = () => {
     startButton.innerText = 'Board Plane'
     screenDiv.appendChild(startButton)
     startButton.addEventListener('click', () => {
+        gameActive = true
         stylePage()
         displayStats(entertainmentScore, sanityScore, eta)
         startGameStats()
@@ -464,7 +468,7 @@ const interactCellPhone = () => {
     // style sent text
     part7.style.backgroudColor = 'blue'
     part7.style.borderRadius = '5px'
-    part6.style.padding = '2px'
+    part7.style.padding = '2px'
 
 
     // style my texts 
@@ -476,13 +480,57 @@ const interactCellPhone = () => {
     // style send area - NOT WORKING
     // textContentSpan.backgroudColor = 'white'
     // textContentSpan.borderRadius = '10px'
+
+    // Add event listeners to the text options
+    cellTextOneButton.addEventListener('click', chooseText)
+    cellTextTwoButton.addEventListener('click', chooseText)
+    cellTextThreeButton.addEventListener('click', chooseText)
 }
 
+const chooseText = (event) => {
+    const textContentSpan = document.getElementById('textcontent') 
+    const sendButton = document.getElementById('part9')
+    const playerText = document.getElementById('part7')
+    if (event.target.id === 'cell-text-1'){
+        textContentSpan.textContent = "I'll just take a taxi from the airport"
+    } else if (event.target.id === 'cell-text-2') {
+        textContentSpan.textContent = "We've been delayed a few times, but I should be arriving at about 6:23 your time"
+    } else if (event.target.id === 'cell-text-3') {
+        textContentSpan.textContent = "I don't care I'm just so excited to see you guys!"
+    }
+    const exitPhone = () => {
+        gameDiv.appendChild(cellPhoneDiv)
+        cellPhoneDiv.classList.add('hide')
+    }
+    const sendText = () => {
+        playerText.textContent = textContentSpan.textContent
+        textContentSpan.textContent = ""
+        cellTextOneButton.removeEventListener('click', chooseText)
+        cellTextTwoButton.removeEventListener('click', chooseText)
+        cellTextThreeButton.removeEventListener('click', chooseText)
+        sendButton.removeEventListener('click', sendText)
+        setTimeout(exitPhone, 5000)
+    }
+    sendButton.addEventListener('click', sendText)
+}
 
+const checkGameConditions = () => {
+    if (entertainmentScore === 0) {
+        console.log('bored to death')
+    } else if (sanityScore === 0) {
+        console.log('You jumped out of the emergency exit')
+    } else if (eta === 0) {
+        console.log('congrats you made it to takeoff')
+    }
+}
 
 
 const gameOver = () => {
     alert('Game over!')
+}
+
+while (gameActive) {
+    checkGameConditions()
 }
 
 
