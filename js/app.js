@@ -23,6 +23,11 @@ const cellTextOneButton = document.getElementById('cell-text-1')
 const cellTextTwoButton = document.getElementById('cell-text-2')
 const cellTextThreeButton = document.getElementById('cell-text-3')
 
+// Create exit button
+const exitGameButton = document.createElement('button')
+
+const winLoseScreen = document.createElement('div')
+
 // Create statistics
 let intervalEta
 let intervalEnt
@@ -171,9 +176,7 @@ const stopCountdowns = () => {
 
 const displayGameOver = (condition) => {
     // Create gameover screen elements
-    const winLoseScreen = document.createElement('div')
     const winLoseMsg = document.createElement('div')
-    const exitButton = document.createElement('button')
     // Style win/lose screen
     winLoseScreen.style.gridArea = '1 / 1 / 5 / 5'
     winLoseScreen.style.display = 'flex'
@@ -186,11 +189,11 @@ const displayGameOver = (condition) => {
     gameDiv.appendChild(winLoseScreen)
     // Append win/lose elements to win/lose div
     winLoseScreen.appendChild(winLoseMsg)
-    winLoseScreen.appendChild(exitButton)
+    winLoseScreen.appendChild(exitGameButton)
     // Style exit button
-    exitButton.innerText = 'Exit'
+    exitGameButton.innerText = 'Exit'
     // Add event listener to exit button
-    exitButton.addEventListener('click', resetGame)
+    exitGameButton.addEventListener('click', resetGame)
     if (condition === 'win') {
         winLoseMsg.innerText = 'Unbelievable & short-lived victory! You now get to continue sitting on this plane for the rest of your flight!'
         winLoseMsg.style.color = 'green'
@@ -208,7 +211,8 @@ const displayGameOver = (condition) => {
 
 const resetGame = () => {
     // Remove event listener
-    exitButton.removeEventListener('click', resetGame)
+    exitGameButton.removeEventListener('click', resetGame)
+
     // Reset all statistics
     entertainmentScore = 100
     sanityScore = 100
@@ -216,7 +220,15 @@ const resetGame = () => {
     // Reset selection to 0
     selection = 0
     // Reset safety card span text
-    safetyCardSpan = 'Instructions'
+    safetyCardSpan.innerText = 'Instructions'
+    while (screenDiv.firstChild) {
+        screenDiv.removeChild(screenDiv.firstChild)
+    }
+    while (passengerDiv.firstChild) {
+        passengerDiv.removeChild(passengerDiv.firstChild)
+    }
+    gameDiv.removeChild(winLoseScreen)
+    phoneDiv.removeEventListener('click', touchPhone)
     getStartScreen()
 }
 
@@ -577,16 +589,16 @@ const startPhoneTimer = () => {
     let phoneTimer = timer*1.75
     setTimeout(interactPhone, phoneTimer)
 }
+const touchPhone = () => {
+    // After phone clicked, return styling and remove event listener, start interaction
+    // phoneInteraction = false
+    phoneDiv.style.border = '2px solid pink'
+    phoneDiv.removeEventListener('click', touchPhone)
+    interactCellPhone()
+}
 
 const interactPhone = () => {
     // When seat phone touched
-    const touchPhone = () => {
-        // After phone clicked, return styling and remove event listener, start interaction
-        // phoneInteraction = false
-        phoneDiv.style.border = '2px solid pink'
-        phoneDiv.removeEventListener('click', touchPhone)
-        interactCellPhone()
-    }
     // Add event listener to phone to allow click
     phoneDiv.addEventListener('click', touchPhone)
     // Style phone to show it should be clicked
@@ -688,7 +700,7 @@ const chooseText = (event) => {
     const exitPhone = () => {
         // Resets screen when finished with phone interaction
         playerText.innerText = ''
-        textContentSpan = ''
+        textContentSpan.innerText = ''
         gameDiv.appendChild(cellPhoneDiv)
         cellPhoneDiv.classList.add('hide')
         screenDiv.classList.remove('noclick')
