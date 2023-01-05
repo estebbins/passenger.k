@@ -977,7 +977,7 @@ const scWinFive = ['8', '9']
 const scWinArrays = [scWinOne, scWintwo, scWinThree, scWinFour, scWinFive]
 
 // Access re-used HTML elements
-const safteyImgDiv = document.getElementById('safety-imgs')
+const safetyImgDiv = document.getElementById('safety-imgs')
 
 // Initialize move counter
 let scMoveCounter = 0
@@ -1174,42 +1174,58 @@ const checkSafetyComplete = () => {
     } 
     // When score of 5 is reached, safety card is complete
     if (complete === 5) {
-        // When safety card puzzle complete, set short delay then return to main screen
-        setTimeout(()=> {
-            while (safetyCardDiv.firstChild) {
-                safetyCardDiv.removeChild(safetyCardDiv.firstChild)
-            }
-        }, 2000)
+        // When safety card puzzle complete, return to main screen
+        while (safetyCardDiv.firstChild) {
+            safetyCardDiv.removeChild(safetyCardDiv.firstChild)
+        }
+        // Adjust scores
+        eta -= 30
+        entertainmentScore += 30
+        sanityScore += 10
+        displayStats(entertainmentScore, sanityScore, eta) 
         // Change text of safety card title to show completed puzzle
         safetyCardSpan.innerText = "Safety Demonstration Complete"
         exitSafety()
     }
 }
 
+
 const exitSafety = () => {
+    // Remove all elements from the safetycard
     while (safetyCardDiv.firstChild) {
         safetyCardDiv.removeChild(safetyCardDiv.firstChild)
     }
+    // Add the safety card back to the seat one div
     seatOneDiv.append(safetyCardDiv)
+    // Re-style the safety card div
     safetyCardDiv.style.gridArea = '4 / 6 / 5 / 8' 
     safetyCardDiv.style.display = 'block'
-    safetyCardDiv.append(safetyCardSpan)
     safetyCardDiv.style.backgroundColor = 'red'
+    // Add back the safety card title span
+    safetyCardDiv.append(safetyCardSpan)
+    // Reset the move counter for the safety card in case it was failed
     scMoveCounter = 0
-    // leaveButton.removeEventListener('click', exitToMain)
 }
+
 const checkSCFail = () => {
+    // After 15 clicks, fail the safety card demonstration
     if (scMoveCounter === 15) {
+        // Move all the divs back to their original div to hide them
         while (safetyCardDiv.firstChild) {
-            safteyImgDiv.appendChild(safetyCardDiv.firstChild)
+            safetyImgDiv.appendChild(safetyCardDiv.firstChild)
         }
+        // Update title span to show player they failed the demonstration
         safetyCardSpan.innerText = "Safety Demonstration FAILED"
+        // Exit the safety card
         exitSafety()
+        // Remove event listener for move counter
         safetyCardDiv.removeEventListener('click', increaseSCMoveCounter)
+        // Add back the event listener so player can redo the exercise
         safetyCardDiv.addEventListener('click', openSafetyCard)
     }
 }
 const increaseSCMoveCounter = () => {
+    // Increases move counter & checks for fails after each click
     scMoveCounter++
     checkSCFail()
 }
