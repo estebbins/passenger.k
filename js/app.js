@@ -42,7 +42,7 @@ let etaRate = 1000
 
 // Create Menu Options
 const mainMenu = ['Play', 'Listen', 'Watch']
-const playMenu = ['Tic-Tac-Toe', 'Other game']
+const playMenu = ['Tic-Tac-Toe']
 const watchMenu = ['ICU', '2', '3']
 
 const leaveOption = document.createElement('div')
@@ -284,6 +284,8 @@ const displayWatchMenu = () => {
     // Append menu to screen div
     watchMenuUl.style.display = 'block'
     screenDiv.appendChild(watchMenuUl)
+    screenDiv.style.justifyContent = 'left'
+    screenDiv.style.alignItems = 'flex-end'
     const watchMenuOptions = document.querySelectorAll('.watch-menu-list')
     // Add event listeners
     checkLinearNavigators(watchMenuOptions, watchMenuUl)
@@ -293,22 +295,27 @@ const checkLinearNavigators = (list, ul) => {
     console.log(selection)
     let selected = list[selection]
     selected.style.fontWeight = 'bold'
+    selected.style.color = 'yellow'
     downButton.addEventListener('click', 
         downAction = () => {        
             if (selection < (list.length - 1)) {
                 selected = list[selection]
                 selected.style.fontWeight = 'normal'
+                selected.style.color = '#fdfded'
                 selection += 1
                 selected = list[selection]
                 selected.style.fontWeight = 'bold'
+                selected.style.color = 'yellow'
                 }
     })
     upButton.addEventListener('click', upAction = () => {
         if (selection > 0) {
             selected.style.fontWeight = 'normal'
+            selected.style.color = '#fdfded'
             selection--
             selected = list[selection]
             selected.style.fontWeight = 'bold'
+            selected.style.color = 'yellow'
         }
     })
     selectButton.addEventListener('click', selectAction = () => {
@@ -481,7 +488,8 @@ const reactTrayTable = (event) => {
     // Remove flight attendant text div
     attendantDiv.removeChild(attendantTextDiv)
     // "Close tray table" by restyling to original image
-    trayTableDiv.style.backgroundImage = "url('https://cdn.pixabay.com/photo/2014/04/05/11/09/material-314790_960_720.jpg')"
+    trayTableDiv.style.backgroundImage = "url('/img/brown_ice_by_darkwood67.jpg')"
+    trayTableDiv.style.boxShadow = '0 0 10px 1px rgba(0,0,0,.5) inset, 0 -1px 4px .5px rgba(0,0,0,.9)'
     // Add event listener back onto tray table to be used again
     trayTableButton.addEventListener('click', startTrayTableInt)
 }
@@ -490,8 +498,9 @@ const startTrayTableInt = () => {
     // Begin tray table interaction once clicked, delay attendant for more realistic interaction
     trayTableButton.removeEventListener('click', startTrayTableInt)
     // Style tray table to appear open
-    trayTableDiv.style.backgroundImage = 'none'
-    setTimeout(interactAttendant, 5000)
+    trayTableDiv.style.backgroundImage = "url('/img/IMGP8093.JPG')"
+    trayTableDiv.style.boxShadow = '0 0 10px 3px rgba(0,0,0,.9) inset, 0 -1px 4px .5px rgba(0,0,0,.9)'
+    setTimeout(interactAttendant, 3000)
 }
 
 const interactBaby = () => {
