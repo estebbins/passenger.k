@@ -421,9 +421,10 @@ const interactAttendant = () => {
     attendantTextDiv.innerText = trayTableStr
 
     // Style console div for player interaction
-    consoleDiv.style.display = 'grid'
-    consoleDiv.style.gridTemplate = '3fr repeat(3, 1fr) 3fr / 1fr'
-
+    consoleDiv.style.display = 'flex'
+    consoleDiv.style.flexDirection = 'column'
+    consoleDiv.style.justifyContent = 'center'
+    consoleDiv.style.alignItems = 'center'
     // Hide other console elements
     controlsDiv.style.display = 'none'
     phoneDiv.classList.add('hide')
@@ -438,9 +439,6 @@ const interactAttendant = () => {
         button.className = 'trayTableOptions'
         buttonDiv.appendChild(button)
         consoleDiv.appendChild(buttonDiv)
-        buttonDiv.style.display = 'flex'
-        buttonDiv.style.gridArea = `${2+i} / 1 / ${3+i} / 2`
-        buttonDiv.style.justifyContent = 'center'
         button.addEventListener('click', reactTrayTable)
     }
 }
@@ -499,7 +497,6 @@ const startTrayTableInt = () => {
 const interactBaby = () => {
     // Create baby text & set number to repeat
     const babyCryStr = 'Wah'
-    let repeat = 7
     passenger.appendChild(babyTextDiv)
     const addWah = () => {
         // Add divs to screen for each cry
@@ -511,34 +508,40 @@ const interactBaby = () => {
         displayStats(entertainmentScore, sanityScore, eta)
     }
     // Set timeout for each cry for every 2 seconds
-    for (let i = 0; i < repeat; i++) {
-        babyCry = setTimeout(addWah, 2000*i)
-    }
+    // for (let i = 0; i < repeat; i++) {
+    //     babyCry = setTimeout(addWah, 2000*i)
+    // }
+    addWah()
+    babyCry = setInterval(addWah, 2000)
+    setTimeout(babyCry, 18000)
     // Style console Div for player interaction
-    consoleDiv.style.display = 'grid'
-    consoleDiv.style.gridTemplate = '3fr repeat(3, 1fr) 3fr / 1fr'
+    consoleDiv.style.display = 'flex'
+    consoleDiv.style.flexDirection = 'column'
+    consoleDiv.style.justifyContent = 'center'
+    consoleDiv.style.alignItems = 'center'
     // Hide other elements on top of console
     controlsDiv.style.display = 'none'
     phoneDiv.classList.add('hide')
     screenDiv.classList.add('hide')
     // Create player interaction options & add to the screen.
-    for (let i=0; i < babyOptions.length; i++) {
-        let button = document.createElement('button')
-        const buttonDiv = document.createElement('div')
-        button.innerText = babyOptions[i]
-        button.id = `${i}optb`
-        button.className = 'babyOptions'
-        buttonDiv.appendChild(button)
-        consoleDiv.appendChild(buttonDiv)
-        buttonDiv.style.display = 'flex'
-        buttonDiv.style.gridArea = `${2+i} / 1 / ${3+i} / 2`
-        buttonDiv.style.justifyContent = 'center'
-        button.addEventListener('click', reactBaby)
+    const setReactions = () => {
+        for (let i=0; i < babyOptions.length; i++) {
+            let button = document.createElement('button')
+            const buttonDiv = document.createElement('div')
+            button.innerText = babyOptions[i]
+            button.id = `${i}optb`
+            button.className = 'babyOptions'
+            buttonDiv.appendChild(button)
+            consoleDiv.appendChild(buttonDiv)
+            button.addEventListener('click', reactBaby)
+        }    
     }
+    setTimeout(setReactions, 1500)
 }
 
 const reactBaby = (event) => {
     // Update game statistics based on reaction selected
+    clearInterval(babyCry)
     if (event.target.id === '0optb') {
         // Try to ignore - impact on scores
         eta += 60
@@ -585,8 +588,6 @@ const clearBabyInteraction = () => {
     controlsDiv.style.display = 'grid'
     phoneDiv.classList.remove('hide')
     screenDiv.classList.remove('hide')
-    // Remove passenger text div
-    passengerDiv.removeChild(babyTextDiv)
 }
 
 const touchPhone = () => {
@@ -1040,6 +1041,12 @@ const leaveTicTacToe = () => {
 
 // Used site for guidance and code for dragging & dropping https://www.javascripttutorial.net/web-apis/javascript-drag-and-drop/#:~:text=Most%20modern%20web%20browsers%20have,you%20would%20drag%20an%20image. 
 
+// belted: https://cdn-icons-png.flaticon.com/512/7379/7379659.png 
+// No smoking image = https://cdn.pixabay.com/photo/2016/04/01/08/43/no-smoking-1298904_960_720.png 
+// Oxygen mask image opt two = https://cdn-icons-png.flaticon.com/512/2533/2533196.png 
+// Bag under seat https://cdn-icons-png.flaticon.com/512/6429/6429835.png 
+
+
 // Create answer divs
 const answerOne = document.createElement('div')
 const answerTwo = document.createElement('div')
@@ -1068,6 +1075,7 @@ const safetyImgDiv = document.getElementById('safety-imgs')
 
 // Initialize move counter
 let scMoveCounter = 0
+let complete = 0
 
 const openSafetyCard = () => {
     // Initalizes and styles open Safety Card
@@ -1078,14 +1086,16 @@ const openSafetyCard = () => {
     // Move safety card div to game div for styling
     gameDiv.appendChild(safetyCardDiv)
     // Style safety card
+    safetyCardDiv.classList.remove('closed')
     safetyCardDiv.style.gridArea = '3 / 3 / 4 / 4'
     safetyCardDiv.style.zIndex = '1'
     safetyCardDiv.style.display = 'grid'
-    safetyCardDiv.style.backgroundColor = 'gray'
     safetyCardDiv.style.gridTemplateRows = '.2fr repeat(5, 1fr)'
     safetyCardDiv.style.gridTemplateColumns = '1.5fr 1.5fr 1fr 2fr 1.5fr 1.5fr'
+    safetyCardDiv.style.boxShadow = '0 8px 16px 8px rgba(0,0,0,0.5)'
     // Style title of safety card
-    safetyCardSpan.style.gridArea = '1 / 1 / 7 / 2'
+    safetyCardSpan.style.gridArea = '1 / 1 / 2 / 7'
+    safetyCardSpan.style.zIndex = '1'
     // Create 3 panel divs for styling & placement in game grid
     const panelOneDiv = document.createElement('div')
     const panelTwoDiv = document.createElement('div')
@@ -1094,9 +1104,9 @@ const openSafetyCard = () => {
     panelTwoDiv.style.gridArea = '1 / 3 / 7 / 5'
     panelThreeDiv.style.gridArea = '1 / 5 / 7 / 7'
     // Add class to Panel divs
-    panelOneDiv.classList.add('panel')
-    panelTwoDiv.classList.add('panel')
-    panelThreeDiv.classList.add('panel')
+    panelOneDiv.classList.add('panelOne')
+    panelTwoDiv.classList.add('panelTwo')
+    panelThreeDiv.classList.add('panelThree')
     // Create divs to initialize draggable items
     const seatbeltOneDiv = document.createElement('div')
     const seatbeltTwoDiv = document.createElement('div')
@@ -1130,16 +1140,16 @@ const openSafetyCard = () => {
     maskBTwoDiv.style.gridArea = '3 / 6 / 4 / 7'
     bagOneDiv.style.gridArea = '6 / 1 / 7 / 2'
     bagTwoDiv.style.gridArea = '4 / 5 / 5 / 6'
-    seatbeltOneDiv.style.backgroundColor = 'blue'
-    seatbeltTwoDiv.style.backgroundColor = 'blue'
-    smokingOneDiv.style.backgroundColor = 'red'
-    smokingTwoDiv.style.backgroundColor = 'red'
-    maskAOneDiv.style.backgroundColor = 'pink'
-    maskATwoDiv.style.backgroundColor = 'pink'
-    maskBOneDiv.style.backgroundColor = 'yellow'
-    maskBTwoDiv.style.backgroundColor = 'yellow'
-    bagOneDiv.style.backgroundColor = 'green'
-    bagTwoDiv.style.backgroundColor = 'green'
+    // seatbeltOneDiv.style.backgroundColor = 'blue'
+    // seatbeltTwoDiv.style.backgroundColor = 'blue'
+    // smokingOneDiv.style.backgroundColor = 'red'
+    // smokingTwoDiv.style.backgroundColor = 'red'
+    // maskAOneDiv.style.backgroundColor = 'pink'
+    // maskATwoDiv.style.backgroundColor = 'pink'
+    // maskBOneDiv.style.backgroundColor = 'yellow'
+    // maskBTwoDiv.style.backgroundColor = 'yellow'
+    // bagOneDiv.style.backgroundColor = 'green'
+    // bagTwoDiv.style.backgroundColor = 'green'
     // Give answer divs a class
     answerOne.className = ('safety-answer')
     answerTwo.className = ('safety-answer')
@@ -1173,6 +1183,16 @@ const openSafetyCard = () => {
     safetyCardDiv.appendChild(answerThree)
     safetyCardDiv.appendChild(answerFour)
     safetyCardDiv.appendChild(answerFive)
+
+    const getSafetyAnsImgs = document.querySelectorAll('.safetyans-imgs')
+    for (let i = 0; i < getSafetyAnsImgs.length; i++) {
+        let answerImg = document.createElement('div')
+        answerImg.classList.add('safetyanswerimage')
+        answerImg.appendChild(getSafetyAnsImgs[i])
+        // getSafetyAnsImgs[i].classList.remove('hide')
+        answerImg.style.gridArea = `${2+i} / 3 / ${3+i} / 4`
+        safetyCardDiv.appendChild(answerImg)
+    }
 
     // Store arrays for answers, images, and item divs in variables
     const safetyAnswers = document.querySelectorAll('.safety-answer')
@@ -1215,11 +1235,15 @@ const dragStart = (event) => {
     setTimeout(() => {
         event.target.classList.add('hide')
     }, 0)
+    const getSafetyAnsImgs = document.querySelectorAll('.safetyans-imgs')
+    getSafetyAnsImgs.forEach(img => img.classList.remove('hide'))
 }
 
 const dragEnter = (event) => {
     // Prevent default behavior during dragenter event
     event.preventDefault()
+    const getSafetyAnsImgs = document.querySelectorAll('.safetyans-imgs')
+    getSafetyAnsImgs.forEach(img => img.classList.remove('hide'))
 }
 
 const drop = (event) => {
@@ -1227,6 +1251,9 @@ const drop = (event) => {
     event.preventDefault()
     // Get the draggable image data
     const id = event.dataTransfer.getData('text/plain')
+    // Re-hide answers
+    const getSafetyAnsImgs = document.querySelectorAll('.safetyans-imgs')
+    getSafetyAnsImgs.forEach(img => img.classList.add('hide'))
     // Get draggable image
     const draggable = document.getElementById(id)
     // Add the draggable image to the drop target
@@ -1252,13 +1279,15 @@ const drop = (event) => {
 const checkSafetyComplete = () => {
     // Checks if safety puzzle has been completed successfully
     // Create a score counter to track
-    let complete = 0
     // Compare player answer arrays to win conditions & increase score by one each time
     for(i = 0; i < 5; i++) {
         if(findWinCombo(ansArrays[i], scWinArrays[i])) {
             complete++
-        } 
+        } else {
+            complete = 0
+        }
     } 
+    console.log(complete)
     // When score of 5 is reached, safety card is complete
     if (complete === 5) {
         // When safety card puzzle complete, return to main screen
@@ -1288,10 +1317,12 @@ const exitSafety = () => {
     safetyCardDiv.style.gridArea = '4 / 6 / 5 / 8' 
     safetyCardDiv.style.display = 'block'
     safetyCardDiv.style.backgroundColor = 'red'
+    safetyCardDiv.classList.add('closed')
     // Add back the safety card title span
     safetyCardDiv.append(safetyCardSpan)
     // Reset the move counter for the safety card in case it was failed
     scMoveCounter = 0
+    complete = 0
 }
 
 const checkSCFail = () => {
@@ -1301,6 +1332,7 @@ const checkSCFail = () => {
         while (safetyCardDiv.firstChild) {
             safetyImgDiv.appendChild(safetyCardDiv.firstChild)
         }
+        safetyCardDiv.classList.add('closed')
         // Update title span to show player they failed the demonstration
         safetyCardSpan.innerText = "Safety Demonstration FAILED"
         // Exit the safety card

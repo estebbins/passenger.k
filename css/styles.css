@@ -46,8 +46,9 @@
 #screen { 
     grid-area: 6 / 3 / 7 / 7; 
     margin: 4px 3px 4px 4px;
-    border: 2px solid blue;
-    background-color: blue;
+    background: rgb(64,57,124);
+    background: radial-gradient(circle, rgba(64,57,124,1) 0%, rgba(42,42,224,1) 92%, rgba(133,128,128,1) 100%);
+    box-shadow: 5px 5px 10px 5px rgba(0,0,0,.6) inset;
     z-index: 1;
 } 
 
@@ -144,12 +145,15 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2)
 } 
 #safety-card { 
+
+} 
+.closed {
     grid-area: 4 / 6 / 5 / 8; 
     background: red;
     text-align: right;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     border-bottom:5px solid rgb(78, 72, 72);
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2)
-} 
+}
 
 #stats {
     grid-area: 1 / 3 / 2 / 5;
@@ -201,7 +205,6 @@
     border: 3px dotted blue;
 }
 
-
 .safety-answer {
     display: grid;
     grid-template: 1fr / 1fr 1fr;
@@ -209,12 +212,19 @@
     margin: 3px;
     z-index: 1;
     align-items: center;
+    justify-content: center;
 }
-.safetycard-img {
-    width: 40px;
-    height: 40px;
+.safetycard-img, .safetyans-imgs {
+    width: 50px;
+    height: 50px;
     justify-self: center;
     z-index: 1;
+}
+
+.dragdiv, .safetyanswerimage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cellphonec {
@@ -233,4 +243,21 @@
 }
 .noclick {
     pointer-events: none;
+}
+
+.panelOne {
+    background: rgb(133,128,128);
+    background: linear-gradient(90deg, rgba(133,128,128,1) 0%, rgba(83,83,87,1) 88%, rgba(51,51,51,1) 100%);
+    /* box-shadow: -10px 10px 8px 0 rgba(0,0,0,0.4); */
+}
+.panelTwo {
+    background: rgb(83,83,87);
+    background: linear-gradient(90deg, rgba(83,83,87,1) 0%, rgba(133,128,128,1) 21%, rgba(133,128,128,1) 79%, rgba(83,83,87,1) 100%);
+    /* box-shadow: 0 10px 8px 0 rgba(0,0,0,0.4); */
+}
+
+.panelThree {
+    background: rgb(51,51,51);
+    background: linear-gradient(90deg, rgba(51,51,51,1) 0%, rgba(83,83,87,1) 12%, rgba(133,128,128,1) 100%);
+    /* box-shadow: 10px 10px 8px 0 rgba(0,0,0,0.4); */
 }
