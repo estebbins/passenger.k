@@ -31,10 +31,12 @@
 }
 #console {
     grid-area: 6 / 3 / 7 / 12;
-    background-image: url('https://cdn.pixabay.com/photo/2018/04/05/20/58/plastic-3294211_960_720.jpg');
-    background-repeat: repeat;
-    background-position: left;
+    background-image: url('/img/brown_ice_by_darkwood67.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border-radius: 15px;
+    box-shadow: 0 0 10px 5px rgba(0,0,0,.6) inset;
 }
 #pocket {
     grid-area: 4 / 4 / 5 / 11;
@@ -45,11 +47,15 @@
 }
 #screen { 
     grid-area: 6 / 3 / 7 / 7; 
-    margin: 4px 3px 4px 4px;
+    margin: 10px 10px 10px 20px;
+    border-radius: 3px;
     background: rgb(64,57,124);
     background: radial-gradient(circle, rgba(64,57,124,1) 0%, rgba(42,42,224,1) 92%, rgba(133,128,128,1) 100%);
-    box-shadow: 5px 5px 10px 5px rgba(0,0,0,.6) inset;
+    box-shadow: 0 0 10px 5px rgba(0,0,0,.6) inset;
     z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 } 
 
 .tictactoe {
