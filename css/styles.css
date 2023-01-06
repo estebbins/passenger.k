@@ -52,6 +52,7 @@
     box-shadow: 0 0 10px 5px rgba(0,0,0,.6) inset, 0 0 2px 2px rgba(0,0,0,1);
 } 
 
+/* Source for creating gradients: https://cssgradient.io/ */
 .screenc {
     background: rgb(64,57,124);
     background: radial-gradient(circle, rgba(64,57,124,1) 0%, rgba(42,42,224,1) 92%, rgba(133,128,128,1) 100%);
@@ -290,6 +291,8 @@
     background: rgb(51,51,51);
     background: linear-gradient(90deg, rgba(51,51,51,1) 0%, rgba(83,83,87,1) 12%, rgba(133,128,128,1) 100%);
 }
+
+/* source for triangle-button: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_shapes_triangle-down */
 #tray-open {
     width: 0;
 	height: 0;
@@ -305,4 +308,13 @@ ul {
     font-size: 25px;
     color: #fdfded;
     text-shadow: 1px 1px 2px black;
+}
+
+@keyframes skew-x-shake {
+    0% { transform: skewX(-5deg); }
+    5% { transform: skewX(5deg); }
+    10% { transform: skewX(-5deg); }
+    12% { transform: skewX(5deg); }
+    15% { transform: skewX(0deg); }
+    100% { transform: skewX(0deg); }  
 }

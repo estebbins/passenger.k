@@ -601,18 +601,18 @@ const clearBabyInteraction = () => {
 
 const touchPhone = () => {
     // After phone clicked, return styling and remove event listener, start interaction
-    // phoneInteraction = false
-    phoneDiv.style.border = '2px solid pink'
     phoneDiv.removeEventListener('click', touchPhone)
     interactCellPhone()
 }
+
+// Source for shake animation, including CSS: https://unused-css.com/blog/css-shake-animation/
 
 const interactPhone = () => {
     // When seat phone touched
     // Add event listener to phone to allow click
     phoneDiv.addEventListener('click', touchPhone)
-    // Style phone to show it should be clicked
-    phoneDiv.style.border = '3px solid red'
+    // Style phone to simulate ringing
+    phoneDiv.style.animation = 'skew-x-shake 1.3s infinite'
 }
 
 const interactCellPhone = () => {
