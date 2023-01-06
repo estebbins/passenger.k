@@ -49,30 +49,34 @@
     grid-area: 6 / 3 / 7 / 7; 
     margin: 10px 10px 10px 20px;
     border-radius: 3px;
+    box-shadow: 0 0 10px 5px rgba(0,0,0,.6) inset, 0 0 2px 2px rgba(0,0,0,1);
+} 
+
+.screenc {
     background: rgb(64,57,124);
     background: radial-gradient(circle, rgba(64,57,124,1) 0%, rgba(42,42,224,1) 92%, rgba(133,128,128,1) 100%);
-    box-shadow: 0 0 10px 5px rgba(0,0,0,.6) inset;
     z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-} 
+}
 
 .tictactoe {
     display: grid;
     grid-template: repeat(3, 1fr)/repeat(3, 1fr);
     margin: 0 auto;
-    background-color: #f4f2f2;
-    border: 5px solid #e6a176;
-    border-radius: 5px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    background: #f4f2f2;
+    background: radial-gradient(circle, rgba(64,57,124,0.4) 5%, rgba(244,242,242,1) 42%, rgba(244,242,242,1) 90%, rgba(42,42,224,1) 97%, rgba(133,128,128,1) 99%);
+    box-shadow: 0 0 10px 5px rgba(0,0,0,.6) inset;
     overflow: hidden;
+    justify-content: unset;
+    align-items: unset;
 }
 .box {
     display: none;
     border: 1px solid #e6a176;
     background-repeat: no-repeat;
-    background-size: 90%;
+    background-size: 60%;
     background-position: center;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
 }
@@ -164,7 +168,7 @@
     border-radius: 25px 25px 0 0;
 } 
 #magazine { 
-    grid-area: 2 / 5 / 5 / 10; 
+    grid-area: 2 / 5 / 5 / 11; 
     border: 2px solid purple;
     background-color: purple;
     border-bottom: 5px solid rgb(78, 72, 72);
@@ -174,7 +178,7 @@
 
 } 
 .closed {
-    grid-area: 4 / 6 / 5 / 8; 
+    grid-area: 4 / 6 / 5 / 10; 
     background: red;
     text-align: right;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);

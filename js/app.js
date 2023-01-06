@@ -777,10 +777,23 @@ let moveCounter = 0
 const launchTicTacToe = () => {
     // Add tictactoe boxes to screendiv & style
     screenDiv.classList.add('tictactoe')
+    // screenDiv.style.display = 'grid'
     for (let i = 0; i < boxes.length; i++) {
         screenDiv.appendChild(boxes[i])
         boxes[i].style.display = 'block'
     }
+    boxes[0].style.borderTop = 'none'
+    boxes[0].style.borderLeft = 'none'
+    boxes[1].style.borderTop = 'none'
+    boxes[2].style.borderTop = 'none'
+    boxes[2].style.borderRight = 'none'
+    boxes[3].style.borderLeft = 'none'
+    boxes[5].style.borderRight = 'none'
+    boxes[6].style.borderBottom = 'none'
+    boxes[6].style.borderLeft = 'none'
+    boxes[7].style.borderBottom = 'none'
+    boxes[8].style.borderBottom= 'none'
+    boxes[8].style.borderRight = 'none'
     const boxOne = document.getElementById('box-1')
     boxOne.classList.add('tttselection')
     playTicTacToe()
@@ -896,7 +909,7 @@ const makeMove = (event) => {
         if (moveCounter % 2 === 0) {
             // Style player selection
             tttPlayerSelection.style.backgroundImage = playerOMarker
-            tttPlayerSelection.style.backgroundSize = '80%'
+            tttPlayerSelection.style.backgroundSize = '55%'
             // Add class to div to deactivate click in CSS
             tttPlayerSelection.classList.add('played')
             // Push move into Player's game array
