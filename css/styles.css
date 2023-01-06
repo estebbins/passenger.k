@@ -11,18 +11,18 @@
 #seat-1 {
     grid-area: 3 / 3 / 4 / 4;
     display: grid;
-    grid-template-columns: .2fr .1fr .4fr .2fr .2fr 2fr .5fr .1fr .1fr .3fr .2fr .2fr;
+    grid-template-columns: .2fr .1fr .1fr .2fr .2fr 3fr .2fr .1fr .1fr .3fr .2fr .1fr .1fr .2fr;
     grid-template-rows: .2fr .2fr .2fr .6fr .2fr 3fr .2fr .2fr;
 }
 #seat-main {
-    grid-area: 3 / 2 / 8 / 12;
+    grid-area: 3 / 2 / 8 / 14;
     background-image: url('https://cdn.pixabay.com/photo/2016/11/19/10/29/background-1838494_960_720.jpg');
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 25px 25px 0 0;
 }
 #seat-outer {
-    grid-area: 5 / 1 / 9 / 13;
+    grid-area: 5 / 1 / 9 / 15;
     background-image: url('https://cdn.pixabay.com/photo/2017/01/23/07/23/pink-leather-2001739_960_720.jpg');
     background-repeat: no-repeat;
     background-size: 100%;
@@ -30,7 +30,7 @@
     border-radius: 25px 25px 0 0;
 }
 #console {
-    grid-area: 6 / 3 / 7 / 12;
+    grid-area: 6 / 3 / 7 / 13;
     background-image: url('/img/brown_ice_by_darkwood67.jpg');
     background-size: cover;
     background-position: center;
@@ -39,7 +39,7 @@
     box-shadow: 0 0 10px 5px rgba(0,0,0,.6) inset;
 }
 #pocket {
-    grid-area: 4 / 4 / 5 / 11;
+    grid-area: 4 / 4 / 5 / 12;
     border-radius: 50px;
     border: 5px solid rgb(78, 72, 72);
     background-color: rgb(161, 149, 149);
@@ -86,46 +86,66 @@
     
 }
 #controls { 
-    grid-area: 6 / 7 / 7 / 9; 
-    border: 2px solid black;
+    grid-area: 6 / 7 / 7 / 8; 
     display: grid;
-    grid-template-rows: .5fr 2fr .5fr;
+    grid-template-rows: 1fr .4fr 1fr .4fr 1fr;
+    font-weight: bold;
 } 
 #vol {
-    display: grid;
-    grid-template-areas: repeat(2, 1fr);
+    grid-area: 1 / 1 / 2 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+}
+#vol-up, #vol-down {
+    background-color: rgba(102, 102, 244, 0.695);
+    border-radius: 5px;
 }
 #navigators {
+    grid-area: 3 / 1 / 4 / 2;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
 }
-#up {
+#up, #right, #down, #left, #select {
     grid-area: 1 / 2 / 2 / 3;
     font-size: 10px;
+    background-color: rgba(239, 238, 168, 0.734);
+    border-radius: 50%;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #right {
     grid-area: 2 / 3 / 3 / 4;
-    font-size: 10px;
 }
 #down {
     grid-area: 3 / 2 / 4 / 3;
-    font-size: 10px;
 }
 #left {
     grid-area: 2 / 1 / 3 / 2;
-    font-size: 10px;
 }
 #select {
     grid-area: 2 / 2 / 3 / 3;
-    font-size: 10px;
+    background-color: silver;
 }
 #brightness {
-    display: grid;
-    grid-template-areas: repeat(2, 1fr);
+    grid-area: 5 / 1 / 6 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+}
+#bright-up, #bright-down {
+    background-color:rgb(223, 228, 248);
+    border-radius: 5px;
 }
 #phone { 
-    grid-area: 6 / 10 / 7 / 12; 
+    grid-area: 6 / 9 / 7 / 12; 
     border: 2px solid pink;
     background-image: url('https://cdn.pixabay.com/photo/2018/04/05/20/58/plastic-3294211_960_720.jpg');
     background-repeat: no-repeat;
@@ -133,7 +153,7 @@
     border-radius: 30px;
 } 
 #tray-table { 
-    grid-area: 8 / 2 / 9 / 12;
+    grid-area: 8 / 2 / 9 / 14;
     border: 2px solid gray;
     display: flex;
     justify-content: center;
