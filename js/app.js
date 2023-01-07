@@ -916,11 +916,13 @@ const navAction = (event) => {
 }
 
 const makeMove = (event) => {
-    // Increase move counter
-    moveCounter++
+
+    
     // Identify which box is selected
     const tttPlayerSelection = document.querySelector('.tttselection')
     if (event.target.id === 'select' && !tttPlayerSelection.classList.contains('played')) {
+        // Increase move counter
+        moveCounter++
         // Identify which player's move it is based on move counter
         if (moveCounter % 2 === 0) {
             // Style player selection
