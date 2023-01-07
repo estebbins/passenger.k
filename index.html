@@ -8,11 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;500&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Kanit:wght@100;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Kanit:wght@100;400&family=Permanent+Marker&display=swap" rel="stylesheet">
     <title>passenger.k</title>
 </head>
 <body>
-    <div id="game">  
+    <div id="game">
+        <video id="background-video" class="hide">
+            <source src="img/action_movie.mp4" type="video/mp4">
+        </video>
         <div id="seat-1">
             <div id="seat-main"> </div>
             <div id="seat-outer"> </div>
@@ -43,14 +46,13 @@
             <div id="tray-table">
                 <button id="tray-open"><img src='https://cdn-icons-png.flaticon.com/512/106/106987.png' id="traybutton"></button>
             </div> 
-            <div id="magazine"><span id="mag">Magazine</span></div> 
-            <div id="safety-card" class="closed"><span id="planenumber">K138</span><span id="safety">Safety</span><span id="instructions">     Instructions</span></div> 
+            <div id="magazine"><span id="mag">Credits</span></div> 
+            <div id="safety-card" class="closed"><span id="planenumber">K138</span><span id="safety">Safety</span><span id="instructions">Instructions</span></div> 
         </div>
         <div id="stats">
-            <div id="entertainment-meter">
-            </div> 
-            <div id="sanity-meter"> </div> 
-            <div id="eta"> </div> 
+            <div id="entertainment-meter"><span id="ent-span">entertainment</span></div> 
+            <div id="sanity-meter"><span id="san-span">sanity</span></div> 
+            <div id="eta"><span id="dep-span">departure</span></div> 
         </div>
         <div id="gap"> </div>
         <div id="background-seats"> </div>
@@ -91,7 +93,13 @@
         <img class="safetyans-imgs hide" src="https://cdn-icons-png.flaticon.com/512/6429/6429835.png">
     </div>
     <div id="videos" class="hide">
-        <video id='alien' width="320" height="240">
+        <video id="alien" width="370" height="240">
+            Your browser does not support the video tag.
+        </video>
+        <video id="action" width="320" height="240">
+            Your browser does not support the video tag.
+        </video>
+        <video id="dog" width="320" height="240">
             Your browser does not support the video tag.
         </video>
     </div>

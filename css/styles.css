@@ -259,31 +259,48 @@ body {
     grid-template-columns: repeat(3, 1fr);
     background-color: rgba(128, 128, 128, 0.666);
     border-radius: 10px;
+    font-family: 'Permanent Marker', cursive;
+    /* color: white;
+    text-shadow: 1px 4px 6px #def, 0 0 0 #000, 1px 4px 6px #def; */
+    color: rgba(30, 109, 35, 0.705);
+    /* color: transparent; */
+    text-shadow: 1px 1px 1px rgb(169, 158, 158), -1px -1px 1px rgb(185, 172, 172);
+    /* text-shadow: 0px 0px 1px rgba(91, 255, 76, 0.8); */
+    /* color:rgb(142, 130, 130); */
+    /* text-shadow: -1px -1px 1px rgba(234, 212, 212, 0.381), 1px 1px 1px rgba(0, 0, 0, 0.702); */
+    /* background-clip: text; */
 }
 #entertainment-meter { 
     grid-area: 1 / 1 / 2 / 2; 
-
-    display: inline-block;
-    align-items: center;
-    /* background-image: url('https://images.unsplash.com/photo-1579546928686-286c9fbde1ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=339&q=80'); */
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 100%;
     border-radius: 10px;
-    background-color: rgb(75, 141, 75);
+    background-color: #560f8596;
 } 
 #sanity-meter { 
     grid-area: 1 / 2 / 2 / 3; 
-    /* background-image: url('https://images.unsplash.com/photo-1509114397022-ed747cca3f65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'); */
-    background-repeat: no-repeat;
-    background-position: top;
     border-radius: 10px;
-    background-color: rgb(141, 75, 75);
+    background-color: #b71a1f93;
 } 
 #eta { 
     grid-area: 1 / 3 / 2 / 4; 
-    border: 2px solid violet;
+    background-color: #df316e8e;
+    border-radius: 10px;
 } 
+#entertainment-meter, #sanity-meter, #eta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#ent-span {
+    color: #560f8596;
+    position: relative;
+}
+#san-span {
+    color: #b71a1f93;
+}
+#dep-span {
+    color: #df316e8e;
+}
+
 
 #aisle {
     grid-area: 3 / 4 / 4 / 5;
@@ -411,4 +428,30 @@ ul {
     12% { transform: skewX(5deg); }
     15% { transform: skewX(0deg); }
     100% { transform: skewX(0deg); }  
+}
+
+#background-video {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+}
+.screenmovie {
+    background: rgb(64,57,124);
+    background: radial-gradient(circle, rgba(64,57,124,1) 0%, rgba(42,42,224,1) 92%, rgba(133,128,128,1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    z-index: 1;
+    font-size: 15px;
+    font-weight: 500;
+    color: yellow;
+    text-shadow: -1px -1px 2px black;
+    font-family: 'IBM Plex Mono', monospace;
 }

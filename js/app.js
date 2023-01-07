@@ -4,6 +4,7 @@
 const gameDiv = document.getElementById('game')
 const seatOneDiv = document.getElementById('seat-1')
 const screenDiv = document.getElementById('screen')
+const screenCDiv = document.querySelector('.screenc')
 const entertainmentDiv = document.getElementById('entertainment-meter')
 const sanityDiv = document.getElementById('sanity-meter')
 const etaDiv = document.getElementById('eta')
@@ -22,6 +23,8 @@ const cellPhoneDiv = document.getElementById('cellphone')
 const cellTextOneButton = document.getElementById('cell-text-1')
 const cellTextTwoButton = document.getElementById('cell-text-2')
 const cellTextThreeButton = document.getElementById('cell-text-3')
+
+const backgroundVideo = document.getElementById('background-video')
 
 // Create exit button
 const exitGameButton = document.createElement('button')
@@ -43,7 +46,7 @@ let etaRate = 1000
 // Create Menu Options
 const mainMenu = ['Play', 'Listen', 'Watch']
 const playMenu = ['Tic-Tac-Toe']
-const watchMenu = ['ICU', '2', '3']
+const watchMenu = ['Eye Cee U', 'Matriception', 'Inner Piece']
 
 const leaveOption = document.createElement('div')
 leaveOption.id = 'leave'
@@ -53,8 +56,8 @@ leaveOption.textContent = 'Exit to Main Menu'
 let selection = 0
 
 const movieOne = document.getElementById('alien')
-const movieTwo = document.getElementById('placeholder')
-const movieThree = document.getElementById('placeholder')
+const movieTwo = document.getElementById('action')
+const movieThree = document.getElementById('dog')
 const trayTableDiv = document.getElementById('tray-table')
 const attendantDiv = document.getElementById('attendant')
 const attendantTextDiv = document.createElement('div')
@@ -67,8 +70,6 @@ const babyOptions = [
     'Cry louder than the baby', 
     'Play Peekaboo'
 ]
-
-let phoneInteraction = true
 
 const getStartScreen = () => {
     // Set up start button & add to screen div
@@ -87,7 +88,7 @@ const startGameLoop = () => {
     startGameStats()
     screenDiv.removeChild(startButton)
     displayMainMenu()
-    safetyCardSpan.textContent = 'Safety Card'
+    // safetyCardSpan.textContent = 'Safety Card'
     safetyCardDiv.addEventListener('click', openSafetyCard)
     trayTableButton.addEventListener('click', startTrayTableInt)
     startButton.removeEventListener('click', startGameLoop)
@@ -133,19 +134,20 @@ const displayStats = (entScore, sanScore, currentEta) => {
         eta = 0
     }
     // Style screen with scores
-    entertainmentDiv.textContent = entScore
-    sanityDiv.textContent = sanScore
+    // entertainmentDiv.textContent = entScore
+    // sanityDiv.textContent = sanScore
     entertainmentDiv.style.width = `${entScore}%`
     sanityDiv.style.width = `${sanScore}%`
+    etaDiv.style.width = `${(currentEta/300)*100}%`
     // format eta, Math.floor method recommendation from https://www.golinuxcloud.com/javascript-integer-division/ 
     // Style ETA to show as a countdown timer
-    const etaMinute = Math.floor(currentEta / 60)
-    const etaSecond = currentEta % 60
-    if (etaSecond < 10) {
-        etaDiv.textContent = `${etaMinute}:0${etaSecond}`
-    } else {
-        etaDiv.textContent = `${etaMinute}:${etaSecond}`
-    }
+    // const etaMinute = Math.floor(currentEta / 60)
+    // const etaSecond = currentEta % 60
+    // if (etaSecond < 10) {
+    //     etaDiv.textContent = `${etaMinute}:0${etaSecond}`
+    // } else {
+    //     etaDiv.textContent = `${etaMinute}:${etaSecond}`
+    // }
     checkGameConditions()
 }
 
@@ -286,8 +288,8 @@ const displayWatchMenu = () => {
     // Append menu to screen div
     watchMenuUl.style.display = 'block'
     screenDiv.appendChild(watchMenuUl)
-    screenDiv.style.justifyContent = 'left'
-    screenDiv.style.alignItems = 'flex-end'
+    // screenDiv.style.justifyContent = 'left'
+    // screenDiv.style.alignItems = 'flex-end'
     const watchMenuOptions = document.querySelectorAll('.watch-menu-list')
     // Add event listeners
     checkLinearNavigators(watchMenuOptions, watchMenuUl)
@@ -343,7 +345,14 @@ const checkLinearNavigators = (list, ul) => {
         }
         } else if (ul.id === 'watch-menu') {
             if (selection === 0) {
+                selection = 0
                 watchMovie(0)
+            } else if (selection === 1) {
+                selection = 0
+                watchMovie(1)
+            } else if (selection === 2) {
+                selection = 0
+                watchMovie(2)
             }
         }
         selection = 0
@@ -354,8 +363,11 @@ const checkLinearNavigators = (list, ul) => {
 
 // Resource for Movie HTML guidance https://www.w3schools.com/html/html5_video.asp 
 // Royalty Free Alien Movie - https://pixabay.com/videos/alien-eye-gel-aloe-vera-blender-139974/ 
-
+// How to set movie as background https://blog.hubspot.com/website/video-background-css
+// https://pixabay.com/videos/dog-pet-animal-small-furry-cute-15305/
 const watchMovie = (num) => {
+    screenDiv.classList.remove('screenc')
+    screenDiv.classList.add('screenmovie')
     if (num === 0) {
         screenDiv.appendChild(movieOne)
         const sourceOne = document.createElement('source')
@@ -369,7 +381,9 @@ const watchMovie = (num) => {
             screenDiv.appendChild(leaveOption)
             selectButton.addEventListener('click', exitMovie)
         }, 8000)
-
+        setTimeout(() => {
+            interactPhone()
+        }, 10000)
         // update game stats
         entertainmentScore += 15
         sanityScore -= 10
@@ -378,31 +392,43 @@ const watchMovie = (num) => {
     } else if (num === 1) {
         screenDiv.appendChild(movieTwo)
         const sourceTwo = document.createElement('source')
-        sourceTwo.src = 'img/Alienmovie.mp4'
+        sourceTwo.src = 'img/action_movie.mp4'
         sourceTwo.type = 'video/mp4'
         movieTwo.appendChild(sourceTwo)
+        movieTwo.load()
+        movieTwo.play()
         movieTwo.autoplay = true
         setTimeout(()=> {
             screenDiv.appendChild(leaveOption)
             selectButton.addEventListener('click', exitMovie)
-        }, 8000)
-
+            gameDiv.style.backgroundImage = "url('https://cdn.pixabay.com/photo/2014/11/06/10/54/passengers-519008_960_720.jpg')"
+            gameDiv.style.backgroundColor = 'rgb(221, 221, 203)'
+            backgroundVideo.classList.add('hide')
+        }, 18000)
+        backgroundVideo.classList.remove('hide')
+        backgroundVideo.load()
+        backgroundVideo.play()
+        backgroundVideo.autoplay = true
+        gameDiv.style.backgroundImage = 'none'
+        gameDiv.style.backgroundColor = 'transparent'
         // update game stats
-        entertainmentScore += 10
+        entertainmentScore += 30
         sanityScore += 5
         eta -= 12
         displayStats(entertainmentScore, sanityScore, eta)
     } else if (num === 2) {
         screenDiv.appendChild(movieThree)
         const sourceThree = document.createElement('source')
-        sourceThree.src = 'img/Alienmovie.mp4'
+        sourceThree.src = 'img/dog_movie.mp4'
         sourceThree.type = 'video/mp4'
-        movieThree.appendChild(sourceTwo)
-        movieOne.autoplay = true
+        movieThree.appendChild(sourceThree)
+        movieThree.load()
+        movieThree.play()
+        movieThree.autoplay = true
         setTimeout(()=> {
             screenDiv.appendChild(leaveOption)
             selectButton.addEventListener('click', exitMovie)
-        }, 8000)
+        }, 14000)
 
         // update game stats
         entertainmentScore += 20
@@ -417,8 +443,9 @@ const exitMovie = () => {
         screenDiv.removeChild(screenDiv.firstChild)
     }
     selectButton.removeEventListener('click', exitMovie)
+    screenDiv.classList.add('screenc')
+    screenDiv.classList.remove('screenmovie')
     displayMainMenu()
-    interactPhone()
 }
 
 // Set Game Interactions with Attendant & Passenger
@@ -604,6 +631,7 @@ const clearBabyInteraction = () => {
 const touchPhone = () => {
     // After phone clicked, return styling and remove event listener, start interaction
     phoneDiv.removeEventListener('click', touchPhone)
+    phoneDiv.style.animation = 'none'
     interactCellPhone()
 }
 
