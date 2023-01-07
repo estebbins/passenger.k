@@ -14,7 +14,7 @@ const leftButton = document.getElementById('left')
 const rightButton = document.getElementById('right')
 const selectButton = document.getElementById('select')
 const safetyCardDiv = document.getElementById('safety-card')
-const safetyCardSpan = document.getElementById('safe-card')
+const safetyCardSpan = document.getElementById('safety')
 const trayTableButton =document.getElementById('tray-open')
 const consoleDiv = document.getElementById('console')
 const controlsDiv = document.getElementById('controls')
@@ -80,29 +80,24 @@ const getStartScreen = () => {
     const startButton = document.createElement('button')
     startButton.id = 'start'
     startButton.innerText = 'Board Plane'
-    screenDiv.appendChild(startButton)
+    gameDiv.appendChild(startButton)
     startButton.addEventListener('click', startGameLoop)
     // a! Will need to add more reset features to this screen.
 }
 
 const startGameLoop = () => {
     const startButton = document.getElementById('start')
-    stylePage()
+    const safetySpan = document.getElementById('safety')
+    const instructionsSpan = document.getElementById('instructions')
     displayStats(entertainmentScore, sanityScore, eta)
     startGameStats()
-    screenDiv.removeChild(startButton)
+    gameDiv.removeChild(startButton)
     displayMainMenu()
-    // safetyCardSpan.textContent = 'Safety Card'
+    safetySpan.style.textShadow = '1px 1px green, -1px -1px black'
+    instructionsSpan.style.textShadow = 'none'
     safetyCardDiv.addEventListener('click', openSafetyCard)
     trayTableButton.addEventListener('click', startTrayTableInt)
     startButton.removeEventListener('click', startGameLoop)
-}
-
-const stylePage = () => {
-    // const seatOuter = document.getElementById('seat-outer')
-    // const seatMain = document.getElementById('seat-main')
-    // seatOuter.style.boxShadow = '10px 0 3px 2px rgba(0,0,0,0.4)'
-    // seatMain.style.boxShadow = '10px 0 3px 2px rgba(0,0,0,0.4)'
 }
 
 const checkGameConditions = () => {
@@ -222,24 +217,6 @@ const displayGameOver = (condition) => {
 
 const resetGame = () => {
     location.reload()
-    // // Remove event listener
-    // exitGameButton.removeEventListener('click', resetGame)
-
-    // // Reset all statistics
-    // entertainmentScore = 100
-    // sanityScore = 100
-    // eta = 300
-    // // Reset selection to 0
-    // selection = 0
-    // // Reset safety card span text
-    // safetyCardSpan.innerText = 'Instructions'
-    // while (screenDiv.firstChild) {
-    //     screenDiv.removeChild(screenDiv.firstChild)
-    // }
-    // clearBabyInteraction()
-    // gameDiv.removeChild(winLoseScreen)
-    // phoneDiv.removeEventListener('click', touchPhone)
-    // getStartScreen()
 }
 
 const displayMainMenu = () => {
@@ -1163,15 +1140,11 @@ const openSafetyCard = () => {
     gameDiv.appendChild(safetyCardDiv)
     // Style safety card
     safetyCardDiv.classList.remove('closed')
-    safetyCardDiv.style.gridArea = '3 / 3 / 4 / 4'
-    safetyCardDiv.style.zIndex = '1'
-    safetyCardDiv.style.display = 'grid'
-    safetyCardDiv.style.gridTemplateRows = '.2fr repeat(5, 1fr)'
-    safetyCardDiv.style.gridTemplateColumns = '1.5fr 1.5fr 1fr 2fr 1.5fr 1.5fr'
-    safetyCardDiv.style.boxShadow = '0 8px 16px 8px rgba(0,0,0,0.5)'
-    // Style title of safety card
+    safetyCardDiv.classList.add('opened')
+    // Place Safety card span for title
     safetyCardSpan.style.gridArea = '1 / 1 / 2 / 7'
     safetyCardSpan.style.zIndex = '1'
+    safetyCardSpan.innerText = 'Safety Demonstration: Drag images to correct boxes to complete'
     // Create 3 panel divs for styling & placement in game grid
     const panelOneDiv = document.createElement('div')
     const panelTwoDiv = document.createElement('div')
@@ -1376,7 +1349,7 @@ const checkSafetyComplete = () => {
         sanityScore += 10
         displayStats(entertainmentScore, sanityScore, eta) 
         // Change text of safety card title to show completed puzzle
-        safetyCardSpan.innerText = "Safety Demonstration Complete"
+        safetyCardSpan.innerText = "COMPLETE"
         exitSafety()
     }
 }
@@ -1390,12 +1363,14 @@ const exitSafety = () => {
     // Add the safety card back to the seat one div
     seatOneDiv.append(safetyCardDiv)
     // Re-style the safety card div
-    safetyCardDiv.style.gridArea = '4 / 6 / 5 / 8' 
-    safetyCardDiv.style.display = 'block'
-    safetyCardDiv.style.backgroundColor = 'red'
+    // safetyCardDiv.style.display = 'block'
+    safetyCardDiv.classList.remove('opened')
     safetyCardDiv.classList.add('closed')
     // Add back the safety card title span
+    const planeNumberSpan = document.getElementById('planenumber')
+    safetyCardDiv.append(planeNumberSpan)
     safetyCardDiv.append(safetyCardSpan)
+    safetyCardSpan.style.gridArea = '2 / 3 / 3 / 4'
     // Reset the move counter for the safety card in case it was failed
     scMoveCounter = 0
     complete = 0
@@ -1410,7 +1385,7 @@ const checkSCFail = () => {
         }
         safetyCardDiv.classList.add('closed')
         // Update title span to show player they failed the demonstration
-        safetyCardSpan.innerText = "Safety Demonstration FAILED"
+        safetyCardSpan.innerText = "TRY AGAIN"
         // Exit the safety card
         exitSafety()
         // Remove event listener for move counter
