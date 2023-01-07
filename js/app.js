@@ -94,10 +94,10 @@ const startGameLoop = () => {
 }
 
 const stylePage = () => {
-    const seatOuter = document.getElementById('seat-outer')
-    const seatMain = document.getElementById('seat-main')
-    seatOuter.style.boxShadow = '10px 0 3px 2px rgba(0,0,0,0.4)'
-    seatMain.style.boxShadow = '10px 0 3px 2px rgba(0,0,0,0.4)'
+    // const seatOuter = document.getElementById('seat-outer')
+    // const seatMain = document.getElementById('seat-main')
+    // seatOuter.style.boxShadow = '10px 0 3px 2px rgba(0,0,0,0.4)'
+    // seatMain.style.boxShadow = '10px 0 3px 2px rgba(0,0,0,0.4)'
 }
 
 const checkGameConditions = () => {
@@ -135,6 +135,8 @@ const displayStats = (entScore, sanScore, currentEta) => {
     // Style screen with scores
     entertainmentDiv.textContent = entScore
     sanityDiv.textContent = sanScore
+    entertainmentDiv.style.width = `${entScore}%`
+    sanityDiv.style.width = `${sanScore}%`
     // format eta, Math.floor method recommendation from https://www.golinuxcloud.com/javascript-integer-division/ 
     // Style ETA to show as a countdown timer
     const etaMinute = Math.floor(currentEta / 60)

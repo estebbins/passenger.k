@@ -1,12 +1,17 @@
+body {
+    background-color: rgb(221, 221, 203);
+}
 #game { 
     display: grid; 
     grid-template-columns: 1fr .4fr 4.5fr 1fr;
-    grid-template-rows: .8fr .2fr 6fr;
+    grid-template-rows: .5fr .5fr 6fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px; 
     width: 960px;
     height: 540px;
-    background-color: beige;
+    background-color: rgb(221, 221, 203);
+    margin: 0 auto;
+    box-shadow: 2px 2px 10px 3px ;
 }
 #seat-1 {
     grid-area: 3 / 3 / 4 / 4;
@@ -14,21 +19,31 @@
     grid-template-columns: .2fr .1fr .1fr .2fr .2fr 3fr .2fr .1fr .1fr .3fr .2fr .1fr .1fr .2fr;
     grid-template-rows: .2fr .2fr .2fr .6fr .2fr 3fr .2fr .2fr;
 }
+/* Source: how to use image as border: https://www.w3schools.com/css/tryit.asp?filename=trycss3_border-image */
 #seat-main {
-    grid-area: 3 / 2 / 8 / 14;
-    background-image: url('https://cdn.pixabay.com/photo/2016/11/19/10/29/background-1838494_960_720.jpg');
+    grid-area: 3 / 2 / 9 / 14;
+    background-image: url('https://images.unsplash.com/photo-1611242319342-ed0d65b1a0f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 25px 25px 0 0;
+    border-image: url('https://cdn.pixabay.com/photo/2017/09/09/15/11/leather-2732272_960_720.jpg') 30 round;
+    border: 4px dashed rgb(48, 52, 82);
+    box-shadow: 5px 0 4px 2px #234c7c, 0 0 20px 0 #2f3f53bf inset;
 }
 #seat-outer {
     grid-area: 5 / 1 / 9 / 15;
-    background-image: url('https://cdn.pixabay.com/photo/2017/01/23/07/23/pink-leather-2001739_960_720.jpg');
+    background-image: url('https://images.unsplash.com/photo-1528459105426-b9548367069b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=664&q=80');
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     background-position: center;
     border-radius: 25px 25px 0 0;
+    background-color: #461111;
+    /* border-image: url('https://cdn.pixabay.com/photo/2017/01/23/07/25/yellow-skin-2001741_960_720.jpg') 30 round; */
+    border: 4px dashed #6c1a1a;
+    box-shadow: 5px 0 4px 2px #461111;
+    border-bottom: none;
 }
+
 #console {
     grid-area: 6 / 3 / 7 / 13;
     background-image: url('/img/brown_ice_by_darkwood67.jpg');
@@ -43,7 +58,7 @@
     border-radius: 50px;
     border: 5px solid rgb(78, 72, 72);
     background-color: rgb(161, 149, 149);
-    box-shadow: 10px 10px 3px 2px rgba(0,0,0,0.4);
+    box-shadow: 0 -5px 10px 5px rgba(0,0,0,.6) inset;
 }
 #screen { 
     grid-area: 6 / 3 / 7 / 7; 
@@ -172,34 +187,60 @@
 } 
 #magazine { 
     grid-area: 2 / 5 / 5 / 11; 
-    border: 2px solid purple;
+    background-image: url('https://images.unsplash.com/photo-1563089145-599997674d42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
+    background-size: cover;
     background-color: purple;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 2px;
+    border-right: 4px double rgb(114, 104, 104);
     border-bottom: 5px solid rgb(78, 72, 72);
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2)
+    box-shadow: 0 -10px 15px 0 rgba(0,0,0,.4) inset, 0px -5px 15px 0px rgba(0,0,0,.6);
+
 } 
 #safety-card { 
 
 } 
 .closed {
     grid-area: 4 / 6 / 5 / 10; 
-    background: red;
+    background-image: url('https://images.unsplash.com/photo-1577792222727-149229ebbd7b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80');
     text-align: right;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     border-bottom:5px solid rgb(78, 72, 72);
+    box-shadow: 0 -10px 15px 0 rgba(0,0,0,.4) inset, 0px -10px 20px 0px rgba(0,0,0,.6);
+    color: white;
+    border-radius: 2px;
+    /* text-shadow: -1px -1px 2px black; */
+    padding: 5px;
+    font-size: 20px;
+    text-shadow: 1px 1px black, -1px -1px rgb(194, 18, 18);
+    /* color: transparent; */
 }
 
 #stats {
     grid-area: 1 / 3 / 2 / 5;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    background-color: rgba(128, 128, 128, 0.666);
+    border-radius: 10px;
 }
 #entertainment-meter { 
     grid-area: 1 / 1 / 2 / 2; 
-    border: 2px solid red;
+
+    display: inline-block;
+    align-items: center;
+    /* background-image: url('https://images.unsplash.com/photo-1579546928686-286c9fbde1ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=339&q=80'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    border-radius: 10px;
+    background-color: rgb(75, 141, 75);
 } 
 #sanity-meter { 
     grid-area: 1 / 2 / 2 / 3; 
-    border: 2px solid orange;
+    /* background-image: url('https://images.unsplash.com/photo-1509114397022-ed747cca3f65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'); */
+    background-repeat: no-repeat;
+    background-position: top;
+    border-radius: 10px;
+    background-color: rgb(141, 75, 75);
 } 
 #eta { 
     grid-area: 1 / 3 / 2 / 4; 
@@ -208,34 +249,27 @@
 
 #aisle {
     grid-area: 3 / 4 / 4 / 5;
-    border: 3px dotted purple;
 }
 #announcements { 
     grid-area: 2 / 7 / 5 / 8; 
-    border: 2px solid olivedrab;
 } 
 #attendant { 
     grid-area: 6 / 7 / 7 / 8; 
-    border: 2px solid brown;
 } 
 
 #seat-2 {
     grid-area: 3 / 1 / 4 / 2;
-    border: 3px dotted purple;
 }
 #passenger { 
-    grid-area: 1 / 1 / 5 / 2; 
-    border: 2px solid yellow;
+    grid-area: 1 / 1 / 5 / 2;
 } 
 
 #gap {
     grid-area: 1 / 2 / 4 / 3;
-    border: 3px dotted blue;
 }
 
 #background-seats {
     grid-area: 2 / 1 / 3 / 5;
-    border: 3px dotted blue;
 }
 
 .safety-answer {
@@ -307,7 +341,8 @@ ul {
     justify-items: left;
     font-size: 25px;
     color: #fdfded;
-    text-shadow: 1px 1px 2px black;
+    text-shadow: -1px -1px 2px black;
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 @keyframes skew-x-shake {
