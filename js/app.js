@@ -185,16 +185,10 @@ const stopCountdowns = () => {
 const displayGameOver = (condition) => {
     // Create gameover screen elements
     const winLoseMsg = document.createElement('div')
-    // Style win/lose screen
-    winLoseScreen.style.gridArea = '1 / 1 / 5 / 5'
-    winLoseScreen.style.display = 'flex'
-    winLoseScreen.style.backgroundColor = 'rgba(0,0,0,0.6)'
-    winLoseScreen.style.zIndex = '1'
-    winLoseScreen.style.justifyContent = 'center'
-    winLoseScreen.style.alignItems = 'center'
-    winLoseScreen.style.flexDirection = 'column'
     // Append win/lose screen to the game div to overlay game
     gameDiv.appendChild(winLoseScreen)
+    winLoseScreen.id = 'winlose'
+    exitGameButton.id = 'exitgame'
     // Append win/lose elements to win/lose div
     winLoseScreen.appendChild(winLoseMsg)
     winLoseScreen.appendChild(exitGameButton)
@@ -205,15 +199,12 @@ const displayGameOver = (condition) => {
     if (condition === 'win') {
         winLoseMsg.innerText = 'Unbelievable & short-lived victory! You now get to continue sitting on this plane for the rest of your flight!'
         winLoseMsg.style.color = 'green'
-        winLoseMsg.style.fontSize = '60px'
     } else if (condition === 'ent loss') {
         winLoseMsg.innerText = 'Died of Boredom!'
         winLoseMsg.style.color = 'green'
-        winLoseMsg.style.fontSize = '60px'
     } else if (condition === 'san loss') {
         winLoseMsg.innerText = 'You lost all sanity and jumped from the emergency exit onto the tarmac!'
         winLoseMsg.style.color = 'red'
-        winLoseMsg.style.fontSize = '60px'
     }
 }
 
@@ -1047,7 +1038,6 @@ const checkWin = () => {
 }
 
 const leaveTicTacToe = () => {
-
     const tttResult = document.getElementById('tttresult')
     const tttLeave = document.getElementById('leave')
     // Remove game event listeners
@@ -1097,13 +1087,12 @@ const answerThree = document.createElement('div')
 const answerFour = document.createElement('div')
 const answerFive = document.createElement('div')
 
-// Create player answer arrays & place into an array
+// Create player answer arrays
 let ansOneArray = []
 let ansTwoArray = []
 let ansThreeArray = []
 let ansFourArray = []
 let ansFiveArray = []
-const ansArrays = [ansOneArray, ansTwoArray, ansThreeArray, ansFourArray, ansFiveArray]
 
 // Create win conditions in arrays & place into an array
 const scWinOne = ['0', '1']
@@ -1321,15 +1310,18 @@ const checkSafetyComplete = () => {
             ansFiveArray.push(childFive.id)
         }
     }
+
+    console.log(ansOneArray)
+    console.log(ansTwoArray)
+    console.log(ansThreeArray)
+    console.log(ansFourArray)
+    console.log('five', ansFiveArray)
     // Compare player answer arrays to win conditions & increase score by one each time
+    const ansArrays = [ansOneArray, ansTwoArray, ansThreeArray, ansFourArray, ansFiveArray]
     for(let i = 0; i < 5; i++) {
         if(findWinCombo(ansArrays[i], scWinArrays[i])) {
             complete++
-            console.log('completeb4', complete)
-        } else {
-            complete = 0
-        }
-        console.log('completeafter', complete)
+        } 
     } 
     // When score of 5 is reached, safety card is complete
     if (complete === 5) {

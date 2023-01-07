@@ -520,6 +520,31 @@ ul {
     text-shadow: 1px 1px 1px rgb(63, 56, 56), -1px -1px 1px rgb(56, 24, 24);
     color: white;
 }
+
+#winlose {
+    grid-area: 1 / 1 / 5 / 5;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.811);
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+    font-size: 50px;
+    text-shadow: 3px 3px 3px rgb(209, 190, 190), -3px -3px 3px rgb(180, 157, 157);
+}
+
+#exitgame {
+    padding: 20px 50px 20px 50px;
+    box-shadow: 0 0 10px 3px rgba(235, 245, 236, 0.582);
+    background: black;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 30px;
+    text-shadow: 1px 1px 1px rgb(63, 56, 56), -1px -1px 1px rgb(56, 24, 24);
+    color: white;
+}
+
 .hide {
     display: none;
 }
