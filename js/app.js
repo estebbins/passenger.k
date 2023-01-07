@@ -1152,7 +1152,7 @@ const openSafetyCard = () => {
     panelOneDiv.style.gridArea = '1 / 1 / 7 / 3'
     panelTwoDiv.style.gridArea = '1 / 3 / 7 / 5'
     panelThreeDiv.style.gridArea = '1 / 5 / 7 / 7'
-    // Add class to Panel divs
+    // Add class to Panel div
     panelOneDiv.classList.add('panelOne')
     panelTwoDiv.classList.add('panelTwo')
     panelThreeDiv.classList.add('panelThree')
@@ -1307,46 +1307,60 @@ const drop = (event) => {
     const draggable = document.getElementById(id)
     // Add the draggable image to the drop target
     event.target.appendChild(draggable)
-    // Push the move to the player answer arrays if placed correctly
-    if (event.target.style.gridArea === '2 / 4 / 3 / 5') {
-        ansOneArray.push(id)
-    } else if(event.target.style.gridArea === '3 / 4 / 4 / 5') {
-        ansTwoArray.push(id)
-    } else if(event.target.style.gridArea === '4 / 4 / 5 / 5') {
-        ansThreeArray.push(id)
-    } else if(event.target.style.gridArea === '5 / 4 / 6 / 5') {
-        ansFourArray.push(id)
-    } else if(event.target.style.gridArea === '6 / 4 / 7 / 5') {
-        ansFiveArray.push(id)
-    }
     // Display the draggable element in it's new location
     draggable.classList.remove('hide')
+    // Increase move counter to avoid player getting stuck
+    scMoveCounter++
     // Check if safety card puzzle complete after each drop event
     checkSafetyComplete()
+    // Check for fails
+    checkSCFail()
 }
 
 const checkSafetyComplete = () => {
     // Checks if safety puzzle has been completed successfully
-    // Create a score counter to track
+    // Clear arrays for each check
+    ansOneArray = []
+    ansTwoArray = []
+    ansThreeArray = []
+    ansFourArray = []
+    ansFiveArray = []
+    // Populate player arrays with current child nodes
+    for (let i = 0; i < 2; i++) {
+        if (answerOne.childNodes.length >= 2 && answerTwo.childNodes.length >= 2 && answerThree.childNodes.length >= 2 && answerFour.childNodes.length >= 2 && answerFive.childNodes.length >= 2) {
+            // Only run below if each answer Div has at least two images
+            let childOne = answerOne.childNodes[i]
+            let childTwo = answerTwo.childNodes[i]
+            let childThree = answerThree.childNodes[i]
+            let childFour = answerFour.childNodes[i]
+            let childFive = answerFive.childNodes[i]
+            ansOneArray.push(childOne.id)
+            ansTwoArray.push(childTwo.id)
+            ansThreeArray.push(childThree.id)
+            ansFourArray.push(childFour.id)
+            ansFiveArray.push(childFive.id)
+        }
+    }
     // Compare player answer arrays to win conditions & increase score by one each time
-    for(i = 0; i < 5; i++) {
+    for(let i = 0; i < 5; i++) {
         if(findWinCombo(ansArrays[i], scWinArrays[i])) {
             complete++
+            console.log('completeb4', complete)
         } else {
             complete = 0
         }
+        console.log('completeafter', complete)
     } 
-    console.log(complete)
     // When score of 5 is reached, safety card is complete
     if (complete === 5) {
         // When safety card puzzle complete, return to main screen
         while (safetyCardDiv.firstChild) {
-            safetyCardDiv.removeChild(safetyCardDiv.firstChild)
+            safetyImgDiv.appendChild(safetyCardDiv.firstChild)
         }
         // Adjust scores
         eta -= 30
         entertainmentScore += 30
-        sanityScore += 10
+        sanityScore += 20
         displayStats(entertainmentScore, sanityScore, eta) 
         // Change text of safety card title to show completed puzzle
         safetyCardSpan.innerText = "COMPLETE"
@@ -1363,7 +1377,6 @@ const exitSafety = () => {
     // Add the safety card back to the seat one div
     seatOneDiv.append(safetyCardDiv)
     // Re-style the safety card div
-    // safetyCardDiv.style.display = 'block'
     safetyCardDiv.classList.remove('opened')
     safetyCardDiv.classList.add('closed')
     // Add back the safety card title span
@@ -1383,7 +1396,6 @@ const checkSCFail = () => {
         while (safetyCardDiv.firstChild) {
             safetyImgDiv.appendChild(safetyCardDiv.firstChild)
         }
-        safetyCardDiv.classList.add('closed')
         // Update title span to show player they failed the demonstration
         safetyCardSpan.innerText = "TRY AGAIN"
         // Exit the safety card
