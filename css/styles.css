@@ -1,18 +1,21 @@
 body {
-    background-color: rgb(221, 221, 203);
+    background: rgb(173,144,129);
+    background: linear-gradient(99deg, rgba(173,144,129,1) 15%, rgba(230,183,141,1) 41%, rgba(203,176,164,1) 62%, rgba(251,241,216,1) 68%, rgba(210,180,153,1) 76%);
 }
 #game { 
     display: grid; 
-    grid-template-columns: 1fr .4fr 4.5fr 1fr;
+    grid-template-columns: 1fr .1fr 4.5fr 1fr;
     grid-template-rows: .5fr .5fr 6fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px; 
     width: 960px;
     height: 540px;
     background-color: rgb(221, 221, 203);
-    /* background-image: url('https://images.unsplash.com/photo-1625512954074-5186da9b99bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80'); */
+    background-image: url('https://cdn.pixabay.com/photo/2014/11/06/10/54/passengers-519008_960_720.jpg');
     margin: 0 auto;
-    /* box-shadow: 2px 2px 10px 3px ; */
+    margin-bottom: 150px;
+    border-bottom-left-radius: 15%;
+    border-bottom-right-radius: 15%;
 }
 #seat-1 {
     grid-area: 3 / 3 / 4 / 4;
@@ -39,7 +42,6 @@ body {
     background-position: center;
     border-radius: 25px 25px 0 0;
     background-color: #461111;
-    /* border-image: url('https://cdn.pixabay.com/photo/2017/01/23/07/25/yellow-skin-2001741_960_720.jpg') 30 round; */
     border: 4px dashed #6c1a1a;
     box-shadow: 5px 0 4px 2px #461111;
     border-bottom: none;
@@ -285,6 +287,12 @@ body {
 
 #aisle {
     grid-area: 3 / 4 / 4 / 5;
+    background-image: url('/img/seatback_final.png');
+    background-position: left;
+    background-size: cover;
+    margin-left: 20px;
+    margin-top: 20px;
+    filter: blur(1px);
 }
 #announcements { 
     grid-area: 2 / 7 / 5 / 8; 
@@ -295,9 +303,11 @@ body {
 
 #seat-2 {
     grid-area: 3 / 1 / 4 / 2;
-    background-image: url('/img/seatback.png');
+    background-image: url('/img/seatback_final.png');
     background-position: right;
-    filter: blur(10x);
+    background-size: cover;
+    filter: blur(1px);
+    margin-top: 20px;
 }
 #passenger { 
     grid-area: 1 / 1 / 5 / 2;
@@ -305,9 +315,6 @@ body {
 
 #gap {
     grid-area: 3 / 1 / 4 / 3;
-    /* background-image: url('/img/seatback.png');
-    background-position: right;
-    filter: blur(10x); */
 }
 
 #background-seats {
