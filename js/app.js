@@ -296,27 +296,27 @@ const displayWatchMenu = () => {
 const checkLinearNavigators = (list, ul) => {
     console.log(selection)
     let selected = list[selection]
-    selected.style.fontWeight = 'bold'
+    selected.style.fontWeight = '500'
     selected.style.color = 'yellow'
     downButton.addEventListener('click', 
         downAction = () => {        
             if (selection < (list.length - 1)) {
                 selected = list[selection]
-                selected.style.fontWeight = 'normal'
+                selected.style.fontWeight = '300'
                 selected.style.color = '#fdfded'
                 selection += 1
                 selected = list[selection]
-                selected.style.fontWeight = 'bold'
+                selected.style.fontWeight = '500'
                 selected.style.color = 'yellow'
                 }
     })
     upButton.addEventListener('click', upAction = () => {
         if (selection > 0) {
-            selected.style.fontWeight = 'normal'
+            selected.style.fontWeight = '300'
             selected.style.color = '#fdfded'
             selection--
             selected = list[selection]
-            selected.style.fontWeight = 'bold'
+            selected.style.fontWeight = '500'
             selected.style.color = 'yellow'
         }
     })
