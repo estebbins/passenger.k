@@ -735,7 +735,7 @@ const sendText = () => {
         // Taxi option - impact to scores
         departure -= 0
         entertainmentScore += 0
-        sanityScore -= 100
+        sanityScore -= 20
         displayStats(entertainmentScore, sanityScore, departure)
     } else if (playerText.textContent === textOption2) {
         // Send ETA option - impact to scores
@@ -747,7 +747,7 @@ const sendText = () => {
         // Excited option - impact to scores
         departure += 0
         entertainmentScore += 20
-        sanityScore -= 30
+        sanityScore -= 15
         displayStats(entertainmentScore, sanityScore, departure)
     }
     // Erase text in content span
