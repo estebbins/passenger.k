@@ -293,12 +293,12 @@ body {
     border-radius: 10px;
     background-color: #b71a1f93;
 } 
-#eta { 
+#departure { 
     grid-area: 1 / 3 / 2 / 4; 
     background-color: #df316e8e;
     border-radius: 10px;
 } 
-#entertainment-meter, #sanity-meter, #eta {
+#entertainment-meter, #sanity-meter, #departure {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -397,8 +397,9 @@ p {
     z-index: 1;
     grid-template: .5fr repeat(4, .4fr) .75fr repeat(3, .5fr) / .5fr .75fr 2fr .75fr;
     font-size: 15px;
+    box-shadow: 0 8px 16px 8px rgba(0,0,0,0.5);
+    margin-right: 20px;
 }
-
 
 .noclick {
     pointer-events: none;

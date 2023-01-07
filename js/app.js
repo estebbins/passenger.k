@@ -7,7 +7,7 @@ const screenDiv = document.getElementById('screen')
 const screenCDiv = document.querySelector('.screenc')
 const entertainmentDiv = document.getElementById('entertainment-meter')
 const sanityDiv = document.getElementById('sanity-meter')
-const etaDiv = document.getElementById('eta')
+const departureDiv = document.getElementById('departure')
 const upButton = document.getElementById('up')
 const downButton = document.getElementById('down')
 const leftButton = document.getElementById('left')
@@ -32,16 +32,16 @@ const exitGameButton = document.createElement('button')
 const winLoseScreen = document.createElement('div')
 
 // Create statistics
-let intervalEta
+let intervalDep
 let intervalEnt
 let intervalSanity
 let entertainmentScore = 100
 let entRate = 1000
 let sanityScore = 100
 let sanityRate = 3000
-// eta is in units of seconds
-let eta = 300
-let etaRate = 1000
+// departure is in units of seconds
+let departure = 300
+let depRate = 1000
 
 // Create Menu Options
 const mainMenu = ['Play', 'Listen', 'Watch']
@@ -89,12 +89,14 @@ const startGameLoop = () => {
     const startButton = document.getElementById('start')
     const safetySpan = document.getElementById('safety')
     const instructionsSpan = document.getElementById('instructions')
-    displayStats(entertainmentScore, sanityScore, eta)
+    displayStats(entertainmentScore, sanityScore, departure)
     startGameStats()
     gameDiv.removeChild(startButton)
     displayMainMenu()
     safetySpan.style.textShadow = '1px 1px green, -1px -1px black'
     instructionsSpan.style.textShadow = 'none'
+    const magazineSpan = document.getElementById('mag')
+    magazineSpan.innerText = 'Magazine'
     safetyCardDiv.addEventListener('click', openSafetyCard)
     trayTableButton.addEventListener('click', startTrayTableInt)
     startButton.removeEventListener('click', startGameLoop)
@@ -107,13 +109,13 @@ const checkGameConditions = () => {
     } else if (sanityScore <= 0) {
         stopCountdowns()
         displayGameOver('san loss')
-    } else if (eta === 0) {
+    } else if (departure === 0) {
         stopCountdowns()
         displayGameOver('win')
     }
 }
 
-const displayStats = (entScore, sanScore, currentEta) => {
+const displayStats = (entScore, sanScore, currentDep) => {
     // Set mins & maxes for each score
     if (entScore > 100) {
         entertainmentScore = 100
@@ -127,19 +129,19 @@ const displayStats = (entScore, sanScore, currentEta) => {
     } else if (sanScore < 0) {
         sanityScore = 0
         sanScore = 0
-    }  else if (currentEta > 300) {
-        currentEta = 300
-        eta = 300
-    } else if (currentEta < 0) {
-        currentEta = 0
-        eta = 0
+    }  else if (currentDep > 300) {
+        currentDep = 300
+        departure = 300
+    } else if (currentDep < 0) {
+        currentDep = 0
+        departure = 0
     }
     // Style screen with scores
     // entertainmentDiv.textContent = entScore
     // sanityDiv.textContent = sanScore
     entertainmentDiv.style.width = `${entScore}%`
     sanityDiv.style.width = `${sanScore}%`
-    etaDiv.style.width = `${(currentEta/300)*100}%`
+    departureDiv.style.width = `${(currentDep/300)*100}%`
     // format eta, Math.floor method recommendation from https://www.golinuxcloud.com/javascript-integer-division/ 
     // Style ETA to show as a countdown timer
     // const etaMinute = Math.floor(currentEta / 60)
@@ -153,31 +155,31 @@ const displayStats = (entScore, sanScore, currentEta) => {
 }
 
 const startGameStats = () => {
-    const countdownEta = () => {
-        eta -= 1
-        displayStats(entertainmentScore, sanityScore, eta)
+    const countdownDep = () => {
+        departure -= 1
+        displayStats(entertainmentScore, sanityScore, departure)
     }
     const countdownEnt = () => {
         entertainmentScore -= 1
-        displayStats(entertainmentScore, sanityScore, eta)
+        displayStats(entertainmentScore, sanityScore, departure)
     }
     const countdownSanity = () => {
         sanityScore -= 1
-        displayStats(entertainmentScore, sanityScore, eta) 
+        displayStats(entertainmentScore, sanityScore, departure) 
     }
-    // countdown for ETA & entertainment will be -1 each second
+    // countdown for departure & entertainment will be -1 each second
     // countdown for sanity will be -1 every three seconds
-    intervalEta = setInterval(countdownEta, etaRate)
+    intervalDep = setInterval(countdownDep, depRate)
     intervalEnt = setInterval(countdownEnt, entRate)
     intervalSanity = setInterval(countdownSanity, sanityRate)
     // a! Some game end conditions
 }
 
 const stopCountdowns = () => {
-    // creates clearIntervals for ETA, entertainment & sanity
+    // creates clearIntervals for departure, entertainment & sanity
     clearInterval(intervalEnt)
     clearInterval(intervalSanity)
-    clearInterval(intervalEta)
+    clearInterval(intervalDep)
 }
 
 const displayGameOver = (condition) => {
@@ -370,8 +372,8 @@ const watchMovie = (num) => {
         // update game stats
         entertainmentScore += 15
         sanityScore -= 10
-        eta -=10
-        displayStats(entertainmentScore, sanityScore, eta)
+        departure -=10
+        displayStats(entertainmentScore, sanityScore, departure)
     } else if (num === 1) {
         screenDiv.appendChild(movieTwo)
         const sourceTwo = document.createElement('source')
@@ -397,8 +399,8 @@ const watchMovie = (num) => {
         // update game stats
         entertainmentScore += 30
         sanityScore += 5
-        eta -= 12
-        displayStats(entertainmentScore, sanityScore, eta)
+        departure -= 12
+        displayStats(entertainmentScore, sanityScore, departure)
     } else if (num === 2) {
         screenDiv.appendChild(movieThree)
         const sourceThree = document.createElement('source')
@@ -415,9 +417,9 @@ const watchMovie = (num) => {
 
         // update game stats
         entertainmentScore += 20
-        sanityScore += 0
-        eta += 5
-        displayStats(entertainmentScore, sanityScore, eta)
+        sanityScore += 20
+        departure += 5
+        displayStats(entertainmentScore, sanityScore, departure)
     }
 }
 
@@ -470,20 +472,20 @@ const reactTrayTable = (event) => {
         // Comply option - impact on scores
         entertainmentScore += 0
         sanityScore += 5
-        eta -= 0
-        displayStats(entertainmentScore, sanityScore, eta)
+        departure -= 0
+        displayStats(entertainmentScore, sanityScore, departure)
     } else if (event.target.id === '1opt') {
         // Ask for 5 more minutes - impact on score
         entertainmentScore += 5
         sanityScore += 2
-        eta += 30
-        displayStats(entertainmentScore, sanityScore, eta)
+        departure += 30
+        displayStats(entertainmentScore, sanityScore, departure)
     } else if (event.target.id === '2opt') {
         // Make a scene - impact on score
         entertainmentScore += 10
         sanityScore -= 20
-        eta -= 0
-        displayStats(entertainmentScore, sanityScore, eta)
+        departure -= 0
+        displayStats(entertainmentScore, sanityScore, departure)
     }
 
     // Remove event listeners from tray table player buttons
@@ -534,7 +536,7 @@ const interactBaby = () => {
         babyTextDiv.appendChild(wah)
         // Decrease sanity score each time baby cries
         sanityScore -= 5 
-        displayStats(entertainmentScore, sanityScore, eta)
+        displayStats(entertainmentScore, sanityScore, departure)
     }
     // Set timeout for each cry for every 2 seconds
     // for (let i = 0; i < repeat; i++) {
@@ -575,29 +577,29 @@ const reactBaby = (event) => {
     clearInterval(babyCry)
     if (event.target.id === '0optb') {
         // Try to ignore - impact on scores
-        eta += 60
+        departure += 60
         entertainmentScore -= 5
         sanityScore -= 5
-        displayStats(entertainmentScore, sanityScore, eta)
+        displayStats(entertainmentScore, sanityScore, departure)
         // Add baby crying sound at lower volume for remainder of game?
     } else if (event.target.id === '1optb') {
         // Put in headphones - impact on scores
-        eta += 0
+        departure += 0
         entertainmentScore += 20
         sanityScore += 20
-        displayStats(entertainmentScore, sanityScore, eta)
+        displayStats(entertainmentScore, sanityScore, departure)
     } else if (event.target.id === '2optb') {
         // Cry louder than baby - impact on scores
-        eta += 0
+        departure += 0
         entertainmentScore += 10
         sanityScore -= 20
-        displayStats(entertainmentScore, sanityScore, eta)
+        displayStats(entertainmentScore, sanityScore, departure)
     } else if (event.target.id === '3optb') {
         // Play peekaboo - impact on scores
-        eta -= 30
+        departure -= 30
         entertainmentScore += 20
         sanityScore += 10
-        displayStats(entertainmentScore, sanityScore, eta)
+        displayStats(entertainmentScore, sanityScore, departure)
     }
     clearBabyInteraction()
 }
@@ -752,22 +754,22 @@ const sendText = () => {
     // adjust scores based on the text the player chose to send
     if (playerText.textContent === textOption1) {
         // Taxi option - impact to scores
-        eta -= 0
+        departure -= 0
         entertainmentScore += 0
         sanityScore -= 100
-        displayStats(entertainmentScore, sanityScore, eta)
+        displayStats(entertainmentScore, sanityScore, departure)
     } else if (playerText.textContent === textOption2) {
         // Send ETA option - impact to scores
-        eta -= 30
+        departure -= 30
         entertainmentScore += 10
         sanityScore += 10
-        displayStats(entertainmentScore, sanityScore, eta)
+        displayStats(entertainmentScore, sanityScore, departure)
     } else if (playerText.textContent === textOption3) {
         // Excited option - impact to scores
-        eta += 0
+        departure += 0
         entertainmentScore += 20
         sanityScore -= 30
-        displayStats(entertainmentScore, sanityScore, eta)
+        displayStats(entertainmentScore, sanityScore, departure)
     }
     // Erase text in content span
     textContentSpan.textContent = ""
@@ -857,7 +859,7 @@ const navAction = (event) => {
         } else {
             // Reduce sanity score if buttons are clicked unnecessarily
             sanityScore--
-            displayStats(entertainmentScore, sanityScore, eta) 
+            displayStats(entertainmentScore, sanityScore, departure) 
         }
     } else if (event.target.id === 'up') {
         if (boxes[3].classList.contains('tttselection')) {
@@ -881,7 +883,7 @@ const navAction = (event) => {
         } else {
             // Reduce sanity score if buttons are clicked unnecessarily
             sanityScore--
-            displayStats(entertainmentScore, sanityScore, eta) 
+            displayStats(entertainmentScore, sanityScore, departure) 
         }
     } else if (event.target.id === 'left') {
         if (boxes[1].classList.contains('tttselection')) {
@@ -905,7 +907,7 @@ const navAction = (event) => {
         } else {
             // Reduce sanity score if buttons are clicked unnecessarily
             sanityScore--
-            displayStats(entertainmentScore, sanityScore, eta) 
+            displayStats(entertainmentScore, sanityScore, departure) 
         }
     } else if (event.target.id === 'right') {
         if (boxes[0].classList.contains('tttselection')) {
@@ -929,7 +931,7 @@ const navAction = (event) => {
         } else {
             // Reduce sanity score if buttons are clicked unnecessarily
             sanityScore--
-            displayStats(entertainmentScore, sanityScore, eta) 
+            displayStats(entertainmentScore, sanityScore, departure) 
         }
     } 
 }
@@ -960,7 +962,7 @@ const makeMove = (event) => {
     } else if (event.target.id === 'select') {
         // Reduce sanity score if buttons are clicked unnecessarily
         sanityScore--
-        displayStats(entertainmentScore, sanityScore, eta) 
+        displayStats(entertainmentScore, sanityScore, departure) 
     }
     // Call print win function to determine if win result and assess move counter
     // in the case of a tie, which should not be assessed until all 9 moves have been made
@@ -989,29 +991,29 @@ const printWin = (moveCounter, result) => {
             resultBox.textContent = "Player X Wins!"
             resultBox.style.color = 'rgb(51, 201, 206)'
             // adjust scores based on win result
-            eta -= 30
+            departure -= 30
             sanityScore += 5
             entertainmentScore += 10
-            displayStats(entertainmentScore, sanityScore, eta) 
+            displayStats(entertainmentScore, sanityScore, departure) 
         } else if (result === false) {
             // If player O wins, add & style the text in the result div, increase the score counter and end the game
             resultBox.textContent = "Player O Wins!"
             resultBox.style.color = '#cdcdcd'
             // adjust scores based on win result
-            eta -= 15
+            departure -= 15
             sanityScore += 2
             entertainmentScore += 5
-            displayStats(entertainmentScore, sanityScore, eta) 
+            displayStats(entertainmentScore, sanityScore, departure) 
         } else if (moveCounter === 9 && result === null) {
             // If neither player wins, add & style the text in the result div, increase the score counter and end the game. Apply complimentary textShadow to override default
             resultBox.textContent = "It's a Tie!"
             resultBox.style.color = '#e6a176'
             resultBox.style.textShadow = '1px 1px 2px #984464'
             // adjust scores based on win result
-            eta += 10
+            departure += 10
             sanityScore -= 10
             entertainmentScore -= 10
-            displayStats(entertainmentScore, sanityScore, eta) 
+            displayStats(entertainmentScore, sanityScore, departure) 
         }
         // Remove the tictactoe boxes from the screen.
         screenDiv.classList.remove('tictactoe')
@@ -1358,10 +1360,10 @@ const checkSafetyComplete = () => {
             safetyImgDiv.appendChild(safetyCardDiv.firstChild)
         }
         // Adjust scores
-        eta -= 30
+        departure -= 30
         entertainmentScore += 30
         sanityScore += 20
-        displayStats(entertainmentScore, sanityScore, eta) 
+        displayStats(entertainmentScore, sanityScore, departure) 
         // Change text of safety card title to show completed puzzle
         safetyCardSpan.innerText = "COMPLETE"
         exitSafety()
