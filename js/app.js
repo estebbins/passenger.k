@@ -680,37 +680,21 @@ const interactCellPhone = () => {
     part11.style.gridArea = '8 / 1 / 9 / 5' 
     part12.style.gridArea = '9 / 1 / 10 / 5'
     // style Fam div
-    part0.style.backgroundColor = 'gray'
-    // style text sender images
-    part1.style.backgroundImage = ''
-    part3.style.backgroundImage = ''
-    part5.style.backgroundImage = ''
+    part0.style.textAlign = 'center'
+    part0.style.fontSize = '25px'
     // style family text messages
     part2.style.backgroundColor = 'darkgrey'
     part2.style.borderRadius = '5px'
-    part2.style.padding = '2px'
+    part2.style.marginTop = '2px'
     part4.style.backgroundColor = 'darkgrey'
     part4.style.borderRadius = '5px'
-    part4.style.padding = '2px'
+    part4.style.marginTop = '2px'
     part6.style.backgroundColor = 'darkgrey'
     part6.style.borderRadius = '5px'
-    part6.style.padding = '2px'
-
+    part6.style.marginTop = '2px'
     // style sent text
-    part7.style.backgroudColor = 'blue'
     part7.style.borderRadius = '5px'
-    part7.style.padding = '2px'
-
-
-    // style my texts 
-    part8.style.backgroundColor = 'gray'
-    part9.style.backgroundColor ='gray'
-    part10.style.backgroundColor = 'gray'
-    part11.style.backgroundColor = 'gray'
-    part12.style.backgroundColor = 'gray'
-    // style send area - NOT WORKING
-    // textContentSpan.backgroudColor = 'white'
-    // textContentSpan.borderRadius = '10px'
+    part7.style.marginTop = '2px'
     
     const sendButton = document.getElementById('part9')
     // Add event listeners to the text options
@@ -719,10 +703,12 @@ const interactCellPhone = () => {
     cellTextThreeButton.addEventListener('click', chooseText)
     sendButton.addEventListener('click', sendText)
 }
+
 // Creates text content
 const textOption1 = "I'll just take a taxi from the airport"
 const textOption2 = "We've been delayed a few times, but I should be arriving at about 6:23 your time"
 const textOption3 = "I don't care I'm just so excited to see you guys!"
+
 const chooseText = (event) => {
     // Access necessary cell phone parts
     const textContentSpan = document.getElementById('textcontent') 
@@ -748,9 +734,11 @@ const sendText = () => {
         cellPhoneDiv.classList.add('hide')
         screenDiv.classList.remove('noclick')
         controlsDiv.classList.remove('noclick')
+        playerText.style.backgroundColor = 'white'
     }    
     // Set the sent text to the text in the textContentSpan
     playerText.textContent = textContentSpan.textContent
+    playerText.style.backgroundColor = 'blue'
     // adjust scores based on the text the player chose to send
     if (playerText.textContent === textOption1) {
         // Taxi option - impact to scores
@@ -1191,16 +1179,6 @@ const openSafetyCard = () => {
     maskBTwoDiv.style.gridArea = '3 / 6 / 4 / 7'
     bagOneDiv.style.gridArea = '6 / 1 / 7 / 2'
     bagTwoDiv.style.gridArea = '4 / 5 / 5 / 6'
-    // seatbeltOneDiv.style.backgroundColor = 'blue'
-    // seatbeltTwoDiv.style.backgroundColor = 'blue'
-    // smokingOneDiv.style.backgroundColor = 'red'
-    // smokingTwoDiv.style.backgroundColor = 'red'
-    // maskAOneDiv.style.backgroundColor = 'pink'
-    // maskATwoDiv.style.backgroundColor = 'pink'
-    // maskBOneDiv.style.backgroundColor = 'yellow'
-    // maskBTwoDiv.style.backgroundColor = 'yellow'
-    // bagOneDiv.style.backgroundColor = 'green'
-    // bagTwoDiv.style.backgroundColor = 'green'
     // Give answer divs a class
     answerOne.className = ('safety-answer')
     answerTwo.className = ('safety-answer')

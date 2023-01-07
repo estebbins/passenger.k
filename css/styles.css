@@ -395,10 +395,25 @@ p {
     grid-area: 4 / 6 / 9 / 7;
     display: grid;
     z-index: 1;
-    grid-template: .5fr repeat(4, .4fr) .75fr repeat(3, .5fr) / .5fr .75fr 2fr .75fr;
+    grid-template: .5fr repeat(2, .4fr) .2fr .4fr .75fr repeat(3, .3fr) / .5fr .75fr 2fr .2fr;
     font-size: 15px;
     box-shadow: 0 8px 16px 8px rgba(0,0,0,0.5);
     margin-right: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+}
+#part0, #part8, #part9, #part10, #part11, #part12 {
+    background-color: gray;
+}
+#part9 {
+    display: flex;
+    align-items: center;
+}
+#textcontent {
+    background-color: white;
+    margin-top: 2px;
+    border-radius: 5px;
+    width: 280px;
+    height: 60px;
 }
 
 .noclick {
