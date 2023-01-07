@@ -16,6 +16,7 @@ body {
     margin-bottom: 150px;
     border-bottom-left-radius: 15%;
     border-bottom-right-radius: 15%;
+    user-select: none;
 }
 #seat-1 {
     grid-area: 3 / 3 / 4 / 4;
@@ -181,6 +182,7 @@ body {
     grid-area: 8 / 2 / 9 / 14;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     background-image: url('/img/brown_ice_by_darkwood67.jpg');
     background-size: cover;
     background-position: top;
@@ -300,8 +302,6 @@ body {
 #dep-span {
     color: #df316e8e;
 }
-
-
 #aisle {
     grid-area: 3 / 4 / 4 / 5;
     background-image: url('/img/seatback_final.png');
@@ -315,9 +315,30 @@ body {
     grid-area: 2 / 7 / 5 / 8; 
 } 
 #attendant { 
-    grid-area: 6 / 7 / 7 / 8; 
+    grid-area: 3 / 4 / 4 / 5;
+    background-color: transparent;
+    font-family: 'Permanent Marker', cursive;
+    color: rgb(238, 18, 51);
+    text-shadow: 1px 1px 1px rgb(252, 247, 247), -1px -1px 1px rgb(70, 19, 19);
+    z-index: 1;
+    font-size: 20px;
 } 
-
+#passenger { 
+    grid-area: 3 / 1 / 4 / 2;
+    background-color: transparent;
+    font-family: 'Permanent Marker', cursive;
+    color: rgb(231, 112, 130);
+    text-shadow: 2px 2px 2px rgb(252, 247, 247), -2px -2px 1px rgb(70, 19, 19);
+    z-index: 1;
+    font-size: 20px;
+    padding-top: none;
+    padding-left: 50px;
+    transform: rotate(-15deg)
+} 
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
 #seat-2 {
     grid-area: 3 / 1 / 4 / 2;
     background-image: url('/img/seatback_final.png');
@@ -326,10 +347,6 @@ body {
     filter: blur(1px);
     margin-top: 20px;
 }
-#passenger { 
-    grid-area: 1 / 1 / 5 / 2;
-} 
-
 #gap {
     grid-area: 3 / 1 / 4 / 3;
 }
@@ -371,9 +388,7 @@ body {
     font-size: 15px;
 }
 
-.hide {
-    display: none;
-}
+
 .noclick {
     pointer-events: none;
 }
@@ -454,4 +469,17 @@ ul {
     color: yellow;
     text-shadow: -1px -1px 2px black;
     font-family: 'IBM Plex Mono', monospace;
+}
+.trayTableOptions, .babyOptions {
+    width: 110px;
+    background-color: black;
+    color: white;
+    font-family: 'Permanent Marker', cursive;
+    color: rgba(235, 245, 236, 1);
+    text-shadow: 1px 1px 1px rgb(63, 56, 56), -1px -1px 1px rgb(56, 24, 24);
+    border: 2px solid rgba(235, 245, 236, 0.147);
+    box-shadow: 0 0 10px 3px rgba(235, 245, 236, 0.582);
+}
+.hide {
+    display: none;
 }

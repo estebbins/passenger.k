@@ -61,14 +61,18 @@ const movieThree = document.getElementById('dog')
 const trayTableDiv = document.getElementById('tray-table')
 const attendantDiv = document.getElementById('attendant')
 const attendantTextDiv = document.createElement('div')
-const trayTableOptions = ['Comply', 'Ask for 5 more minutes', 'Make a scene']
+const trayTableOptions = [
+    'Comply', 
+    'Ask for 5 more minutes', 
+    'Make a scene'
+]
 const passengerDiv = document.getElementById('passenger')
 const babyTextDiv = document.createElement('div')
 const babyOptions = [
     'Try to ignore', 
-    'Put in headphones', 
-    'Cry louder than the baby', 
-    'Play Peekaboo'
+    'Headphones!', 
+    'Cry louder than baby', 
+    'Peekaboo'
 ]
 
 const getStartScreen = () => {
@@ -128,8 +132,10 @@ const displayStats = (entScore, sanScore, currentEta) => {
     } else if (sanScore < 0) {
         sanityScore = 0
         sanScore = 0
-    }  else if (currentEta < 0) {
-        // eta has no max
+    }  else if (currentEta > 300) {
+        currentEta = 300
+        eta = 300
+    } else if (currentEta < 0) {
         currentEta = 0
         eta = 0
     }
@@ -452,7 +458,7 @@ const exitMovie = () => {
 
 const interactAttendant = () => {
     // Create attendant text & add to screen
-    let trayTableStr = "Excuse me! We can't take off until your tray table is closed!"
+    let trayTableStr = '"Excuse me! We cant take off until your tray table is closed!"'
     attendantDiv.appendChild(attendantTextDiv)
     attendantTextDiv.innerText = trayTableStr
 
@@ -461,6 +467,8 @@ const interactAttendant = () => {
     consoleDiv.style.flexDirection = 'column'
     consoleDiv.style.justifyContent = 'center'
     consoleDiv.style.alignItems = 'center'
+    consoleDiv.style.backgroundImage = "url('https://cdn.pixabay.com/photo/2022/11/30/06/13/tunnel-7626014_960_720.png')"
+    consoleDiv.style.boxShadow = '0 0 10px 3px rgba(235, 245, 236, 0.582)'
     // Hide other console elements
     controlsDiv.style.display = 'none'
     phoneDiv.classList.add('hide')
@@ -510,6 +518,9 @@ const reactTrayTable = (event) => {
     while (consoleDiv.firstChild) {
         consoleDiv.removeChild(consoleDiv.firstChild)
     }
+    // Restyle console div
+    consoleDiv.style.backgroundImage = "url('/img/brown_ice_by_darkwood67.jpg')"
+    consoleDiv.style.boxShadow = '0 0 10px 5px rgba(0,0,0,.6) inset'
     // Unhide controls, phone and screen divs
     controlsDiv.style.display = 'grid'
     phoneDiv.classList.remove('hide')
@@ -519,6 +530,7 @@ const reactTrayTable = (event) => {
     // "Close tray table" by restyling to original image
     trayTableDiv.style.backgroundImage = "url('/img/brown_ice_by_darkwood67.jpg')"
     trayTableDiv.style.boxShadow = '0 0 10px 1px rgba(0,0,0,.5) inset, 0 -1px 4px .5px rgba(0,0,0,.9)'
+    trayTableButton.style.transform = ''
     // Add event listener back onto tray table to be used again
     trayTableButton.addEventListener('click', startTrayTableInt)
 }
@@ -529,6 +541,7 @@ const startTrayTableInt = () => {
     // Style tray table to appear open
     trayTableDiv.style.backgroundImage = "url('/img/IMGP8093.JPG')"
     trayTableDiv.style.boxShadow = '0 0 10px 3px rgba(0,0,0,.9) inset, 0 -1px 4px .5px rgba(0,0,0,.9)'
+    trayTableButton.style.transform = 'rotate(90deg)'
     setTimeout(interactAttendant, 3000)
 }
 
@@ -541,6 +554,7 @@ const interactBaby = () => {
         let wah = document.createElement('p')
         wah.textContent = babyCryStr
         babyTextDiv.appendChild(wah)
+        babyTextDiv.appendChild(wah)
         // Decrease sanity score each time baby cries
         sanityScore -= 5 
         displayStats(entertainmentScore, sanityScore, eta)
@@ -551,16 +565,7 @@ const interactBaby = () => {
     // }
     addWah()
     babyCry = setInterval(addWah, 2000)
-    setTimeout(babyCry, 18000)
-    // Style console Div for player interaction
-    consoleDiv.style.display = 'flex'
-    consoleDiv.style.flexDirection = 'column'
-    consoleDiv.style.justifyContent = 'center'
-    consoleDiv.style.alignItems = 'center'
-    // Hide other elements on top of console
-    controlsDiv.style.display = 'none'
-    phoneDiv.classList.add('hide')
-    screenDiv.classList.add('hide')
+    setTimeout(()=>{clearInterval(babyCry)}, 14000)
     // Create player interaction options & add to the screen.
     const setReactions = () => {
         for (let i=0; i < babyOptions.length; i++) {
@@ -572,7 +577,18 @@ const interactBaby = () => {
             buttonDiv.appendChild(button)
             consoleDiv.appendChild(buttonDiv)
             button.addEventListener('click', reactBaby)
-        }    
+        }
+            // Style console Div for player interaction
+        consoleDiv.style.display = 'flex'
+        consoleDiv.style.flexDirection = 'column'
+        consoleDiv.style.justifyContent = 'center'
+        consoleDiv.style.alignItems = 'center'
+        consoleDiv.style.backgroundImage = "url('https://cdn.pixabay.com/photo/2022/11/30/06/13/tunnel-7626014_960_720.png')"
+        consoleDiv.style.boxShadow = '0 0 10px 3px rgba(235, 245, 236, 0.582)'
+        // Hide other elements on top of console
+        controlsDiv.style.display = 'none'
+        phoneDiv.classList.add('hide')
+        screenDiv.classList.add('hide')    
     }
     setTimeout(setReactions, 1500)
 }
@@ -622,6 +638,9 @@ const clearBabyInteraction = () => {
     while (passengerDiv.firstChild) {
         passengerDiv.removeChild(passengerDiv.firstChild)
     }
+    // Restyle console div
+    consoleDiv.style.backgroundImage = "url('/img/brown_ice_by_darkwood67.jpg')"
+    consoleDiv.style.boxShadow = '0 0 10px 5px rgba(0,0,0,.6) inset'
     // Redisplay console elements to continue gameplay
     controlsDiv.style.display = 'grid'
     phoneDiv.classList.remove('hide')
@@ -1030,12 +1049,6 @@ const printWin = (moveCounter, result) => {
         screenDiv.appendChild(resultBox)
         // Add leave option to screen
         screenDiv.append(leaveOption)
-        // Reset ttt statistics
-        moveCounter = 0
-        for (let i = 0; i < 9; i++) {
-            playerXMoves.pop()
-            playerOMoves.pop()
-        }
         // Reset screen and controls
         leaveTicTacToe()
     }
@@ -1067,22 +1080,33 @@ const checkWin = () => {
 }
 
 const leaveTicTacToe = () => {
+
+    const tttResult = document.getElementById('tttresult')
+    const tttLeave = document.getElementById('leave')
     // Remove game event listeners
     upButton.removeEventListener('click', navAction)
     downButton.removeEventListener('click', navAction)
     leftButton.removeEventListener('click', navAction)
     rightButton.removeEventListener('click', navAction)
     selectButton.removeEventListener('click', makeMove)
-
+    screenDiv.classList.add('screenmovie')
+    tttResult.style.margin = '50px'
+    // Reset ttt statistics
+    moveCounter = 0
+    for (let i = 0; i < 9; i++) {
+        playerXMoves.pop()
+        playerOMoves.pop()
+    }
+    console.log(playerXMoves)
+    console.log(moveCounter)
     const exitToMain = () => {
         // Removes tictactoe elements from screen and displays main menu
-        const tttResult = document.getElementById('tttresult')
-        const tttLeave = document.getElementById('leave')
         screenDiv.removeChild(tttResult)
         screenDiv.removeChild(tttLeave)
         displayMainMenu()
         // Removes event listener from select button
         selectButton.removeEventListener('click', exitToMain)
+        screenDiv.classList.remove('screenmovie')
         interactBaby()
     }
     // Set short delay to be able to exit screen, add event listener to select
