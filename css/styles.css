@@ -512,7 +512,7 @@ ul {
 #start {
     position: absolute;
     left: 40%;
-    top: 40%;
+    top: 35%;
     z-index: 1;
     padding: 30px 60px 30px 60px;
     box-shadow: 0 0 10px 3px rgba(235, 245, 236, 0.582);
