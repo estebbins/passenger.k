@@ -489,7 +489,7 @@ const reactTrayTable = (event) => {
         consoleDiv.removeChild(consoleDiv.firstChild)
     }
     // Restyle console div
-    consoleDiv.style.backgroundImage = "url('https://i.imgur.com/H6hh6Pw.jpg')"
+    consoleDiv.style.backgroundImage = 'url("https://i.imgur.com/H6hh6Pw.jpg")'
     consoleDiv.style.boxShadow = '0 0 10px 5px rgba(0,0,0,.6) inset'
     // Unhide controls, phone and screen divs
     controlsDiv.style.display = 'grid'
@@ -509,7 +509,7 @@ const startTrayTableInt = () => {
     // Begin tray table interaction once clicked, delay attendant for more realistic interaction
     trayTableButton.removeEventListener('click', startTrayTableInt)
     // Style tray table to appear open
-    trayTableDiv.style.backgroundImage = "url('/img/IMGP8093.JPG')"
+    trayTableDiv.style.backgroundImage = 'url("/img/IMGP8093.JPG")'
     trayTableDiv.style.boxShadow = '0 0 10px 3px rgba(0,0,0,.9) inset, 0 -1px 4px .5px rgba(0,0,0,.9)'
     trayTableButton.style.transform = 'rotate(90deg)'
     setTimeout(interactAttendant, 3000)
