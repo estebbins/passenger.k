@@ -509,7 +509,7 @@ const startTrayTableInt = () => {
     // Begin tray table interaction once clicked, delay attendant for more realistic interaction
     trayTableButton.removeEventListener('click', startTrayTableInt)
     // Style tray table to appear open
-    trayTableDiv.style.backgroundImage = 'url("https://i.imgur.com/H6hh6Pw.jpg")'
+    trayTableDiv.style.backgroundImage = 'url("https://i.imgur.com/zQkpBLL.jpg")'
     trayTableDiv.style.boxShadow = '0 0 10px 3px rgba(0,0,0,.9) inset, 0 -1px 4px .5px rgba(0,0,0,.9)'
     trayTableButton.style.transform = 'rotate(90deg)'
     setTimeout(interactAttendant, 3000)
