@@ -56,8 +56,7 @@ const listenMenu = [
     'Empty mind by Lofi hour', 
     'sound k by nojisuma', 
     'Sensual Jazz by Grand Project Music', 
-    'Pause Music', 
-    'Exit to Main Menu'
+    'Pause Music'
 ]
 const watchMenu = [
     'Eye Cee U', 

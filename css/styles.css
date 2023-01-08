@@ -208,7 +208,6 @@ body {
 } 
 #mag {
     padding-left: 15px;
-    /* line-height: 1.5 */
 }
 #mag::first-letter {
     initial-letter: 4;
