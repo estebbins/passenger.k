@@ -13,7 +13,7 @@ body {
     background-color: rgb(221, 221, 203);
     background-image: url("https://cdn.pixabay.com/photo/2014/11/06/10/54/passengers-519008_960_720.jpg");
     margin: 0 auto;
-    margin-bottom: 150px;
+    margin-bottom: 300px;
     border-bottom-left-radius: 15%;
     border-bottom-right-radius: 15%;
     user-select: none;
@@ -388,33 +388,7 @@ p {
     align-items: center;
 }
 
-.cellphonec {
-    background-color: white;
-    border-radius: 6px;
-    border: 15px solid black;
-    grid-area: 4 / 6 / 9 / 7;
-    display: grid;
-    z-index: 1;
-    grid-template: .5fr repeat(2, .4fr) .2fr .4fr .75fr repeat(3, .3fr) / .5fr .75fr 2fr .2fr;
-    font-size: 15px;
-    box-shadow: 0 8px 16px 8px rgba(0,0,0,0.5);
-    margin-right: 20px;
-    font-family: 'IBM Plex Mono', monospace;
-}
-#part0, #part8, #part9, #part10, #part11, #part12 {
-    background-color: gray;
-}
-#part9 {
-    display: flex;
-    align-items: center;
-}
-#textcontent {
-    background-color: white;
-    margin-top: 2px;
-    border-radius: 5px;
-    width: 280px;
-    height: 60px;
-}
+
 
 .noclick {
     pointer-events: none;
@@ -436,12 +410,6 @@ p {
 
 /* source for triangle-button: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_shapes_triangle-down */
 #tray-open {
-    /* width: 0;
-	height: 0;
-	border-left: 10px solid transparent;
-	border-right: 10px solid transparent;
-	border-top: 20px solid #555;
-    border-bottom: none; */
     background-color: transparent;
     height: 25px;
     background-image: url('https://i.imgur.com/H6hh6Pw.jpg');
@@ -497,7 +465,30 @@ ul {
     text-shadow: -1px -1px 2px black;
     font-family: 'IBM Plex Mono', monospace;
 }
-.trayTableOptions, .babyOptions {
+.cellphonec {
+    background-color: white;
+    border-radius: 6px;
+    border: 15px solid black;
+    grid-area: 4 / 6 / 9 / 7;
+    display: grid;
+    z-index: 1;
+    grid-template: .5fr .2fr .4fr .2fr .4fr .75fr repeat(3, .3fr) / .5fr .75fr 2fr .2fr;
+    font-size: 15px;
+    box-shadow: 0 8px 16px 8px rgba(0,0,0,0.5);
+    margin-right: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+}
+#part0, #part8, #part9, #part10, #part11, #part12 {
+    background-color: gray;
+}
+#textcontent {
+    background-color: white;
+    margin: 10px 0 2px 0;
+    border-radius: 5px;
+    width: 280px;
+    height: 60px;
+}
+.trayTableOptions, .babyOptions, #cell-text-1, #cell-text-2, #cell-text-3 {
     width: 110px;
     background-color: black;
     color: white;
@@ -507,6 +498,17 @@ ul {
     border: 2px solid rgba(235, 245, 236, 0.147);
     box-shadow: 0 0 10px 3px rgba(235, 245, 236, 0.582);
 }
+#cell-text-1, #cell-text-2, #cell-text-3 {
+    align-items: center;
+    width: 100%;
+}
+#part9, #part10, #part11, #part12 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
 #start {
     position: absolute;
     left: 40%;

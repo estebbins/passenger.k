@@ -177,7 +177,6 @@ const checkGameConditions = () => {
 const changeVolume = (event) => {
     // Change volume if user presses volume buttons
     // Set min & max of sounds
-    console.log(noiseTwo.volume)
     if (event.target.id === 'vol-up') {
         // Noise two starts slightly louder at 0.7
         if (soundOne.volume >= .89) {
@@ -774,11 +773,14 @@ const startTrayTableInt = () => {
     // Style tray table to appear open
     trayTableDiv.style.backgroundImage = 'url("https://i.imgur.com/zQkpBLL.jpg")'
     trayTableDiv.style.boxShadow = '0 0 10px 3px rgba(0,0,0,.9) inset, 0 -1px 4px .5px rgba(0,0,0,.9)'
+    // Rotate the button to simulate a tray table
     trayTableButton.style.transform = 'rotate(90deg)'
+    // set flight attendant interaction to start 3 seconds after tray table is open
     setTimeout(interactAttendant, 3000)
 }
 
 const interactBaby = () => {
+    // Creates interaction with a passenger baby crying
     // Create baby text & set number to repeat
     const babyCryStr = 'Wah'
     passenger.appendChild(babyTextDiv)
@@ -788,16 +790,21 @@ const interactBaby = () => {
         wah.textContent = babyCryStr
         babyTextDiv.appendChild(wah)
         babyTextDiv.appendChild(wah)
+        // Play sound for each cry
+        const sourceBaby = document.createElement('source')
+        sourceBaby.src = 'sounds/tre-em-bi-on-43927.mp3'
+        sourceBaby.type = 'audio/mpeg'
+        babyCrySound.appendChild(sourceBaby)
+        babyCrySound.load()
+        babyCrySound.play()
         // Decrease sanity score each time baby cries
         sanityScore -= 5 
         displayStats(entertainmentScore, sanityScore, departure)
     }
-    // Set timeout for each cry for every 2 seconds
-    // for (let i = 0; i < repeat; i++) {
-    //     babyCry = setTimeout(addWah, 2000*i)
-    // }
+    // Cry once before interval begins
     addWah()
     babyCry = setInterval(addWah, 2000)
+    // Clear interval after 14 seconds
     setTimeout(()=>{clearInterval(babyCry)}, 14000)
     // Create player interaction options & add to the screen.
     const setReactions = () => {
@@ -811,7 +818,7 @@ const interactBaby = () => {
             consoleDiv.appendChild(buttonDiv)
             button.addEventListener('click', reactBaby)
         }
-            // Style console Div for player interaction
+        // Style console Div for player interaction
         consoleDiv.style.display = 'flex'
         consoleDiv.style.flexDirection = 'column'
         consoleDiv.style.justifyContent = 'center'
@@ -823,6 +830,7 @@ const interactBaby = () => {
         phoneDiv.classList.add('hide')
         screenDiv.classList.add('hide')    
     }
+    // Run function after a brief pause following tic tac toe
     setTimeout(setReactions, 1500)
 }
 
@@ -884,17 +892,28 @@ const touchPhone = () => {
     // After phone clicked, return styling and remove event listener, start interaction
     phoneDiv.removeEventListener('click', touchPhone)
     phoneDiv.style.animation = 'none'
+    // Stop ringing sound
+    phoneRingSound.loop = false
+    // Open uop cell phone
     interactCellPhone()
 }
 
 // Source for shake animation, including CSS: https://unused-css.com/blog/css-shake-animation/
 
 const interactPhone = () => {
-    // When seat phone touched
+    // Adds animation & sound to prompt user reaction
     // Add event listener to phone to allow click
     phoneDiv.addEventListener('click', touchPhone)
     // Style phone to simulate ringing
     phoneDiv.style.animation = 'skew-x-shake 1.3s infinite'
+    // Add sound to get user's attention
+    const sourcePhone = document.createElement('source')
+    sourcePhone.src = 'sounds/vintage-phone-ringing-121778.mp3'
+    sourcePhone.type = 'audio/mpeg'
+    phoneRingSound.appendChild(sourcePhone)
+    phoneRingSound.load()
+    phoneRingSound.play()
+    phoneRingSound.loop = true
 }
 
 const interactCellPhone = () => {
@@ -1319,8 +1338,6 @@ const leaveTicTacToe = () => {
         playerXMoves.pop()
         playerOMoves.pop()
     }
-    console.log(playerXMoves)
-    console.log(moveCounter)
     const exitToMain = () => {
         // Removes tictactoe elements from screen and displays main menu
         screenDiv.removeChild(tttResult)
@@ -1575,12 +1592,6 @@ const checkSafetyComplete = () => {
             ansFiveArray.push(childFive.id)
         }
     }
-
-    console.log(ansOneArray)
-    console.log(ansTwoArray)
-    console.log(ansThreeArray)
-    console.log(ansFourArray)
-    console.log('five', ansFiveArray)
     // Compare player answer arrays to win conditions & increase score by one each time
     const ansArrays = [ansOneArray, ansTwoArray, ansThreeArray, ansFourArray, ansFiveArray]
     for(let i = 0; i < 5; i++) {
