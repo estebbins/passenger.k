@@ -50,7 +50,7 @@ body {
 
 #console {
     grid-area: 6 / 3 / 7 / 13;
-    background-image: url('../img/brown_ice_by_darkwood67.jpg');
+    background-image: url('img/brown_ice_by_darkwood67.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -352,7 +352,7 @@ p {
 }
 #seat-2 {
     grid-area: 3 / 1 / 4 / 2;
-    background-image: url('../img/seatback_final.png');
+    background-image: url('img/seatback_final.png');
     background-position: right;
     background-size: cover;
     filter: blur(1px);
@@ -444,7 +444,7 @@ p {
     border-bottom: none; */
     background-color: transparent;
     height: 25px;
-    background-image: url('../img/brown_ice_by_darkwood67.jpg');
+    background-image: url('img/brown_ice_by_darkwood67.jpg');
     background-size: cover;
     background-position: top;
     box-shadow: 0 0 5px 3px rgba(0,0,0,.6) inset;
