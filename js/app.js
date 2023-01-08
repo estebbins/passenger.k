@@ -46,10 +46,24 @@ let departure = 300
 let depRate = 1000
 
 // Create Menu Options
-const mainMenu = ['Play', 'Listen', 'Watch']
+const mainMenu = [
+    'Play', 
+    'Listen', 
+    'Watch'
+]
 const playMenu = ['Tic-Tac-Toe']
-const listenMenu = ['Empty mind by Lofi hour', 'sound k by nojisuma', 'Sensual Jazz by Grand Project Music', 'Pause Music', 'Exit to Main Menu']
-const watchMenu = ['Eye Cee U', 'Matriception', 'Inner Piece']
+const listenMenu = [
+    'Empty mind by Lofi hour', 
+    'sound k by nojisuma', 
+    'Sensual Jazz by Grand Project Music', 
+    'Pause Music', 
+    'Exit to Main Menu'
+]
+const watchMenu = [
+    'Eye Cee U', 
+    'Matriception', 
+    'Inner Piece'
+]
 
 const leaveOption = document.createElement('div')
 leaveOption.id = 'leave'
@@ -69,6 +83,7 @@ const noiseOne = document.getElementById('genericcrowd')
 const noiseTwo = document.getElementById('airplaneambience')
 const phoneRingSound = document.getElementById('phonering')
 const babyCrySound = document.getElementById('babycry')
+
 // set volume for sounds
 soundOne.volume = 0.5
 soundTwo.volume = 0.5
@@ -78,6 +93,7 @@ noiseTwo.volume = 0.7
 phoneRingSound.volume = 0.5
 babyCrySound.volume = 0.5
 
+// Access elements for tray table & baby interactions
 const trayTableDiv = document.getElementById('tray-table')
 const attendantDiv = document.getElementById('attendant')
 const attendantTextDiv = document.createElement('div')
@@ -96,44 +112,61 @@ const babyOptions = [
 ]
 
 const getStartScreen = () => {
-    // Set up start button & add to screen div
+    // Sets up start button & add to screen div - this runs when DOM loads
+    // Create start button
     const startButton = document.createElement('button')
     startButton.id = 'start'
     startButton.innerText = 'Board Plane'
+    // Add button to screen
     gameDiv.appendChild(startButton)
+    // Add event listener
     startButton.addEventListener('click', startGameLoop)
-    // a! Will need to add more reset features to this screen.
 }
 
 const startGameLoop = () => {
+    // Starts all necessary game functions
+    // Access relevant elements
     const startButton = document.getElementById('start')
     const safetySpan = document.getElementById('safety')
     const instructionsSpan = document.getElementById('instructions')
-    displayStats(entertainmentScore, sanityScore, departure)
-    startGameStats()
-    gameDiv.removeChild(startButton)
-    displayMainMenu()
-    safetySpan.style.textShadow = '1px 1px green, -1px -1px black'
-    instructionsSpan.style.textShadow = 'none'
     const magazineSpan = document.getElementById('mag')
+    // Show starting stats
+    displayStats(entertainmentScore, sanityScore, departure)
+    // Start ithe intervals
+    startGameStats()
+    // remove the start button from the window
+    gameDiv.removeChild(startButton)
+    // Display the console screen's main menu
+    displayMainMenu()
+    // Style the word Safety on the safety card to show it's now the instruction game
+    safetySpan.style.textShadow = '1px 1px green, -1px -1px black'
+    // Style the word instructions to de-emphasize it
+    instructionsSpan.style.textShadow = 'none'
+    // Change "Credits" to "Magazine"
     magazineSpan.innerText = 'Magazine'
+    // Add event listeners to the safety, tray table, and volume button
     safetyCardDiv.addEventListener('click', openSafetyCard)
     trayTableButton.addEventListener('click', startTrayTableInt)
-    startButton.removeEventListener('click', startGameLoop)
-    playBackgroundNoise()
     volUpButton.addEventListener('click', changeVolume)
     volDownButton.addEventListener('click', changeVolume)
-    // Add volume event listener
+    // Remove the start button event listener to avoid redundant processes
+    startButton.removeEventListener('click', startGameLoop)
+    // Play ambient noise
+    playBackgroundNoise()
 }
 
 const checkGameConditions = () => {
+    // Checks to see if game won or lost - stop intervals in the startGameStats function if so
     if (entertainmentScore <= 0) {
+        // If entertainment reaches 0 - loss
         stopCountdowns()
         displayGameOver('ent loss')
     } else if (sanityScore <= 0) {
+        // If sanity reaches 0 - loss
         stopCountdowns()
         displayGameOver('san loss')
     } else if (departure === 0) {
+        // If departure reaches 0 before sanity or entertainment - player has won
         stopCountdowns()
         displayGameOver('win')
     }
@@ -144,26 +177,29 @@ const checkGameConditions = () => {
 const changeVolume = (event) => {
     // Change volume if user presses volume buttons
     // Set min & max of sounds
-    console.log(soundOne.volume)
-    console.log(soundTwo.volume)
-    console.log(soundThree.volume)
-    console.log(noiseOne.volume)
     console.log(noiseTwo.volume)
-    console.log(phoneRingSound.volume)
-    console.log(babyCrySound.volume)
     if (event.target.id === 'vol-up') {
         // Noise two starts slightly louder at 0.7
-        if (noiseTwo >= .89) {
-            noiseTwo = 1
-        } else if (soundOne.volume >= .89) {
+        if (soundOne.volume >= .89) {
             // Can't go higher than one
             soundOne.volume = 1
             soundTwo.volume = 1
             soundThree.volume = 1
             noiseOne.volume = 1
+            noiseTwo.volume = 1
             phoneRingSound.volume = 1
             babyCrySound.volume = 1
+        } else if (soundOne.volume >= .69){
+            soundOne.volume += .1
+            soundTwo.volume += .1
+            soundThree.volume += .1
+            noiseOne.volume += .1
+            // Max out Noise Two at this point
+            noiseTwo.volume = 1
+            phoneRingSound.volume += .1
+            babyCrySound.volume += .1
         } else {
+            // Increment by 10%
             soundOne.volume += .1
             soundTwo.volume += .1
             soundThree.volume += .1
@@ -173,7 +209,7 @@ const changeVolume = (event) => {
             babyCrySound.volume += .1
         }
     } else if (event.target.id === 'vol-down') {
-        if (noiseTwo <= .19) {
+        if (noiseTwo.volume <= .29) {
             // Can't go lower than 0
             soundOne.volume = 0
             soundTwo.volume = 0
@@ -204,7 +240,7 @@ const playBackgroundNoise = () => {
     noiseOne.load()
     noiseOne.play()
     noiseOne.loop = true
-    // Airplain ambience
+    // Airplane ambience
     const sourceTwo = document.createElement('source')
     sourceTwo.src = 'sounds/airplane_ambience-6830.mp3'
     sourceTwo.type = 'audio/mpeg'
@@ -235,12 +271,11 @@ const displayStats = (entScore, sanScore, currentDep) => {
         currentDep = 0
         departure = 0
     }
-    // Style screen with scores
-    // entertainmentDiv.textContent = entScore
-    // sanityDiv.textContent = sanScore
+    // Style meters by changing width
     entertainmentDiv.style.width = `${entScore}%`
     sanityDiv.style.width = `${sanScore}%`
     departureDiv.style.width = `${(currentDep/300)*100}%`
+    // Code if time remaining to be displayed - need to rename variable to departure nomenclature from eta.
     // format eta, Math.floor method recommendation from https://www.golinuxcloud.com/javascript-integer-division/ 
     // Style ETA to show as a countdown timer
     // const etaMinute = Math.floor(currentEta / 60)
@@ -250,10 +285,13 @@ const displayStats = (entScore, sanScore, currentDep) => {
     // } else {
     //     etaDiv.textContent = `${etaMinute}:${etaSecond}`
     // }
+
+    // Consistently check game conditions to detect win or loss
     checkGameConditions()
 }
 
 const startGameStats = () => {
+    // Sets up countdowns for each stat
     const countdownDep = () => {
         departure -= 1
         displayStats(entertainmentScore, sanityScore, departure)
@@ -271,7 +309,6 @@ const startGameStats = () => {
     intervalDep = setInterval(countdownDep, depRate)
     intervalEnt = setInterval(countdownEnt, entRate)
     intervalSanity = setInterval(countdownSanity, sanityRate)
-    // a! Some game end conditions
 }
 
 const stopCountdowns = () => {
@@ -292,14 +329,15 @@ const displayGameOver = (condition) => {
     winLoseScreen.appendChild(winLoseMsg)
     winLoseScreen.appendChild(exitGameButton)
     // Style exit button
-    exitGameButton.innerText = 'Exit'
+    exitGameButton.innerText = 'Return to start'
     // Add event listener to exit button
     exitGameButton.addEventListener('click', resetGame)
+    // Print win message
     if (condition === 'win') {
-        winLoseMsg.innerText = 'Unbelievable & short-lived victory! You now get to continue sitting on this plane for the rest of your flight!'
-        winLoseMsg.style.color = 'green'
+        winLoseMsg.innerText = 'What an unbelievable & short-lived victory! You may now continue sitting on this plane for the rest of your flight!'
+        winLoseMsg.style.color = 'purple'
     } else if (condition === 'ent loss') {
-        winLoseMsg.innerText = 'Died of Boredom!'
+        winLoseMsg.innerText = 'You died of boredom!'
         winLoseMsg.style.color = 'green'
     } else if (condition === 'san loss') {
         winLoseMsg.innerText = 'You lost all sanity and jumped from the emergency exit onto the tarmac!'
@@ -308,12 +346,14 @@ const displayGameOver = (condition) => {
 }
 
 const resetGame = () => {
+    // Reset is currently refreshing page as there are are no stats that carry over
     location.reload()
 }
 
 const displayMainMenu = () => {
     // Create Ul and Li items for main menu
     const mainMenuUl = document.createElement('ul')
+    // give them a class
     mainMenuUl.id = 'main-menu'
     for (let i = 0; i < mainMenu.length; i++) {
         const listItem = document.createElement('li')
@@ -386,27 +426,26 @@ const displayWatchMenu = () => {
 }
 
 const checkLinearNavigators = (list, ul) => {
+    // Reacts to the use of the controls for linear menus
     // Access selected li & style it
     let selected = list[selection]
     selected.style.fontWeight = '500'
     selected.style.color = 'yellow'
     // Restyle next selection if down is clicked
     downButton.addEventListener('click', downAction = () => {        
-            console.log(selection)
-            if (selection < (list.length - 1)) {
-                selected = list[selection]
-                selected.style.fontWeight = '300'
-                selected.style.color = '#fdfded'
-                // Move selection counter up one
-                selection += 1
-                selected = list[selection]
-                selected.style.fontWeight = '500'
-                selected.style.color = 'yellow'
-            }
+        if (selection < (list.length - 1)) {
+            selected = list[selection]
+            selected.style.fontWeight = '300'
+            selected.style.color = '#fdfded'
+            // Move selection counter up one
+            selection += 1
+            selected = list[selection]
+            selected.style.fontWeight = '500'
+            selected.style.color = 'yellow'
+        }
     })
     // Restyle next selection if down is clicked
     upButton.addEventListener('click', upAction = () => {
-        console.log(selection)
         if (selection > 0) {
             selected.style.fontWeight = '300'
             selected.style.color = '#fdfded'
@@ -418,11 +457,13 @@ const checkLinearNavigators = (list, ul) => {
         }
     })
     selectButton.addEventListener('click', selectAction = () => {
-        console.log(selection)
+        // Hide ul
         ul.style.display = 'none'
+        // Remove listeners
         downButton.removeEventListener('click', downAction)
         upButton.removeEventListener('click', upAction)
         selectButton.removeEventListener('click', selectAction)
+        // Navigate to the appropriate sub menu/process based on which list is currently populated
         if (ul.id === 'main-menu') {
             if (selection === 0) {
                 selection = 0
@@ -451,6 +492,7 @@ const checkLinearNavigators = (list, ul) => {
                 watchMovie(2)
             }
         } else if (ul.id === 'listen-menu') {
+            // Listen menu will kick user back to main menu after each selection
             if (selection === 0) {
                 selection = 0
                 listenMusic(0)
@@ -474,27 +516,34 @@ const checkLinearNavigators = (list, ul) => {
     }, {once: true})
 }
 
-
 // Resource for Movie HTML guidance https://www.w3schools.com/html/html5_video.asp 
 // Royalty Free Alien Movie - https://pixabay.com/videos/alien-eye-gel-aloe-vera-blender-139974/ 
 // How to set movie as background https://blog.hubspot.com/website/video-background-css
 // https://pixabay.com/videos/dog-pet-animal-small-furry-cute-15305/
 const watchMovie = (num) => {
+    // Loads timed movies
+    // Use classes to style screen for movies
     screenDiv.classList.remove('screenc')
     screenDiv.classList.add('screenmovie')
     if (num === 0) {
+        // Eye Cee You
+        // Add to screen
         screenDiv.appendChild(movieOne)
+        // Give properties
         const sourceOne = document.createElement('source')
         sourceOne.src = 'img/Alienmovie.mp4'
         sourceOne.type = 'video/mp4'
         movieOne.appendChild(sourceOne)
+        // Load movie each time, & tell to autoplay
         movieOne.load()
         movieOne.play()
         movieOne.autoplay = true
+        // Add a "leave option" after the movie finishes to prompt user interaction with select button
         setTimeout(()=> {
             screenDiv.appendChild(leaveOption)
             selectButton.addEventListener('click', exitMovie)
         }, 8000)
+        // This movie prompts Phone/Cell Phone interaction
         setTimeout(() => {
             interactPhone()
         }, 10000)
@@ -504,41 +553,53 @@ const watchMovie = (num) => {
         departure -=10
         displayStats(entertainmentScore, sanityScore, departure)
     } else if (num === 1) {
+        // Matriception
+        // Add to screen
         screenDiv.appendChild(movieTwo)
+        // Give propertise
         const sourceTwo = document.createElement('source')
         sourceTwo.src = 'img/action_movie.mp4'
         sourceTwo.type = 'video/mp4'
         movieTwo.appendChild(sourceTwo)
+        // Load movie each time, & tell to autoplay
         movieTwo.load()
         movieTwo.play()
         movieTwo.autoplay = true
+        // This movie changes the background of the window to simulate being in the movie
+        backgroundVideo.classList.remove('hide')
+        // Load & play the background movie
+        backgroundVideo.load()
+        backgroundVideo.play()
+        backgroundVideo.autoplay = true
+        // Style the game div for the background movie
+        gameDiv.style.backgroundImage = 'none'
+        gameDiv.style.backgroundColor = 'transparent'
         setTimeout(()=> {
+            // add the leave button & return window to normal after movie playd
             screenDiv.appendChild(leaveOption)
             selectButton.addEventListener('click', exitMovie)
             gameDiv.style.backgroundImage = "url('https://cdn.pixabay.com/photo/2014/11/06/10/54/passengers-519008_960_720.jpg')"
             gameDiv.style.backgroundColor = 'rgb(221, 221, 203)'
             backgroundVideo.classList.add('hide')
         }, 18000)
-        backgroundVideo.classList.remove('hide')
-        backgroundVideo.load()
-        backgroundVideo.play()
-        backgroundVideo.autoplay = true
-        gameDiv.style.backgroundImage = 'none'
-        gameDiv.style.backgroundColor = 'transparent'
         // update game stats
         entertainmentScore += 30
         sanityScore += 5
         departure -= 12
         displayStats(entertainmentScore, sanityScore, departure)
     } else if (num === 2) {
+        // Add movie to screen
         screenDiv.appendChild(movieThree)
+        // Give properties
         const sourceThree = document.createElement('source')
         sourceThree.src = 'img/dog_movie.mp4'
         sourceThree.type = 'video/mp4'
         movieThree.appendChild(sourceThree)
+        // Load & play movie
         movieThree.load()
         movieThree.play()
         movieThree.autoplay = true
+        // Add leave option
         setTimeout(()=> {
             screenDiv.appendChild(leaveOption)
             selectButton.addEventListener('click', exitMovie)
@@ -551,21 +612,24 @@ const watchMovie = (num) => {
     } 
 }
 
-
 const exitMovie = () => {
+    // Resets screen to main menu
+    // Remove everything on screen
     while (screenDiv.firstChild) {
         screenDiv.removeChild(screenDiv.firstChild)
     }
+    // Remove select button event listener
     selectButton.removeEventListener('click', exitMovie)
+    // Add styling class back on & remove screenmovie class
     screenDiv.classList.add('screenc')
     screenDiv.classList.remove('screenmovie')
+    // Return screen to main menu
     displayMainMenu()
 }
 
 const listenMusic = (num) => {
-    console.log("listen menu", selection)
-    console.log("num", num)
     if (num === 0) {
+        // Pause other sounds if active
         soundTwo.pause()
         soundThree.pause()
         // Load and loop sound one - empty mind
@@ -582,6 +646,7 @@ const listenMusic = (num) => {
         departure -= 15
         displayStats(entertainmentScore, sanityScore, departure)
     } else if (num === 1) {
+        // Pause other sounds if activce
         soundOne.pause()
         soundThree.pause()
         // Load and loop sound two - soundk
@@ -598,6 +663,7 @@ const listenMusic = (num) => {
         departure -= 10
         displayStats(entertainmentScore, sanityScore, departure)
     } else if (num === 2) {
+        // Pause other sounds if active
         soundOne.pause()
         soundTwo.pause()
         // Load and loop sound three - sensual jazz
@@ -614,15 +680,11 @@ const listenMusic = (num) => {
         departure -= 5
         displayStats(entertainmentScore, sanityScore, departure)
     } else if (num === 3) {
+        // Pause all music
         soundOne.pause()
         soundTwo.pause()
         soundThree.pause()
     }
-    // checkLinearNavigators(listenMenuOptions, listenMenuUl)
-    // } else if (num === 4) {
-    //     // Utilize exit movie function to exit music
-    //     exitMovie()
-    // }
 }
 
 // Set Game Interactions with Attendant & Passenger
