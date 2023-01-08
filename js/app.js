@@ -13,6 +13,8 @@ const downButton = document.getElementById('down')
 const leftButton = document.getElementById('left')
 const rightButton = document.getElementById('right')
 const selectButton = document.getElementById('select')
+const volUpButton = document.getElementById('vol-up')
+const volDownButton = document.getElementById('vol-down')
 const safetyCardDiv = document.getElementById('safety-card')
 const safetyCardSpan = document.getElementById('safety')
 const trayTableButton =document.getElementById('tray-open')
@@ -28,7 +30,7 @@ const backgroundVideo = document.getElementById('background-video')
 
 // Create exit button
 const exitGameButton = document.createElement('button')
-
+// Create win/lose screen
 const winLoseScreen = document.createElement('div')
 
 // Create statistics
@@ -46,6 +48,7 @@ let depRate = 1000
 // Create Menu Options
 const mainMenu = ['Play', 'Listen', 'Watch']
 const playMenu = ['Tic-Tac-Toe']
+const listenMenu = ['Empty mind by Lofi hour', 'sound k by nojisuma', 'Sensual Jazz by Grand Project Music', 'Pause Music', 'Exit to Main Menu']
 const watchMenu = ['Eye Cee U', 'Matriception', 'Inner Piece']
 
 const leaveOption = document.createElement('div')
@@ -55,9 +58,26 @@ leaveOption.textContent = 'Exit to Main Menu'
 // Create selection option for screen div options to default to 0
 let selection = 0
 
+// Create variables for video & audio elements
 const movieOne = document.getElementById('alien')
 const movieTwo = document.getElementById('action')
 const movieThree = document.getElementById('dog')
+const soundOne = document.getElementById('emptymind')
+const soundTwo = document.getElementById('soundk')
+const soundThree = document.getElementById('sensualjazz')
+const noiseOne = document.getElementById('genericcrowd')
+const noiseTwo = document.getElementById('airplaneambience')
+const phoneRingSound = document.getElementById('phonering')
+const babyCrySound = document.getElementById('babycry')
+// set volume for sounds
+soundOne.volume = 0.5
+soundTwo.volume = 0.5
+soundThree.volume = 0.5
+noiseOne.volume = 0.5
+noiseTwo.volume = 0.7
+phoneRingSound.volume = 0.5
+babyCrySound.volume = 0.5
+
 const trayTableDiv = document.getElementById('tray-table')
 const attendantDiv = document.getElementById('attendant')
 const attendantTextDiv = document.createElement('div')
@@ -100,6 +120,10 @@ const startGameLoop = () => {
     safetyCardDiv.addEventListener('click', openSafetyCard)
     trayTableButton.addEventListener('click', startTrayTableInt)
     startButton.removeEventListener('click', startGameLoop)
+    playBackgroundNoise()
+    volUpButton.addEventListener('click', changeVolume)
+    volDownButton.addEventListener('click', changeVolume)
+    // Add volume event listener
 }
 
 const checkGameConditions = () => {
@@ -113,6 +137,81 @@ const checkGameConditions = () => {
         stopCountdowns()
         displayGameOver('win')
     }
+}
+
+// Resources for guidance on configuring audio elements https://www.w3schools.com/html/html5_audio.asp, https://www.w3schools.com/tags/ref_av_dom.asp
+
+const changeVolume = (event) => {
+    // Change volume if user presses volume buttons
+    // Set min & max of sounds
+    console.log(soundOne.volume)
+    console.log(soundTwo.volume)
+    console.log(soundThree.volume)
+    console.log(noiseOne.volume)
+    console.log(noiseTwo.volume)
+    console.log(phoneRingSound.volume)
+    console.log(babyCrySound.volume)
+    if (event.target.id === 'vol-up') {
+        // Noise two starts slightly louder at 0.7
+        if (noiseTwo >= .89) {
+            noiseTwo = 1
+        } else if (soundOne.volume >= .89) {
+            // Can't go higher than one
+            soundOne.volume = 1
+            soundTwo.volume = 1
+            soundThree.volume = 1
+            noiseOne.volume = 1
+            phoneRingSound.volume = 1
+            babyCrySound.volume = 1
+        } else {
+            soundOne.volume += .1
+            soundTwo.volume += .1
+            soundThree.volume += .1
+            noiseOne.volume += .1
+            noiseTwo.volume += .1
+            phoneRingSound.volume += .1
+            babyCrySound.volume += .1
+        }
+    } else if (event.target.id === 'vol-down') {
+        if (noiseTwo <= .19) {
+            // Can't go lower than 0
+            soundOne.volume = 0
+            soundTwo.volume = 0
+            soundThree.volume = 0
+            noiseOne.volume = 0
+            noiseTwo.volume = 0
+            phoneRingSound.volume = 0
+            babyCrySound.volume = 0
+        } else {
+            soundOne.volume -= .1
+            soundTwo.volume -= .1
+            soundThree.volume -= .1
+            noiseOne.volume -= .1
+            noiseTwo.volume -= .1
+            phoneRingSound.volume -= .1
+            babyCrySound.volume -= .1
+        }
+    }
+}
+
+const playBackgroundNoise = () => {
+    // Sets up ambient sounds to loop while playing the game
+    // Generic crowd
+    const sourceOne = document.createElement('source')
+    sourceOne.src = 'sounds/generic-crowd-background-noise-31310.mp3'
+    sourceOne.type = 'audio/mpeg'
+    noiseOne.appendChild(sourceOne)
+    noiseOne.load()
+    noiseOne.play()
+    noiseOne.loop = true
+    // Airplain ambience
+    const sourceTwo = document.createElement('source')
+    sourceTwo.src = 'sounds/airplane_ambience-6830.mp3'
+    sourceTwo.type = 'audio/mpeg'
+    noiseTwo.appendChild(sourceTwo)
+    noiseTwo.load()
+    noiseTwo.play()
+    noiseTwo.loop = true
 }
 
 const displayStats = (entScore, sanScore, currentDep) => {
@@ -249,7 +348,22 @@ const displayPlayMenu = () => {
 }
 
 const displayListenMenu = () => {
-    console.log('display listen menu')
+    const listenMenuUl = document.createElement('ul')
+    listenMenuUl.id = 'listen-menu'
+    for (let i = 0; i < listenMenu.length; i++) {
+        const listItem = document.createElement('li')
+        listItem.innerText = listenMenu[i]
+        listItem.className = 'listen-menu-list'
+        listenMenuUl.appendChild(listItem)
+    }
+    // Append menu to screen div
+    listenMenuUl.style.display = 'block'
+    screenDiv.appendChild(listenMenuUl)
+    // screenDiv.style.justifyContent = 'left'
+    // screenDiv.style.alignItems = 'flex-end'
+    const listenMenuOptions = document.querySelectorAll('.listen-menu-list')
+    // Add event listeners
+    checkLinearNavigators(listenMenuOptions, listenMenuUl)
 }
 
 const displayWatchMenu = () => {
@@ -272,26 +386,31 @@ const displayWatchMenu = () => {
 }
 
 const checkLinearNavigators = (list, ul) => {
-    console.log(selection)
+    // Access selected li & style it
     let selected = list[selection]
     selected.style.fontWeight = '500'
     selected.style.color = 'yellow'
-    downButton.addEventListener('click', 
-        downAction = () => {        
+    // Restyle next selection if down is clicked
+    downButton.addEventListener('click', downAction = () => {        
+            console.log(selection)
             if (selection < (list.length - 1)) {
                 selected = list[selection]
                 selected.style.fontWeight = '300'
                 selected.style.color = '#fdfded'
+                // Move selection counter up one
                 selection += 1
                 selected = list[selection]
                 selected.style.fontWeight = '500'
                 selected.style.color = 'yellow'
-                }
+            }
     })
+    // Restyle next selection if down is clicked
     upButton.addEventListener('click', upAction = () => {
+        console.log(selection)
         if (selection > 0) {
             selected.style.fontWeight = '300'
             selected.style.color = '#fdfded'
+            // Move selection counter down one
             selection--
             selected = list[selection]
             selected.style.fontWeight = '500'
@@ -299,6 +418,7 @@ const checkLinearNavigators = (list, ul) => {
         }
     })
     selectButton.addEventListener('click', selectAction = () => {
+        console.log(selection)
         ul.style.display = 'none'
         downButton.removeEventListener('click', downAction)
         upButton.removeEventListener('click', upAction)
@@ -318,7 +438,7 @@ const checkLinearNavigators = (list, ul) => {
             if (selection === 0) {
                 selection = 0
                 launchTicTacToe()
-        }
+            }
         } else if (ul.id === 'watch-menu') {
             if (selection === 0) {
                 selection = 0
@@ -330,6 +450,24 @@ const checkLinearNavigators = (list, ul) => {
                 selection = 0
                 watchMovie(2)
             }
+        } else if (ul.id === 'listen-menu') {
+            if (selection === 0) {
+                selection = 0
+                listenMusic(0)
+                displayMainMenu()
+            } else if (selection === 1) {
+                selection = 0
+                listenMusic(1)
+                displayMainMenu()
+            } else if (selection === 2) {
+                selection = 0
+                listenMusic(2)
+                displayMainMenu()
+            } else if (selection === 3) {
+                selection = 0
+                listenMusic(3)
+                displayMainMenu()
+            } 
         }
         selection = 0
         screenDiv.removeChild(ul)
@@ -405,14 +543,14 @@ const watchMovie = (num) => {
             screenDiv.appendChild(leaveOption)
             selectButton.addEventListener('click', exitMovie)
         }, 14000)
-
         // update game stats
         entertainmentScore += 20
         sanityScore += 20
         departure += 5
         displayStats(entertainmentScore, sanityScore, departure)
-    }
+    } 
 }
+
 
 const exitMovie = () => {
     while (screenDiv.firstChild) {
@@ -422,6 +560,69 @@ const exitMovie = () => {
     screenDiv.classList.add('screenc')
     screenDiv.classList.remove('screenmovie')
     displayMainMenu()
+}
+
+const listenMusic = (num) => {
+    console.log("listen menu", selection)
+    console.log("num", num)
+    if (num === 0) {
+        soundTwo.pause()
+        soundThree.pause()
+        // Load and loop sound one - empty mind
+        const sourceOne = document.createElement('source')
+        sourceOne.src = 'sounds/empty-mind-118973.mp3'
+        sourceOne.type = 'audio/mpeg'
+        soundOne.appendChild(sourceOne)
+        soundOne.load()
+        soundOne.play()
+        soundOne.loop = true
+        // update game stats
+        entertainmentScore += 15
+        sanityScore += 20
+        departure -= 15
+        displayStats(entertainmentScore, sanityScore, departure)
+    } else if (num === 1) {
+        soundOne.pause()
+        soundThree.pause()
+        // Load and loop sound two - soundk
+        const sourceTwo = document.createElement('source')
+        sourceTwo.src = 'sounds/sound-k-117217.mp3'
+        sourceTwo.type = 'audio/mpeg'
+        soundTwo.appendChild(sourceTwo)
+        soundTwo.load()
+        soundTwo.play()
+        soundTwo.loop = true
+        // update game stats
+        entertainmentScore += 20
+        sanityScore += 25
+        departure -= 10
+        displayStats(entertainmentScore, sanityScore, departure)
+    } else if (num === 2) {
+        soundOne.pause()
+        soundTwo.pause()
+        // Load and loop sound three - sensual jazz
+        const sourceThree = document.createElement('source')
+        sourceThree.src = 'sounds/sensual-jazz-130483.mp3'
+        sourceThree.type = 'audio/mpeg'
+        soundThree.appendChild(sourceThree)
+        soundThree.load()
+        soundThree.play()
+        soundThree.loop = true
+        // update game stats
+        entertainmentScore += 10
+        sanityScore -= 5
+        departure -= 5
+        displayStats(entertainmentScore, sanityScore, departure)
+    } else if (num === 3) {
+        soundOne.pause()
+        soundTwo.pause()
+        soundThree.pause()
+    }
+    // checkLinearNavigators(listenMenuOptions, listenMenuUl)
+    // } else if (num === 4) {
+    //     // Utilize exit movie function to exit music
+    //     exitMovie()
+    // }
 }
 
 // Set Game Interactions with Attendant & Passenger
