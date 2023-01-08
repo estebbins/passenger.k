@@ -171,7 +171,7 @@ body {
 #phone { 
     grid-area: 6 / 9 / 7 / 12; 
     margin: 5px 0 5px 0;
-    background-image: url('/img/brown_ice_by_darkwood67.jpg');
+    background-image: url('../img/brown_ice_by_darkwood67.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -183,7 +183,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background-image: url('/img/brown_ice_by_darkwood67.jpg');
+    background-image: url('../img/brown_ice_by_darkwood67.jpg');
     background-size: cover;
     background-position: top;
     background-repeat: no-repeat;
@@ -315,7 +315,7 @@ body {
 }
 #aisle {
     grid-area: 3 / 4 / 4 / 5;
-    background-image: url('/img/seatback_final.png');
+    background-image: url('../img/seatback_final.png');
     background-position: left;
     background-size: cover;
     margin-left: 20px;
@@ -352,7 +352,7 @@ p {
 }
 #seat-2 {
     grid-area: 3 / 1 / 4 / 2;
-    background-image: url('/img/seatback_final.png');
+    background-image: url('../img/seatback_final.png');
     background-position: right;
     background-size: cover;
     filter: blur(1px);
@@ -444,7 +444,7 @@ p {
     border-bottom: none; */
     background-color: transparent;
     height: 25px;
-    background-image: url('/img/brown_ice_by_darkwood67.jpg');
+    background-image: url('../img/brown_ice_by_darkwood67.jpg');
     background-size: cover;
     background-position: top;
     box-shadow: 0 0 5px 3px rgba(0,0,0,.6) inset;
