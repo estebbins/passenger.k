@@ -498,7 +498,7 @@ const reactTrayTable = (event) => {
     // Remove flight attendant text div
     attendantDiv.removeChild(attendantTextDiv)
     // "Close tray table" by restyling to original image
-    trayTableDiv.style.backgroundImage = "url('https://i.imgur.com/H6hh6Pw.jpg')"
+    trayTableDiv.style.backgroundImage = 'url("https://i.imgur.com/H6hh6Pw.jpg")'
     trayTableDiv.style.boxShadow = '0 0 10px 1px rgba(0,0,0,.5) inset, 0 -1px 4px .5px rgba(0,0,0,.9)'
     trayTableButton.style.transform = ''
     // Add event listener back onto tray table to be used again
@@ -609,7 +609,7 @@ const clearBabyInteraction = () => {
         passengerDiv.removeChild(passengerDiv.firstChild)
     }
     // Restyle console div
-    consoleDiv.style.backgroundImage = "url('https://i.imgur.com/H6hh6Pw.jpg')"
+    consoleDiv.style.backgroundImage = 'url("https://i.imgur.com/H6hh6Pw.jpg")'
     consoleDiv.style.boxShadow = '0 0 10px 5px rgba(0,0,0,.6) inset'
     // Redisplay console elements to continue gameplay
     controlsDiv.style.display = 'grid'
