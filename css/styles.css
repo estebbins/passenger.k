@@ -315,7 +315,7 @@ body {
 }
 #aisle {
     grid-area: 3 / 4 / 4 / 5;
-    background-image: url('../img/seatback_final.png');
+    background-image: url('https://i.imgur.com/DlcKTNd.png');
     background-position: left;
     background-size: cover;
     margin-left: 20px;
@@ -352,7 +352,7 @@ p {
 }
 #seat-2 {
     grid-area: 3 / 1 / 4 / 2;
-    background-image: url('img/seatback_final.png');
+    background-image: url('https://i.imgur.com/DlcKTNd.png');
     background-position: right;
     background-size: cover;
     filter: blur(1px);
