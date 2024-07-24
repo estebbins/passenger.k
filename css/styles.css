@@ -200,7 +200,8 @@ body {
     border-right: 4px double rgb(114, 104, 104);
     border-bottom: 5px solid rgb(78, 72, 72);
     box-shadow: 0 -10px 15px 0 rgba(0,0,0,.4) inset, 0px -5px 15px 0px rgba(0,0,0,.6);
-    display: flex;
+    /* This property was causing seat-1 to stretch in chrome (not safari) */
+    /* display: flex; */
     font-family: 'Dancing Script', cursive;
     color: white;
     font-size: 40px;
